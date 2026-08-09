@@ -1,0 +1,69 @@
+# file opened: C:\Users\pablo\OneDrive\Escritorio\TETRIS_E (2)\TETRIS_E\caida.asm
+ 1    0000              ; Programa que calcula la caida de la pieza
+ 2    0000
+ 3    0000
+ 4    0000              ; Constantes para el cálculo del tiempo
+ 5    0000              TIEMPO_BASE       EQU 0x88FF  ; Tiempo base de espera
+ 6    0000              REDUCCION_TIEMPO  EQU 10      ; Reducción de tiempo por nivel
+ 7    0000              TIEMPO_MINIMO     EQU 200     ; Tiempo mínimo de espera
+ 8    0000
+ 9    0000              ; Variables de tiempo
+10    0000              TIEMPO_CAIDA      EQU 0x7000  ; Dirección de la variable del tiempo de caída
+11    0000              NIVEL_ACTUAL      EQU 0x7002  ; Dirección de la variable del nivel actual
+12    0000
+13    0000              ; Función para calcular y esperar el tiempo de caída
+14    0000              Tiempo:
+15    0000                  ; Guardar registros que vamos a usar
+16    0000 F5               PUSH AF
+17    0001 C5               PUSH BC
+18    0002 D5               PUSH DE
+19    0003 E5               PUSH HL
+20    0004
+21    0004                  ; Calcular el tiempo de caída basado en el nivel actual
+22    0004 3A 02 70         LD A, (NIVEL_ACTUAL)
+23    0007 21 FF 88         LD HL, TIEMPO_BASE
+24    000A 97               SUB A
+25    000B 06 00            LD B, 0
+26    000D 4F               LD C, A
+27    000E 11 0A 00         LD DE, REDUCCION_TIEMPO
+28    0011 3E 00            LD A, 0
+29    0013 ED 42            SBC HL, BC ; Calcular el tiempo de caída: TIEMPO_BASE - (NIVEL_ACTUAL * REDUCCION_TIEMPO)
+30    0015 7C               LD A, H
+31    0016 B7               OR A
+32    0017 20 06            JR NZ, SkipMinCheck
+33    0019 BD               CP L
+34    001A 30 03            JR NC, SkipMinCheck
+35    001C 21 C8 00         LD HL, TIEMPO_MINIMO
+36    001F
+37    001F              SkipMinCheck:
+38    001F 22 00 70         LD (TIEMPO_CAIDA), HL ; Guardar el tiempo calculado
+39    0022
+40    0022                  ; Esperar el tiempo de caída
+41    0022
+42    0022              EsperarCaida:
+43    0022 ED 5B 00 70      LD DE, (TIEMPO_CAIDA)
+44    0026
+45    0026              EsperarLoop:
+46    0026 1B               DEC DE
+47    0027 7A               LD A, D
+48    0028 B7               OR A
+49    0029 20 FB            JR NZ, EsperarLoop
+50    002B 7B               LD A, E
+51    002C B7               OR A
+52    002D 20 F7            JR NZ, EsperarLoop
+53    002F
+54    002F                  ; Restaurar registros usados
+55    002F E1               POP HL
+56    0030 D1               POP DE
+57    0031 C1               POP BC
+58    0032 F1               POP AF
+59    0033
+60    0033 C9               RET
+61    0034
+62    0034              ; Función para inicializar el tiempo de caída
+63    0034              InicializarTiempo:
+64    0034 21 FF 88         LD HL, TIEMPO_BASE
+65    0037 22 00 70         LD (TIEMPO_CAIDA), HL
+66    003A C9               RET
+67    003B
+# file closed: C:\Users\pablo\OneDrive\Escritorio\TETRIS_E (2)\TETRIS_E\caida.asm

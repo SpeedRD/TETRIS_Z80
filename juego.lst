@@ -1,0 +1,64 @@
+# file opened: C:\Users\pablo\OneDrive\Escritorio\TETRIS_E (2)\TETRIS_E\juego.asm
+ 1    0000              ;Funcionamiento del juego
+ 2    0000
+ 3    0000              iniciar:
+C:\Users\pablo\OneDrive\Escritorio\TETRIS_E (2)\TETRIS_E\juego.asm(4): error: Label not found: seleccionar_pieza
+ 4    0000 CD 00 00         CALL seleccionar_pieza
+ 5    0003
+ 6    0003 06 FF            LD B, 255 ;me situo en la ultima línea
+ 7    0005 3E 0F            ld a, 15
+C:\Users\pablo\OneDrive\Escritorio\TETRIS_E (2)\TETRIS_E\juego.asm(8): error: Label not found: Medio
+ 8    0007 32 00 00         LD (Medio), A
+ 9    000A
+C:\Users\pablo\OneDrive\Escritorio\TETRIS_E (2)\TETRIS_E\juego.asm(10): error: Label not found: comprobar
+10    000A CD 00 00         CALL comprobar
+11    000D B7               or a
+12    000E
+13    000E
+14    000E              ciclo_juego:
+15    000E
+16    000E 78               ld a, b
+17    000F FE FF            cp $FF
+18    0011 28 03            jr z, siguiente_juego
+19    0013
+C:\Users\pablo\OneDrive\Escritorio\TETRIS_E (2)\TETRIS_E\juego.asm(20): error: Label not found: borrar_tetromino
+20    0013 CD 00 00         CALL borrar_tetromino
+20    0016                ; borrar el tetromino
+21    0016
+22    0016              siguiente_juego:
+23    0016 04               inc b
+24    0017 50               ld d, b
+C:\Users\pablo\OneDrive\Escritorio\TETRIS_E (2)\TETRIS_E\juego.asm(25): error: Label not found: Medio
+C:\Users\pablo\OneDrive\Escritorio\TETRIS_E (2)\TETRIS_E\juego.asm(25): warning[rdlow]: Reading memory at low address: 0
+25    0018 3A 00 00         ld a, (Medio)
+26    001B 5F               ld e, a
+C:\Users\pablo\OneDrive\Escritorio\TETRIS_E (2)\TETRIS_E\juego.asm(27): error: Label not found: MOVER
+27    001C CD 00 00         call MOVER
+C:\Users\pablo\OneDrive\Escritorio\TETRIS_E (2)\TETRIS_E\juego.asm(28): error: Label not found: GIRAR
+28    001F CD 00 00         call GIRAR
+C:\Users\pablo\OneDrive\Escritorio\TETRIS_E (2)\TETRIS_E\juego.asm(29): error: Label not found: comprobar
+29    0022 CD 00 00         call comprobar ; Validar la posición del tetromino
+30    0025 B7               or a
+31    0026
+32    0026 28 07            jr z, cambiar_tetromino ; Si no se puede mover más abajo, cambiar tetromino
+33    0028
+34    0028 05               dec b                  ; Si se puede mover, actualizar posición y dibujar
+35    0029 4B               ld c, e
+C:\Users\pablo\OneDrive\Escritorio\TETRIS_E (2)\TETRIS_E\juego.asm(36): error: Label not found: pintar_tetromino
+36    002A CD 00 00         call pintar_tetromino
+37    002D 18 D1            jr iniciar
+38    002F
+39    002F              cambiar_tetromino:
+40    002F 4B               ld c, e
+C:\Users\pablo\OneDrive\Escritorio\TETRIS_E (2)\TETRIS_E\juego.asm(41): error: Label not found: pintar_tetromino
+41    0030 CD 00 00         call pintar_tetromino ; Pintar el tetromino en la parte superior
+C:\Users\pablo\OneDrive\Escritorio\TETRIS_E (2)\TETRIS_E\juego.asm(42): error: Label not found: Tiempo
+42    0033 CD 00 00         call Tiempo
+43    0036 18 D6            jr ciclo_juego
+44    0038
+45    0038              end:
+46    0038 C9               ret
+47    0039
+48    0039
+49    0039
+# file closed: C:\Users\pablo\OneDrive\Escritorio\TETRIS_E (2)\TETRIS_E\juego.asm

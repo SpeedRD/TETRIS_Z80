@@ -1,0 +1,115 @@
+# file opened: D:\TETRIS\TETRIS_E\piezas.asm
+ 1    0000              ; Programa para definir y dibujar cada pieza o tetromino
+ 2    0000
+ 3    0000              ; Datos de los tetrominos: filas, columnas, patrón de bits, giros
+ 4    0000 02 02 08 08  Tetro1:  db 2, 2, 1*8, 1*8, 1*8, 1*8, 0, 0
+ 4    0004 08 08 00 00
+ 4    0008 00 00 00 00    dw Tetro1, Tetro1
+ 5    000C
+ 6    000C              ; Datos para la barra
+ 7    000C 04 01 10 10  Tetro2:  db 4, 1, 2*8, 2*8, 2*8, 2*8, 0, 0
+ 7    0010 10 10 00 00
+ 7    0014 18 00 18 00    dw Tetro3, Tetro3
+ 8    0018 01 04 10 10  Tetro3:  db 1, 4, 2*8, 2*8, 2*8, 2*8, 0, 0
+ 8    001C 10 10 00 00
+ 8    0020 0C 00 0C 00    dw Tetro2, Tetro2
+ 9    0024
+10    0024              ; Datos para la forma de L
+11    0024 03 02 18 00  Tetro4:  db 3, 2, 3*8, 0, 3*8, 0, 3*8, 3*8
+11    0028 18 00 18 18
+11    002C 54 00 3C 00    dw Tetro8, Tetro6
+12    0030 03 02 00 18  Tetro5:  db 3, 2, 0, 3*8, 0, 3*8, 3*8, 3*8
+12    0034 00 18 18 18
+12    0038 78 00 60 00    dw Tetro11, Tetro9
+13    003C 02 03 18 18  Tetro6:  db 2, 3, 3*8, 3*8, 3*8, 3*8, 0, 0
+13    0040 18 18 00 00
+13    0044 24 00 48 00    dw Tetro4, Tetro7
+14    0048 03 02 18 18  Tetro7:  db 3, 2, 3*8, 3*8, 0, 3*8, 0, 3*8
+14    004C 00 18 00 18
+14    0050 3C 00 54 00    dw Tetro6, Tetro8
+15    0054 02 03 00 00  Tetro8:  db 2, 3, 0, 0, 3*8, 3*8, 3*8, 3*8
+15    0058 18 18 18 18
+15    005C 48 00 24 00    dw Tetro7, Tetro4
+16    0060 02 03 18 00  Tetro9:  db 2, 3, 3*8, 0, 0, 3*8, 3*8, 3*8
+16    0064 00 18 18 18
+16    0068 30 00 6C 00    dw Tetro5, Tetro10
+17    006C 03 02 18 18  Tetro10: db 3, 2, 3*8, 3*8, 3*8, 0, 3*8, 0
+17    0070 18 00 18 00
+17    0074 60 00 78 00    dw Tetro9, Tetro11
+18    0078 02 03 18 18  Tetro11: db 2, 3, 3*8, 3*8, 3*8, 0, 0, 3*8
+18    007C 18 00 00 18
+18    0080 6C 00 30 00    dw Tetro10, Tetro5
+19    0084
+20    0084              ; Datos para la forma de T
+21    0084 02 03 00 20  Tetro12: db 2, 3, 0, 4*8, 0, 4*8, 4*8, 4*8
+21    0088 00 20 20 20
+21    008C A8 00 90 00    dw Tetro15, Tetro13
+22    0090 03 02 20 00  Tetro13: db 3, 2, 4*8, 0, 4*8, 4*8, 4*8, 0
+22    0094 20 20 20 00
+22    0098 84 00 9C 00    dw Tetro12, Tetro14
+23    009C 02 03 20 20  Tetro14: db 2, 3, 4*8, 4*8, 4*8, 0, 4*8, 0
+23    00A0 20 00 20 00
+23    00A4 90 00 A8 00    dw Tetro13, Tetro15
+24    00A8 03 02 00 20  Tetro15: db 3, 2, 0, 4*8, 4*8, 4*8, 0, 4*8
+24    00AC 20 20 00 20
+24    00B0 9C 00 84 00    dw Tetro14, Tetro12
+25    00B4
+26    00B4              ; Datos para la forma de Z
+27    00B4 03 02 28 00  Tetro16: db 3, 2, 5*8, 0, 5*8, 5*8, 0, 5*8
+27    00B8 28 28 00 28
+27    00BC CC 00 CC 00    dw Tetro18, Tetro18
+28    00C0 03 02 00 28  Tetro17: db 3, 2, 0, 5*8, 5*8, 5*8, 5*8, 0
+28    00C4 28 28 28 00
+28    00C8 D8 00 D8 00    dw Tetro19, Tetro19
+29    00CC 02 03 00 28  Tetro18: db 2, 3, 0, 5*8, 5*8, 5*8, 5*8, 0
+29    00D0 28 28 28 00
+29    00D4 B4 00 B4 00    dw Tetro16, Tetro16
+30    00D8 02 03 28 28  Tetro19: db 2, 3, 5*8, 5*8, 0, 0, 5*8, 5*8
+30    00DC 00 00 28 28
+30    00E0 C0 00 C0 00    dw Tetro17, Tetro17
+31    00E4
+32    00E4              ; Rutina para pintar el tetromino en pantalla
+33    00E4              pintar_tetromino:
+34    00E4 F5               push af
+35    00E5 FD E5            push iy
+36    00E7 E5               push hl
+37    00E8 D5               push de
+38    00E9 C5               push bc
+39    00EA
+D:\TETRIS\TETRIS_E\piezas.asm(40): error: Label not found: CalcularAtributo
+40    00EA CD 00 00         call CalcularAtributo  ; Calcular la dirección en HL
+41    00ED DD 46 00         ld b, (ix)             ; Obtener filas en B
+42    00F0 DD 4E 01         ld c, (ix+1)           ; Obtener columnas en C
+43    00F3 DD E5 FD E1      ld iy, ix
+44    00F7 FD 23            inc iy
+44    00F9 FD 23          inc iy        ; Ajustar IY a la dirección del patrón de bits del tetromino
+45    00FB
+46    00FB              pintar_loop:
+47    00FB FD 7E 00         ld a, (iy)
+48    00FE FD 23            inc iy
+49    0100 B7               or a                   ; Verificar si el byte es cero
+50    0101 28 01            jr z, siguiente_byte
+51    0103 77               ld (hl), a             ; Pintar el byte en pantalla
+52    0104
+53    0104              siguiente_byte:
+54    0104 23               inc hl                 ; Mover a la siguiente posición en memoria de video
+55    0105 0D               dec c                  ; Decrementar el contador de columnas
+56    0106 20 F3            jr nz, pintar_loop     ; Repetir hasta que C sea cero
+57    0108
+58    0108 DD 4E 01         ld c, (ix+1)           ; Resetear C para la siguiente fila
+59    010B 3E 20            ld a, 32
+60    010D 91               sub c
+61    010E 16 00            ld d, 0
+62    0110 5F               ld e, a
+63    0111 19               add hl, de             ; Mover a la siguiente fila en memoria de video
+64    0112 10 E7            djnz pintar_loop       ; Repetir para todas las filas
+65    0114
+66    0114 C1               pop bc
+67    0115 D1               pop de
+68    0116 E1               pop hl
+69    0117 FD E1            pop iy
+70    0119 F1               pop af
+71    011A
+72    011A C9               ret
+73    011B
+# file closed: D:\TETRIS\TETRIS_E\piezas.asm
