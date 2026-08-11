@@ -6,8 +6,9 @@ borrar_tetromino:
     push hl
     push de
     push bc
+    di                    ; IY va a apuntar al patron; la ROM ($0038) exige IY=$5C3A
 
-    call CalcularAtributo 
+    call CalcularAtributo
     ld b, (ix)            ; Guardar filas en B
     ld c, (ix+1)          ; Guardar columnas en C
     ld iy, ix
@@ -40,6 +41,7 @@ siguiente_columna:
     pop de
     pop hl
     pop iy
+    ei                    ; IY ya vale lo que tenia el llamante: seguro reanudar
     pop af
 
     ret

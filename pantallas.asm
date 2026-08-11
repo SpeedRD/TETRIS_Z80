@@ -38,8 +38,8 @@ Pantalla_Final:
     ld a, 1               ; Set color to blue on black, blinking
     ld b, 18              ; Row position
     ld c, 1               ; Column position
-    ld ix, MensajeGameOver   ; Address of the message
-    call PRINTAT  ; Print the message
+    ld ix, MensajeReiniciar  ; Address of the message (antes cargaba
+    call PRINTAT             ;  MensajeGameOver por segunda vez)
 
     ; Set cursor attribute to blinking blue
     ld b, 18              ; Row position for attribute
@@ -50,7 +50,9 @@ Pantalla_Final:
 
     call LeerTecla     ; Wait for a key press (S or N)
 
-    call inicializar          ; Restart the game
+    jp inicializar            ; Restart the game. JP y no CALL: con CALL cada
+                              ; reinicio dejaba 2 bytes de pila sin recuperar,
+                              ; y lo que hubiera detras era codigo muerto.
 
 
 FinDelJuego:
@@ -82,7 +84,7 @@ CalcularAtributo:
 
 EsperarTecla:
     call LeerTecla
-    cp $FF
+    cp $1F              ; SoltarTecla devuelve el puerto enmascarado a los bits 0-4
     jr nz,EsperarTecla  ; Esperar hasta que no haya tecla pulsada
     ret
 
@@ -99,7 +101,8 @@ LeerTecla:
 
 SoltarTecla:
     in a,(c)            ; Leer del puerto que se ha definido en LeerTecla
-    cp $FF              ; Comprobar que no hay tecla pulsada
+    and $1F             ; solo los bits 0-4 son teclado; el bit 6 (EAR) no es fiable
+    cp $1F              ; Comprobar que no hay tecla pulsada
     jr nz,SoltarTecla   ; Esperar hasta que no haya tecla pulsada
     ret
 
@@ -110,5 +113,9 @@ SoltarTecla:
 MensajeFinal:     db "Gracias por jugar",0         ; Mensaje de agradecimiento
 MensajeIniciar:   db "Empezamos una partida (S/N)? ",0  ; Mensaje para iniciar partida
 MensajeJuego:     db "Tipo de Juego: Tipo-A",0   ; Mensaje del tipo de juego
-MensajeReiniciar: db "¿Reiniciar el juego (S/N)?",0   ; Mensaje para reiniciar partida
-MensajeGameOver:  db "¡Juego Terminado!",0        ; Mensaje de fin de juego
+; Solo ASCII: el fuente es UTF-8, asi que "¿" y "¡" se ensamblaban como dos
+; bytes ($C2 $BF y $C2 $A1). PRINTCHNUM indexa CHARSET con (codigo-32)*8 y el
+; juego de caracteres solo cubre los codigos 32-127, asi que cualquier byte
+; >= 128 apuntaba fuera y pintaba dos glifos de basura delante del texto.
+MensajeReiniciar: db "Reiniciar el juego (S/N)?",0   ; Mensaje para reiniciar partida
+MensajeGameOver:  db "Juego Terminado!",0        ; Mensaje de fin de juego

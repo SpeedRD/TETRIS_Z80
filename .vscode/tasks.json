@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "sjasmplus: build main",
+      "type": "shell",
+      "command": "sjasmplus",
+      "args": ["--fullpath", "--raw=main.bin", "--lst=main.lst", "--sld=main.sld", "main.asm"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": []
+    }
+  ]
+}

@@ -6,6 +6,7 @@ comprobar:
     push hl
     push de
     push bc
+    di                   ; IY va a apuntar al patron; la ROM ($0038) exige IY=$5C3A
 
     CALL CalcularAtributo
     ; Configurar las filas y columnas del tetromino
@@ -50,6 +51,7 @@ fin_comprobacion:
     pop de
     pop hl
     pop iy
-    pop ix
+    ei                   ; IY ya vale lo que tenia el llamante: seguro reanudar
+    pop ix               ; AF no se restaura a proposito: A es el valor de retorno
 
     ret

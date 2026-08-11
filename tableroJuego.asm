@@ -36,10 +36,10 @@ base:
     inc hl                   ; Mover la posición a la siguiente columna
     djnz base                ; Decrementar B y repetir hasta que B sea cero
 
+    di                       ; Tetris_3D deja IY en $9FDF y no lo restaura
     call Tetris_3D           ; Aplicar el efecto 3D a los bloques
+    ld iy, $5C3A             ; devolvemos IY a la base de variables del sistema
+    ei
 
-    
+
     ret
-
-
-fin_dibujar_tablero: jr fin_dibujar_tablero

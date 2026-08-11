@@ -19,14 +19,13 @@ PintarPantalla:
 EsperarEntrada:
     ld bc, $FBFE
     in a, (c)               ; Leer el puerto de entrada del teclado
-    bit 0, a                ; Comprobar si todas las teclas están liberadas
-    jr nz, EsperarEntrada   ; Si todas las teclas no están liberadas, seguir esperando
-    ld d, 1
-    jr LiberarTecla
+    bit 0, a                ; ¿Está pulsada la Q? Activo a nivel bajo: 0 = pulsada.
+    jr nz, EsperarEntrada   ; Todavía no: seguir esperando
 
-LiberarTecla:
+LiberarTecla:               ; Pulsada: ahora esperamos a que la suelten
     in a, (c)
-    cp $FF
+    and $1F                 ; solo los bits 0-4 son teclado; el bit 6 (EAR) no es fiable
+    cp $1F                  ; $1F = ninguna tecla pulsada en esta media fila
     jr nz, LiberarTecla
     ret
 

@@ -18,17 +18,25 @@ T_T1: DB 2, 3, 5*8, 5*8, 5*8, 0, 5*8, 0 : DW T_T2, T_T3
 T_T2: DB 3, 2, 5*8, 0, 5*8, 5*8, 5*8, 0 : DW T_T4, T_T1
 T_T3: DB 3, 2, 0, 5*8, 5*8, 5*8, 0, 5*8 : DW T_T1, T_T4
 T_T4: DB 2, 3, 0, 5*8, 0, 5*8, 5*8, 5*8 : DW T_T3, T_T2
-;Tetromino I
-T_I1: DB 4, 1, 6*8, 6*8, 6*8, 6*8, 0, 0 : DW T_I2, T_I2
-T_I2: DB 1, 4, 6*8, 6*8, 6*8, 6*8, 0, 0 : DW T_I1, T_I1
+;Tetromino I -- era 6*8, el mismo amarillo que la O. Ahora 1*8 (azul).
+T_I1: DB 4, 1, 1*8, 1*8, 1*8, 1*8, 0, 0 : DW T_I2, T_I2
+T_I2: DB 1, 4, 1*8, 1*8, 1*8, 1*8, 0, 0 : DW T_I1, T_I1
 ;Tetromino Z
 T_Z1: DB 2, 3, 7*8, 7*8, 0, 0, 7*8, 7*8 : DW T_Z2, T_Z2
 T_Z2: DB 3, 2, 0, 7*8, 7*8, 7*8, 7*8, 0 : DW T_Z1, T_Z1
-;Tetromino S
-T_S1: DB 2, 3, 0, 7*8, 7*8, 7*8, 7*8, 0 : DW T_S2, T_S2
-T_S2: DB 3, 2, 7*8, 0, 7*8, 7*8, 0, 7*8 : DW T_S1, T_S1
+;Tetromino S -- era 7*8, el mismo blanco que la Z. Ahora 3*8 (magenta).
+T_S1: DB 2, 3, 0, 3*8, 3*8, 3*8, 3*8, 0 : DW T_S2, T_S2
+T_S2: DB 3, 2, 3*8, 0, 3*8, 3*8, 0, 3*8 : DW T_S1, T_S1
 
-Medio: DB 14 ; llevara la cuenta de la columna
+; Estados de aparicion, uno por FORMA (no por giro). Son datos de SOLO LECTURA,
+; asi que no les afecta el problema de adyacencia que tenia "Medio": al elegir
+; de aqui, nada vuelve a indexar aritmeticamente la tabla de registros, con lo
+; que desaparece el riesgo de que un indice se pase del ultimo registro.
+spawn_table: DW T_0, T_L1, T_J1, T_T1, T_I1, T_Z1, T_S1
+
+; "Medio" (la columna en curso) vivia aqui, incrustado en la imagen de codigo
+; justo detras del ultimo registro de pieza y sin ningun margen. Ahora esta en
+; variables.asm, con el resto del estado mutable.
 
 ; Rutina para pintar el tetromino en pantalla
 pintar_tetromino:
@@ -37,6 +45,7 @@ pintar_tetromino:
     push hl
     push de
     push bc
+    di                     ; IY va a apuntar al patron; la ROM ($0038) exige IY=$5C3A
 
     call CalcularAtributo  ; Calcular la dirección en HL
     ld b, (ix)             ; Obtener filas en B
@@ -68,6 +77,7 @@ siguiente_byte:
     pop de
     pop hl
     pop iy
+    ei                     ; IY ya vale lo que tenia el llamante: seguro reanudar
     pop af
 
     ret

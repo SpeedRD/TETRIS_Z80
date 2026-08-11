@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "dezog",
+      "request": "launch",
+      "name": "Tetris (ZEsarUX)",
+      "remoteType": "zrcp",
+      "zrcp": { "hostname": "localhost", "port": 10000 },
+      "rootFolder": "${workspaceFolder}",
+      "sjasmplus": [
+        { "path": "${workspaceFolder}/main.sld" }
+      ],
+      "loadObjs": [
+        { "path": "${workspaceFolder}/main.bin", "start": "0x8000" }
+      ],
+      "execAddress": "0x8000",
+      "startAutomatically": true,
+      "preLaunchTask": "sjasmplus: build main"
+    }
+  ]
+}

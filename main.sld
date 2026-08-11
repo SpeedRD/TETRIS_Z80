@@ -1,672 +1,1134 @@
 |SLD.data.version|1
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\main.asm|3||0|-1|-1|Z|pages.size:16384,pages.count:4,slots.count:4,slots.adr:0,16384,32768,49152
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\main.asm|5||0|2|32768|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\main.asm|7||0|2|32771|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\main.asm|9||0|2|32774|F|inicializar
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\main.asm|9||0|2|32774|L|,inicializar,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\main.asm|10||0|2|32774|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\main.asm|12||0|2|32777|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\main.asm|14||0|2|32780|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|3||0|2|32783|F|InicioDePantalla
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|3||0|2|32783|L|,InicioDePantalla,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|4||0|2|32783|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|5||0|2|32786|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|6||0|2|32789|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|8||0|2|32790|F|PintarPantalla
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|8||0|2|32790|L|,PintarPantalla,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|9||0|2|32790|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|10||0|2|32791|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|12||0|2|32792|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|13||0|2|32795|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|14||0|2|32798|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|16||0|2|32800|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|17||0|2|32801|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|19||0|2|32802|F|EsperarEntrada
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|19||0|2|32802|L|,EsperarEntrada,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|20||0|2|32802|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|21||0|2|32805|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|22||0|2|32807|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|23||0|2|32809|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|24||0|2|32811|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|25||0|2|32813|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|27||0|2|32815|F|LiberarTecla
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|27||0|2|32815|L|,LiberarTecla,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|28||0|2|32815|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|29||0|2|32817|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|30||0|2|32819|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|31||0|2|32821|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|33||0|2|32822|F|datosPantalla
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\titulo.asm|33||0|2|32822|L|,datosPantalla,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|3||0|2|39734|F|Pantalla_Ini
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|3||0|2|39734|L|,Pantalla_Ini,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|4||0|2|39734|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|6||0|2|39737|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|7||0|2|39739|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|8||0|2|39741|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|9||0|2|39743|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|10||0|2|39747|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|12||0|2|39750|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|13||0|2|39752|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|14||0|2|39754|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|15||0|2|39756|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|16||0|2|39760|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|18||0|2|39763|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|19||0|2|39765|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|20||0|2|39767|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|21||0|2|39770|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|22||0|2|39772|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|24||0|2|39773|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|25||0|2|39776|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|27||0|2|39777|F|Pantalla_Final
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|27||0|2|39777|L|,Pantalla_Final,
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|28||0|2|39777|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|31||0|2|39780|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|32||0|2|39782|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|33||0|2|39784|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|34||0|2|39786|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|35||0|2|39790|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|38||0|2|39793|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|39||0|2|39795|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|40||0|2|39797|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|41||0|2|39799|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|42||0|2|39803|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|45||0|2|39806|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|46||0|2|39808|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|47||0|2|39810|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|48||0|2|39813|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|49||0|2|39815|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|51||0|2|39816|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|53||0|2|39819|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|56||0|2|39822|F|FinDelJuego
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|56||0|2|39822|L|,FinDelJuego,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|57||0|2|39822|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|59||0|2|39825|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|60||0|2|39827|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|61||0|2|39829|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|62||0|2|39831|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|63||0|2|39835|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|65||0|2|39838|F|fin
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|65||0|2|39838|L|,fin,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|65||0|2|39838|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|67||0|2|39840|F|CalcularAtributo
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|67||0|2|39840|L|,CalcularAtributo,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|70||0|2|39840|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|71||0|2|39841|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|72:1:12||0|2|39842|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|72:12:20||0|2|39844|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|72:20||0|2|39846|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|73||0|2|39848|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|74:1:12||0|2|39849|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|74:12:20||0|2|39851|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|74:20:28||0|2|39853|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|74:28:36||0|2|39855|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|74:36||0|2|39857|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|75||0|2|39859|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|76||0|2|39860|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|77||0|2|39861|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|78||0|2|39864|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|79||0|2|39865|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|80||0|2|39866|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|83||0|2|39867|F|EsperarTecla
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|83||0|2|39867|L|,EsperarTecla,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|84||0|2|39867|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|85||0|2|39870|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|86||0|2|39872|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|87||0|2|39874|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|89||0|2|39875|F|LeerTecla
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|89||0|2|39875|L|,LeerTecla,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|90||0|2|39875|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|91||0|2|39878|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|92||0|2|39880|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|93||0|2|39882|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|94||0|2|39884|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|95||0|2|39887|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|96||0|2|39889|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|97||0|2|39891|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|98||0|2|39893|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|100||0|2|39895|F|SoltarTecla
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|100||0|2|39895|L|,SoltarTecla,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|101||0|2|39895|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|102||0|2|39897|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|103||0|2|39899|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|104||0|2|39901|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|110||0|2|39902|F|MensajeFinal
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|110||0|2|39902|L|,MensajeFinal,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|111||0|2|39920|F|MensajeIniciar
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|111||0|2|39920|L|,MensajeIniciar,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|112||0|2|39950|F|MensajeJuego
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|112||0|2|39950|L|,MensajeJuego,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|113||0|2|39972|F|MensajeReiniciar
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|113||0|2|39972|L|,MensajeReiniciar,
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|114||0|2|40000|F|MensajeGameOver
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\pantallas.asm|114||0|2|40000|L|,MensajeGameOver,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|14||0|2|40019|F|PRINTAT
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|14||0|2|40019|L|,PRINTAT,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|14||0|2|40019|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|20||0|2|40022|F|PRINTSTR
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|20||0|2|40022|L|,PRINTSTR,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|20||0|2|40022|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|21||0|2|40025|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|22||0|2|40026|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|23||0|2|40027|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|24||0|2|40030|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|25||0|2|40032|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|32||0|2|40034|F|PREP_PRT
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|32||0|2|40034|L|,PREP_PRT,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|32||0|2|40034|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|33||0|2|40037|F|PREP_PRT_2
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|33||0|2|40037|L|,PREP_PRT_2,
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|33||0|2|40037|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|34||0|2|40040|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|45||0|2|40043|F|CRtoSCREEN
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|45||0|2|40043|L|,CRtoSCREEN,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|46||0|2|40043|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|47||0|2|40044|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|48||0|2|40046|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|49||0|2|40048|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|51||0|2|40049|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|52||0|2|40050|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|53||0|2|40052|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|54||0|2|40053|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|55||0|2|40054|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|56||0|2|40055|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|57||0|2|40056|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|58||0|2|40057|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|59||0|2|40060|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|72||0|2|40061|F|CRtoATTR
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|72||0|2|40061|L|,CRtoATTR,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|73||0|2|40061|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|74||0|2|40062|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|75||0|2|40063|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|76||0|2|40064|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|77||0|2|40065|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|78||0|2|40066|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|79||0|2|40068|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|80||0|2|40070|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|82||0|2|40071|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|83||0|2|40072|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|84||0|2|40074|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|85||0|2|40075|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|87||0|2|40076|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|88||0|2|40079|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|96||0|2|40080|F|PRINTCHNUM
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|96||0|2|40080|L|,PRINTCHNUM,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|97||0|2|40080|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|98||0|2|40082|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|99||0|2|40083|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|100||0|2|40084|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|101||0|2|40085|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|102||0|2|40086|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|103||0|2|40089|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|104||0|2|40090|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|112||0|2|40091|F|PRINTCHAR
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|112||0|2|40091|L|,PRINTCHAR,
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|113||0|2|40091|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|114||0|2|40093|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|116||0|2|40096|F|BYTEPCHAR
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|116||0|2|40096|L|,BYTEPCHAR,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|116||0|2|40096|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|117||0|2|40097|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|118||0|2|40098|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|119||0|2|40099|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|120||0|2|40100|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|121||0|2|40102|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|122||0|2|40105|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|123||0|2|40108|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|124||0|2|40109|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|125||0|2|40112|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|126||0|2|40113|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|127||0|2|40116|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|128||0|2|40117|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|137||0|2|40118|F|INK2PAPER
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|137||0|2|40118|L|,INK2PAPER,
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|137||0|2|40118|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|138||0|2|40121|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|139||0|2|40123|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|140||0|2|40124|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|141||0|2|40125|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|142||0|2|40126|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|143||0|2|40128|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|144||0|2|40131|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|150||0|2|40132|F|CLEARSCR
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|150||0|2|40132|L|,CLEARSCR,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|150||0|2|40132|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|151||0|2|40135|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|152||0|2|40138|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|153||0|2|40141|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|154||0|2|40143|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|155||0|2|40145|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|158:1:14||0|2|40146|F|SCR_CUR_PTR
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|158:1:14||0|2|40146|L|,SCR_CUR_PTR,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|159||0|2|40148|F|SCR_ATTR_PTR
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|159||0|2|40148|L|,SCR_ATTR_PTR,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|160||0|2|40150|F|PRINT_ATTR
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|160||0|2|40150|L|,PRINT_ATTR,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|162||0|2|40151|F|CHARSET
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L30.3 - printat.asm|162||0|2|40151|L|,CHARSET,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|1||0|2|40919|F|Tetro_3D
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|1||0|2|40919|L|,Tetro_3D,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|3||0|2|40927|F|Tetris_3D
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|3||0|2|40927|L|,Tetris_3D,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|4||0|2|40927|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|5||0|2|40929|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|7||0|2|40933|F|T3D3
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|7||0|2|40933|L|,T3D3,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|9||0|2|40933|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|11||0|2|40937|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|12||0|2|40939|F|T3D2
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|12||0|2|40939|L|,T3D2,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|13||0|2|40939|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|14||0|2|40941|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|15||0|2|40944|F|T3D1
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|15||0|2|40944|L|,T3D1,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|16||0|2|40944|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|17||0|2|40947|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|18||0|2|40949|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|20||0|2|40951|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|21||0|2|40952|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|22||0|2|40954|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|24||0|2|40956|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|25||0|2|40957|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\L35 - Tetris_3D.asm|27||0|2|40959|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|4||0|2|40960|F|dibujar_tablero
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|4||0|2|40960|L|,dibujar_tablero,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|5||0|2|40960|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|8||0|2|40963|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|9||0|2|40966|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|10||0|2|40969|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|11||0|2|40971|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|13||0|2|40973|F|borde_izquierdo
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|13||0|2|40973|L|,borde_izquierdo,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|14||0|2|40973|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|15||0|2|40974|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|16||0|2|40975|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|19||0|2|40977|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|20||0|2|40980|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|21||0|2|40983|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|22||0|2|40985|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|24||0|2|40987|F|borde_derecho
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|24||0|2|40987|L|,borde_derecho,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|25||0|2|40987|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|26||0|2|40988|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|27||0|2|40989|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|30||0|2|40991|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|31||0|2|40994|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|32||0|2|40996|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|34||0|2|40998|F|base
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|34||0|2|40998|L|,base,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|35||0|2|40998|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|36||0|2|40999|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|37||0|2|41000|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|39||0|2|41002|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|42||0|2|41005|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|45||0|2|41006|F|fin_dibujar_tablero
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|45||0|2|41006|L|,fin_dibujar_tablero,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tableroJuego.asm|45||0|2|41006|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|3||0|2|41008|F|iniciar
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|3||0|2|41008|L|,iniciar,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|4||0|2|41008|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|6||0|2|41011|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|7||0|2|41013|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|8||0|2|41015|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|10||0|2|41018|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|11||0|2|41021|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|12||0|2|41022|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|14||0|2|41024|F|ciclo_juego
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|14||0|2|41024|L|,ciclo_juego,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|16||0|2|41024|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|17||0|2|41025|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|18||0|2|41027|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|20:1:27||0|2|41029|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|22||0|2|41032|F|siguiente_juego
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|22||0|2|41032|L|,siguiente_juego,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|23||0|2|41032|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|24||0|2|41033|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|25||0|2|41034|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|26||0|2|41037|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|29||0|2|41038|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|30||0|2|41041|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|32||0|2|41042|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|34||0|2|41044|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|35||0|2|41045|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|36||0|2|41046|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|37||0|2|41049|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|39||0|2|41051|F|cambiar_tetromino
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|39||0|2|41051|L|,cambiar_tetromino,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|40||0|2|41051|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|41||0|2|41052|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|42||0|2|41055|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|43||0|2|41058|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|44||0|2|41061|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|45||0|2|41064|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|47||0|2|41066|F|end
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|47||0|2|41066|L|,end,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\juego.asm|48||0|2|41066|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|3||0|-1|12|D|longitud_pieza
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|3||0|-1|12|L|,longitud_pieza,,+equ,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|5||0|2|41067|F|seleccionar_pieza
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|5||0|2|41067|L|,seleccionar_pieza,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|6||0|2|41067|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|7||0|2|41071|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|8||0|2|41073|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|9||0|2|41075|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|10||0|2|41077|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|11||0|2|41079|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|13||0|2|41081|F|calc_posicion
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|13||0|2|41081|L|,calc_posicion,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|14||0|2|41081|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|15||0|2|41084|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|16||0|2|41085|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|18||0|2|41087|F|ajustar_pos
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|18||0|2|41087|L|,ajustar_pos,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|19||0|2|41087|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|20||0|2|41089|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|21||0|2|41090|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|23||0|2|41092|F|pos_arriba
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|23||0|2|41092|L|,pos_arriba,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|24||0|2|41092|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|25||0|2|41094|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|26||0|2|41096|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|28||0|2|41097|F|fin_selec_pieza
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|28||0|2|41097|L|,fin_selec_pieza,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\tetromino_next.asm|28||0|2|41097|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|5:1:40||0|2|41099|F|T_0
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|5:1:40||0|2|41099|L|,T_0,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|7:1:41||0|2|41111|F|T_L1
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|7:1:41||0|2|41111|L|,T_L1,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|8:1:41||0|2|41123|F|T_L2
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|8:1:41||0|2|41123|L|,T_L2,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|9:1:41||0|2|41135|F|T_L3
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|9:1:41||0|2|41135|L|,T_L3,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|10:1:41||0|2|41147|F|T_L4
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|10:1:41||0|2|41147|L|,T_L4,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|12:1:41||0|2|41159|F|T_J1
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|12:1:41||0|2|41159|L|,T_J1,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|13:1:41||0|2|41171|F|T_J2
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|13:1:41||0|2|41171|L|,T_J2,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|14:1:41||0|2|41183|F|T_J3
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|14:1:41||0|2|41183|L|,T_J3,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|15:1:41||0|2|41195|F|T_J4
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|15:1:41||0|2|41195|L|,T_J4,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|17:1:42||0|2|41207|F|T_T1
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|17:1:42||0|2|41207|L|,T_T1,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|18:1:42||0|2|41219|F|T_T2
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|18:1:42||0|2|41219|L|,T_T2,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|19:1:42||0|2|41231|F|T_T3
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|19:1:42||0|2|41231|L|,T_T3,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|20:1:42||0|2|41243|F|T_T4
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|20:1:42||0|2|41243|L|,T_T4,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|22:1:42||0|2|41255|F|T_I1
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|22:1:42||0|2|41255|L|,T_I1,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|23:1:42||0|2|41267|F|T_I2
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|23:1:42||0|2|41267|L|,T_I2,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|25:1:42||0|2|41279|F|T_Z1
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|25:1:42||0|2|41279|L|,T_Z1,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|26:1:42||0|2|41291|F|T_Z2
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|26:1:42||0|2|41291|L|,T_Z2,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|28:1:42||0|2|41303|F|T_S1
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|28:1:42||0|2|41303|L|,T_S1,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|29:1:42||0|2|41315|F|T_S2
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|29:1:42||0|2|41315|L|,T_S2,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|31||0|2|41327|F|Medio
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|31||0|2|41327|L|,Medio,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|34||0|2|41328|F|pintar_tetromino
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|34||0|2|41328|L|,pintar_tetromino,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|35||0|2|41328|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|36||0|2|41329|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|37||0|2|41331|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|38||0|2|41332|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|39||0|2|41333|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|41||0|2|41334|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|42||0|2|41337|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|43||0|2|41340|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|44||0|2|41343|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|44||0|2|41345|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|45:1:13||0|2|41347|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|45:13||0|2|41349|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|47||0|2|41351|F|pintar_loop
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|47||0|2|41351|L|,pintar_loop,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|48||0|2|41351|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|49||0|2|41354|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|50||0|2|41356|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|51||0|2|41358|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|53||0|2|41360|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|54||0|2|41361|F|siguiente_byte
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|54||0|2|41361|L|,siguiente_byte,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|55||0|2|41361|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|56||0|2|41362|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|57||0|2|41363|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|59||0|2|41365|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|60||0|2|41368|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|61||0|2|41370|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|62||0|2|41371|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|63||0|2|41373|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|64||0|2|41374|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|65||0|2|41375|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|67||0|2|41377|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|68||0|2|41378|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|69||0|2|41379|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|70||0|2|41380|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|71||0|2|41382|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\piezas.asm|73||0|2|41383|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|3||0|2|41384|F|comprobar
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|3||0|2|41384|L|,comprobar,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|4||0|2|41384|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|5||0|2|41386|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|6||0|2|41388|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|7||0|2|41389|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|8||0|2|41390|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|10||0|2|41391|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|12||0|2|41394|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|13||0|2|41397|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|14||0|2|41400|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|14||0|2|41402|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|15||0|2|41404|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|16||0|2|41406|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|18||0|2|41408|F|validar_fila
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|18||0|2|41408|L|,validar_fila,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|19||0|2|41408|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|20||0|2|41411|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|21||0|2|41413|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|22||0|2|41414|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|24||0|2|41416|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|25||0|2|41417|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|26||0|2|41418|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|28||0|2|41420|F|siguiente_cuadro
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|28||0|2|41420|L|,siguiente_cuadro,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|29||0|2|41420|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|30||0|2|41421|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|31||0|2|41422|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|34||0|2|41424|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|35||0|2|41427|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|36||0|2|41429|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|37||0|2|41430|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|38||0|2|41432|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|39||0|2|41433|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|40||0|2|41434|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|42||0|2|41436|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|43||0|2|41438|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|45||0|2|41440|F|colision_detectada
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|45||0|2|41440|L|,colision_detectada,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|46||0|2|41440|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|48||0|2|41442|F|fin_comprobacion
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|48||0|2|41442|L|,fin_comprobacion,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|49||0|2|41442|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|50||0|2|41443|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|51||0|2|41444|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|52||0|2|41445|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|53||0|2|41447|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\test_col.asm|55||0|2|41449|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|3||0|2|41450|F|borrar_tetromino
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|3||0|2|41450|L|,borrar_tetromino,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|4||0|2|41450|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|5||0|2|41451|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|6||0|2|41453|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|7||0|2|41454|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|8||0|2|41455|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|10||0|2|41456|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|11||0|2|41459|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|12||0|2|41462|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|13||0|2|41465|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|13||0|2|41467|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|14||0|2|41469|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|15||0|2|41471|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|17||0|2|41473|F|loop_filas
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|17||0|2|41473|L|,loop_filas,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|18||0|2|41473|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|19||0|2|41476|F|loop_columnas
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|19||0|2|41476|L|,loop_columnas,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|20||0|2|41476|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|21||0|2|41479|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|22||0|2|41481|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|23||0|2|41482|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|25||0|2|41484|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|27||0|2|41486|F|siguiente_columna
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|27||0|2|41486|L|,siguiente_columna,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|28||0|2|41486|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|29||0|2|41487|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|30||0|2|41488|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|32||0|2|41490|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|33||0|2|41492|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|34||0|2|41495|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|35||0|2|41497|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|36||0|2|41498|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|37||0|2|41499|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|39||0|2|41501|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|40||0|2|41502|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|41||0|2|41503|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|42||0|2|41504|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|43||0|2|41506|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\clear.asm|45||0|2|41507|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|5||0|-1|4607|D|TIEMPO_BASE
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|5||0|-1|4607|L|,TIEMPO_BASE,,+equ,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|6||0|-1|10|D|REDUCCION_TIEMPO
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|6||0|-1|10|L|,REDUCCION_TIEMPO,,+equ,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|7||0|-1|200|D|TIEMPO_MINIMO
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|7||0|-1|200|L|,TIEMPO_MINIMO,,+equ,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|10||0|-1|28672|D|TIEMPO_CAIDA
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|10||0|-1|28672|L|,TIEMPO_CAIDA,,+equ,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|11||0|-1|28674|D|NIVEL_ACTUAL
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|11||0|-1|28674|L|,NIVEL_ACTUAL,,+equ,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|14||0|2|41508|F|Tiempo
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|14||0|2|41508|L|,Tiempo,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|16||0|2|41508|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|17||0|2|41509|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|18||0|2|41510|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|19||0|2|41511|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|22||0|2|41512|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|23||0|2|41515|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|24||0|2|41518|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|25||0|2|41519|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|26||0|2|41521|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|27||0|2|41522|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|28||0|2|41525|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|29||0|2|41527|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|30||0|2|41529|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|31||0|2|41530|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|32||0|2|41531|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|33||0|2|41533|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|34||0|2|41534|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|35||0|2|41536|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|37||0|2|41539|F|SkipMinCheck
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|37||0|2|41539|L|,SkipMinCheck,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|38||0|2|41539|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|42||0|2|41542|F|EsperarCaida
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|42||0|2|41542|L|,EsperarCaida,
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|43||0|2|41542|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|45||0|2|41546|F|EsperarLoop
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|45||0|2|41546|L|,EsperarLoop,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|46||0|2|41546|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|47||0|2|41547|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|48||0|2|41548|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|49||0|2|41549|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|50||0|2|41551|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|51||0|2|41552|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|52||0|2|41553|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|55||0|2|41555|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|56||0|2|41556|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|57||0|2|41557|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|58||0|2|41558|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|60||0|2|41559|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|63||0|2|41560|F|InicializarTiempo
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|63||0|2|41560|L|,InicializarTiempo,
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|64||0|2|41560|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|65||0|2|41563|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\caida.asm|66||0|2|41566|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|1||0|2|41567|F|MOVER
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|1||0|2|41567|L|,MOVER,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|9||0|2|41567|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|10||0|2|41568|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|11||0|2|41571|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|12||0|2|41573|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|13||0|2|41575|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|14||0|2|41577|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|15||0|2|41579|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|16||0|2|41581|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|17||0|2|41583|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|19||0|2|41585|F|move_right
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|19||0|2|41585|L|,move_right,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|20||0|2|41585|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|21||0|2|41588|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|22||0|2|41589|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|23||0|2|41592|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|24||0|2|41594|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|25||0|2|41595|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|27||0|2|41596|F|move_left
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|27||0|2|41596|L|,move_left,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|28||0|2|41596|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|29||0|2|41599|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|30||0|2|41600|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|31||0|2|41603|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|32||0|2|41605|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|33||0|2|41606|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|37||0|2|41607|F|SoltarTeclaMv
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|37||0|2|41607|L|,SoltarTeclaMv,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|38||0|2|41607|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|39||0|2|41609|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|40||0|2|41611|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|41||0|2|41613|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|42||0|2|41614|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|44||0|2|41615|F|no_tecla_move
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|44||0|2|41615|L|,no_tecla_move,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|45||0|2|41615|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\movimiento.asm|46||0|2|41616|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|1||0|2|41617|F|GIRAR
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|1||0|2|41617|L|,GIRAR,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|8||0|2|41617|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|9||0|2|41618|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|10||0|2|41621|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|11||0|2|41623|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|12||0|2|41625|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|13||0|2|41627|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|14||0|2|41629|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|15||0|2|41631|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|16||0|2|41633|F|turn_left
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|16||0|2|41633|L|,turn_left,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|17||0|2|41633|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|18||0|2|41636|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|19||0|2|41639|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|19||0|2|41641|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|20||0|2|41643|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|21||0|2|41645|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|22||0|2|41646|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|24||0|2|41647|F|turn_right
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|24||0|2|41647|L|,turn_right,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|25||0|2|41647|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|26||0|2|41650|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|27||0|2|41653|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|27||0|2|41655|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|28||0|2|41657|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|29||0|2|41659|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|30||0|2|41660|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|33||0|2|41661|F|Soltar_Tecla
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|33||0|2|41661|L|,Soltar_Tecla,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|34||0|2|41661|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|35||0|2|41663|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|36||0|2|41665|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|37||0|2|41667|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|38||0|2|41668|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|40||0|2|41669|F|no_teclaturn
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|40||0|2|41669|L|,no_teclaturn,,+used
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|41||0|2|41669|T|
-C:\UFV Segundo~Tercero\Arquitectura\Practicas\TETRIS_E (2)\TETRIS_E\giro.asm|42||0|2|41670|T|
+main.asm|3||0|-1|-1|Z|pages.size:16384,pages.count:4,slots.count:4,slots.adr:0,16384,32768,49152
+main.asm|5||0|2|32768|T|
+main.asm|7||0|2|32771|T|
+main.asm|8||0|2|32772|T|
+main.asm|9||0|2|32776|T|
+main.asm|10||0|2|32778|T|
+main.asm|12||0|2|32779|T|
+main.asm|14||0|2|32782|F|inicializar
+main.asm|14||0|2|32782|L|,inicializar,,+used
+main.asm|15||0|2|32782|T|
+main.asm|21||0|2|32785|T|
+main.asm|23||0|2|32788|T|
+main.asm|25||0|2|32791|T|
+main.asm|27||0|2|32794|F|fin_del_programa
+main.asm|27||0|2|32794|L|,fin_del_programa,,+used
+main.asm|28||0|2|32794|T|
+titulo.asm|3||0|2|32796|F|InicioDePantalla
+titulo.asm|3||0|2|32796|L|,InicioDePantalla,,+used
+titulo.asm|4||0|2|32796|T|
+titulo.asm|5||0|2|32799|T|
+titulo.asm|6||0|2|32802|T|
+titulo.asm|8||0|2|32803|F|PintarPantalla
+titulo.asm|8||0|2|32803|L|,PintarPantalla,,+used
+titulo.asm|9||0|2|32803|T|
+titulo.asm|10||0|2|32804|T|
+titulo.asm|12||0|2|32805|T|
+titulo.asm|13||0|2|32808|T|
+titulo.asm|14||0|2|32811|T|
+titulo.asm|16||0|2|32813|T|
+titulo.asm|17||0|2|32814|T|
+titulo.asm|19||0|2|32815|F|EsperarEntrada
+titulo.asm|19||0|2|32815|L|,EsperarEntrada,,+used
+titulo.asm|20||0|2|32815|T|
+titulo.asm|21||0|2|32818|T|
+titulo.asm|22||0|2|32820|T|
+titulo.asm|23||0|2|32822|T|
+titulo.asm|25||0|2|32824|F|LiberarTecla
+titulo.asm|25||0|2|32824|L|,LiberarTecla,,+used
+titulo.asm|26||0|2|32824|T|
+titulo.asm|27||0|2|32826|T|
+titulo.asm|28||0|2|32828|T|
+titulo.asm|29||0|2|32830|T|
+titulo.asm|30||0|2|32832|T|
+titulo.asm|32||0|2|32833|F|datosPantalla
+titulo.asm|32||0|2|32833|L|,datosPantalla,,+used
+pantallas.asm|3||0|2|39745|F|Pantalla_Ini
+pantallas.asm|3||0|2|39745|L|,Pantalla_Ini,,+used
+pantallas.asm|4||0|2|39745|T|
+pantallas.asm|6||0|2|39748|T|
+pantallas.asm|7||0|2|39750|T|
+pantallas.asm|8||0|2|39752|T|
+pantallas.asm|9||0|2|39754|T|
+pantallas.asm|10||0|2|39758|T|
+pantallas.asm|12||0|2|39761|T|
+pantallas.asm|13||0|2|39763|T|
+pantallas.asm|14||0|2|39765|T|
+pantallas.asm|15||0|2|39767|T|
+pantallas.asm|16||0|2|39771|T|
+pantallas.asm|18||0|2|39774|T|
+pantallas.asm|19||0|2|39776|T|
+pantallas.asm|20||0|2|39778|T|
+pantallas.asm|21||0|2|39781|T|
+pantallas.asm|22||0|2|39783|T|
+pantallas.asm|24||0|2|39784|T|
+pantallas.asm|25||0|2|39787|T|
+pantallas.asm|27||0|2|39788|F|Pantalla_Final
+pantallas.asm|27||0|2|39788|L|,Pantalla_Final,,+used
+pantallas.asm|28||0|2|39788|T|
+pantallas.asm|31||0|2|39791|T|
+pantallas.asm|32||0|2|39793|T|
+pantallas.asm|33||0|2|39795|T|
+pantallas.asm|34||0|2|39797|T|
+pantallas.asm|35||0|2|39801|T|
+pantallas.asm|38||0|2|39804|T|
+pantallas.asm|39||0|2|39806|T|
+pantallas.asm|40||0|2|39808|T|
+pantallas.asm|41||0|2|39810|T|
+pantallas.asm|42||0|2|39814|T|
+pantallas.asm|45||0|2|39817|T|
+pantallas.asm|46||0|2|39819|T|
+pantallas.asm|47||0|2|39821|T|
+pantallas.asm|48||0|2|39824|T|
+pantallas.asm|49||0|2|39826|T|
+pantallas.asm|51||0|2|39827|T|
+pantallas.asm|53||0|2|39830|T|
+pantallas.asm|58||0|2|39833|F|FinDelJuego
+pantallas.asm|58||0|2|39833|L|,FinDelJuego,,+used
+pantallas.asm|59||0|2|39833|T|
+pantallas.asm|61||0|2|39836|T|
+pantallas.asm|62||0|2|39838|T|
+pantallas.asm|63||0|2|39840|T|
+pantallas.asm|64||0|2|39842|T|
+pantallas.asm|65||0|2|39846|T|
+pantallas.asm|67||0|2|39849|F|fin
+pantallas.asm|67||0|2|39849|L|,fin,,+used
+pantallas.asm|67||0|2|39849|T|
+pantallas.asm|69||0|2|39851|F|CalcularAtributo
+pantallas.asm|69||0|2|39851|L|,CalcularAtributo,,+used
+pantallas.asm|72||0|2|39851|T|
+pantallas.asm|73||0|2|39852|T|
+pantallas.asm|74:1:12||0|2|39853|T|
+pantallas.asm|74:12:20||0|2|39855|T|
+pantallas.asm|74:20||0|2|39857|T|
+pantallas.asm|75||0|2|39859|T|
+pantallas.asm|76:1:12||0|2|39860|T|
+pantallas.asm|76:12:20||0|2|39862|T|
+pantallas.asm|76:20:28||0|2|39864|T|
+pantallas.asm|76:28:36||0|2|39866|T|
+pantallas.asm|76:36||0|2|39868|T|
+pantallas.asm|77||0|2|39870|T|
+pantallas.asm|78||0|2|39871|T|
+pantallas.asm|79||0|2|39872|T|
+pantallas.asm|80||0|2|39875|T|
+pantallas.asm|81||0|2|39876|T|
+pantallas.asm|82||0|2|39877|T|
+pantallas.asm|85||0|2|39878|F|EsperarTecla
+pantallas.asm|85||0|2|39878|L|,EsperarTecla,,+used
+pantallas.asm|86||0|2|39878|T|
+pantallas.asm|87||0|2|39881|T|
+pantallas.asm|88||0|2|39883|T|
+pantallas.asm|89||0|2|39885|T|
+pantallas.asm|91||0|2|39886|F|LeerTecla
+pantallas.asm|91||0|2|39886|L|,LeerTecla,,+used
+pantallas.asm|92||0|2|39886|T|
+pantallas.asm|93||0|2|39889|T|
+pantallas.asm|94||0|2|39891|T|
+pantallas.asm|95||0|2|39893|T|
+pantallas.asm|96||0|2|39895|T|
+pantallas.asm|97||0|2|39898|T|
+pantallas.asm|98||0|2|39900|T|
+pantallas.asm|99||0|2|39902|T|
+pantallas.asm|100||0|2|39904|T|
+pantallas.asm|102||0|2|39906|F|SoltarTecla
+pantallas.asm|102||0|2|39906|L|,SoltarTecla,,+used
+pantallas.asm|103||0|2|39906|T|
+pantallas.asm|104||0|2|39908|T|
+pantallas.asm|105||0|2|39910|T|
+pantallas.asm|106||0|2|39912|T|
+pantallas.asm|107||0|2|39914|T|
+pantallas.asm|113||0|2|39915|F|MensajeFinal
+pantallas.asm|113||0|2|39915|L|,MensajeFinal,,+used
+pantallas.asm|114||0|2|39933|F|MensajeIniciar
+pantallas.asm|114||0|2|39933|L|,MensajeIniciar,,+used
+pantallas.asm|115||0|2|39963|F|MensajeJuego
+pantallas.asm|115||0|2|39963|L|,MensajeJuego,,+used
+pantallas.asm|120||0|2|39985|F|MensajeReiniciar
+pantallas.asm|120||0|2|39985|L|,MensajeReiniciar,,+used
+pantallas.asm|121||0|2|40011|F|MensajeGameOver
+pantallas.asm|121||0|2|40011|L|,MensajeGameOver,,+used
+L30.3 - printat.asm|14||0|2|40028|F|PRINTAT
+L30.3 - printat.asm|14||0|2|40028|L|,PRINTAT,,+used
+L30.3 - printat.asm|14||0|2|40028|T|
+L30.3 - printat.asm|20||0|2|40031|F|PRINTSTR
+L30.3 - printat.asm|20||0|2|40031|L|,PRINTSTR,,+used
+L30.3 - printat.asm|20||0|2|40031|T|
+L30.3 - printat.asm|21||0|2|40034|T|
+L30.3 - printat.asm|22||0|2|40035|T|
+L30.3 - printat.asm|23||0|2|40036|T|
+L30.3 - printat.asm|24||0|2|40039|T|
+L30.3 - printat.asm|25||0|2|40041|T|
+L30.3 - printat.asm|32||0|2|40043|F|PREP_PRT
+L30.3 - printat.asm|32||0|2|40043|L|,PREP_PRT,,+used
+L30.3 - printat.asm|32||0|2|40043|T|
+L30.3 - printat.asm|33||0|2|40046|F|PREP_PRT_2
+L30.3 - printat.asm|33||0|2|40046|L|,PREP_PRT_2,
+L30.3 - printat.asm|33||0|2|40046|T|
+L30.3 - printat.asm|34||0|2|40049|T|
+L30.3 - printat.asm|45||0|2|40052|F|CRtoSCREEN
+L30.3 - printat.asm|45||0|2|40052|L|,CRtoSCREEN,,+used
+L30.3 - printat.asm|46||0|2|40052|T|
+L30.3 - printat.asm|47||0|2|40053|T|
+L30.3 - printat.asm|48||0|2|40055|T|
+L30.3 - printat.asm|49||0|2|40057|T|
+L30.3 - printat.asm|51||0|2|40058|T|
+L30.3 - printat.asm|52||0|2|40059|T|
+L30.3 - printat.asm|53||0|2|40061|T|
+L30.3 - printat.asm|54||0|2|40062|T|
+L30.3 - printat.asm|55||0|2|40063|T|
+L30.3 - printat.asm|56||0|2|40064|T|
+L30.3 - printat.asm|57||0|2|40065|T|
+L30.3 - printat.asm|58||0|2|40066|T|
+L30.3 - printat.asm|59||0|2|40069|T|
+L30.3 - printat.asm|72||0|2|40070|F|CRtoATTR
+L30.3 - printat.asm|72||0|2|40070|L|,CRtoATTR,,+used
+L30.3 - printat.asm|73||0|2|40070|T|
+L30.3 - printat.asm|74||0|2|40071|T|
+L30.3 - printat.asm|75||0|2|40072|T|
+L30.3 - printat.asm|76||0|2|40073|T|
+L30.3 - printat.asm|77||0|2|40074|T|
+L30.3 - printat.asm|78||0|2|40075|T|
+L30.3 - printat.asm|79||0|2|40077|T|
+L30.3 - printat.asm|80||0|2|40079|T|
+L30.3 - printat.asm|82||0|2|40080|T|
+L30.3 - printat.asm|83||0|2|40081|T|
+L30.3 - printat.asm|84||0|2|40083|T|
+L30.3 - printat.asm|85||0|2|40084|T|
+L30.3 - printat.asm|87||0|2|40085|T|
+L30.3 - printat.asm|88||0|2|40088|T|
+L30.3 - printat.asm|96||0|2|40089|F|PRINTCHNUM
+L30.3 - printat.asm|96||0|2|40089|L|,PRINTCHNUM,,+used
+L30.3 - printat.asm|97||0|2|40089|T|
+L30.3 - printat.asm|98||0|2|40091|T|
+L30.3 - printat.asm|99||0|2|40092|T|
+L30.3 - printat.asm|100||0|2|40093|T|
+L30.3 - printat.asm|101||0|2|40094|T|
+L30.3 - printat.asm|102||0|2|40095|T|
+L30.3 - printat.asm|103||0|2|40098|T|
+L30.3 - printat.asm|104||0|2|40099|T|
+L30.3 - printat.asm|112||0|2|40100|F|PRINTCHAR
+L30.3 - printat.asm|112||0|2|40100|L|,PRINTCHAR,
+L30.3 - printat.asm|113||0|2|40100|T|
+L30.3 - printat.asm|114||0|2|40102|T|
+L30.3 - printat.asm|116||0|2|40105|F|BYTEPCHAR
+L30.3 - printat.asm|116||0|2|40105|L|,BYTEPCHAR,,+used
+L30.3 - printat.asm|116||0|2|40105|T|
+L30.3 - printat.asm|117||0|2|40106|T|
+L30.3 - printat.asm|118||0|2|40107|T|
+L30.3 - printat.asm|119||0|2|40108|T|
+L30.3 - printat.asm|120||0|2|40109|T|
+L30.3 - printat.asm|121||0|2|40111|T|
+L30.3 - printat.asm|122||0|2|40114|T|
+L30.3 - printat.asm|123||0|2|40117|T|
+L30.3 - printat.asm|124||0|2|40118|T|
+L30.3 - printat.asm|125||0|2|40121|T|
+L30.3 - printat.asm|126||0|2|40122|T|
+L30.3 - printat.asm|127||0|2|40125|T|
+L30.3 - printat.asm|128||0|2|40126|T|
+L30.3 - printat.asm|137||0|2|40127|F|INK2PAPER
+L30.3 - printat.asm|137||0|2|40127|L|,INK2PAPER,
+L30.3 - printat.asm|137||0|2|40127|T|
+L30.3 - printat.asm|138||0|2|40130|T|
+L30.3 - printat.asm|139||0|2|40132|T|
+L30.3 - printat.asm|140||0|2|40133|T|
+L30.3 - printat.asm|141||0|2|40134|T|
+L30.3 - printat.asm|142||0|2|40135|T|
+L30.3 - printat.asm|143||0|2|40137|T|
+L30.3 - printat.asm|144||0|2|40140|T|
+L30.3 - printat.asm|150||0|2|40141|F|CLEARSCR
+L30.3 - printat.asm|150||0|2|40141|L|,CLEARSCR,,+used
+L30.3 - printat.asm|150||0|2|40141|T|
+L30.3 - printat.asm|151||0|2|40144|T|
+L30.3 - printat.asm|152||0|2|40147|T|
+L30.3 - printat.asm|153||0|2|40150|T|
+L30.3 - printat.asm|154||0|2|40152|T|
+L30.3 - printat.asm|155||0|2|40154|T|
+L30.3 - printat.asm|158:1:14||0|2|40155|F|SCR_CUR_PTR
+L30.3 - printat.asm|158:1:14||0|2|40155|L|,SCR_CUR_PTR,,+used
+L30.3 - printat.asm|159||0|2|40157|F|SCR_ATTR_PTR
+L30.3 - printat.asm|159||0|2|40157|L|,SCR_ATTR_PTR,,+used
+L30.3 - printat.asm|160||0|2|40159|F|PRINT_ATTR
+L30.3 - printat.asm|160||0|2|40159|L|,PRINT_ATTR,,+used
+L30.3 - printat.asm|162||0|2|40160|F|CHARSET
+L30.3 - printat.asm|162||0|2|40160|L|,CHARSET,,+used
+L35 - Tetris_3D.asm|1||0|2|40928|F|Tetro_3D
+L35 - Tetris_3D.asm|1||0|2|40928|L|,Tetro_3D,,+used
+L35 - Tetris_3D.asm|3||0|2|40936|F|Tetris_3D
+L35 - Tetris_3D.asm|3||0|2|40936|L|,Tetris_3D,,+used
+L35 - Tetris_3D.asm|4||0|2|40936|T|
+L35 - Tetris_3D.asm|5||0|2|40938|T|
+L35 - Tetris_3D.asm|7||0|2|40942|F|T3D3
+L35 - Tetris_3D.asm|7||0|2|40942|L|,T3D3,,+used
+L35 - Tetris_3D.asm|9||0|2|40942|T|
+L35 - Tetris_3D.asm|11||0|2|40946|T|
+L35 - Tetris_3D.asm|12||0|2|40948|F|T3D2
+L35 - Tetris_3D.asm|12||0|2|40948|L|,T3D2,,+used
+L35 - Tetris_3D.asm|13||0|2|40948|T|
+L35 - Tetris_3D.asm|14||0|2|40950|T|
+L35 - Tetris_3D.asm|15||0|2|40953|F|T3D1
+L35 - Tetris_3D.asm|15||0|2|40953|L|,T3D1,,+used
+L35 - Tetris_3D.asm|16||0|2|40953|T|
+L35 - Tetris_3D.asm|17||0|2|40956|T|
+L35 - Tetris_3D.asm|18||0|2|40958|T|
+L35 - Tetris_3D.asm|20||0|2|40960|T|
+L35 - Tetris_3D.asm|21||0|2|40961|T|
+L35 - Tetris_3D.asm|22||0|2|40963|T|
+L35 - Tetris_3D.asm|24||0|2|40965|T|
+L35 - Tetris_3D.asm|25||0|2|40966|T|
+L35 - Tetris_3D.asm|27||0|2|40968|T|
+tableroJuego.asm|4||0|2|40969|F|dibujar_tablero
+tableroJuego.asm|4||0|2|40969|L|,dibujar_tablero,,+used
+tableroJuego.asm|5||0|2|40969|T|
+tableroJuego.asm|8||0|2|40972|T|
+tableroJuego.asm|9||0|2|40975|T|
+tableroJuego.asm|10||0|2|40978|T|
+tableroJuego.asm|11||0|2|40980|T|
+tableroJuego.asm|13||0|2|40982|F|borde_izquierdo
+tableroJuego.asm|13||0|2|40982|L|,borde_izquierdo,,+used
+tableroJuego.asm|14||0|2|40982|T|
+tableroJuego.asm|15||0|2|40983|T|
+tableroJuego.asm|16||0|2|40984|T|
+tableroJuego.asm|19||0|2|40986|T|
+tableroJuego.asm|20||0|2|40989|T|
+tableroJuego.asm|21||0|2|40992|T|
+tableroJuego.asm|22||0|2|40994|T|
+tableroJuego.asm|24||0|2|40996|F|borde_derecho
+tableroJuego.asm|24||0|2|40996|L|,borde_derecho,,+used
+tableroJuego.asm|25||0|2|40996|T|
+tableroJuego.asm|26||0|2|40997|T|
+tableroJuego.asm|27||0|2|40998|T|
+tableroJuego.asm|30||0|2|41000|T|
+tableroJuego.asm|31||0|2|41003|T|
+tableroJuego.asm|32||0|2|41005|T|
+tableroJuego.asm|34||0|2|41007|F|base
+tableroJuego.asm|34||0|2|41007|L|,base,,+used
+tableroJuego.asm|35||0|2|41007|T|
+tableroJuego.asm|36||0|2|41008|T|
+tableroJuego.asm|37||0|2|41009|T|
+tableroJuego.asm|39||0|2|41011|T|
+tableroJuego.asm|40||0|2|41012|T|
+tableroJuego.asm|41||0|2|41015|T|
+tableroJuego.asm|42||0|2|41019|T|
+tableroJuego.asm|45||0|2|41020|T|
+juego.asm|16||0|2|41021|F|iniciar
+juego.asm|16||0|2|41021|L|,iniciar,,+used
+juego.asm|17||0|2|41021|T|
+juego.asm|19||0|2|41024|T|
+juego.asm|23||0|2|41027|T|
+juego.asm|24||0|2|41030|T|
+juego.asm|25||0|2|41033|T|
+juego.asm|26||0|2|41034|T|
+juego.asm|28||0|2|41037|T|
+juego.asm|29||0|2|41040|T|
+juego.asm|30||0|2|41041|T|
+juego.asm|32||0|2|41043|T|
+juego.asm|34||0|2|41046|F|paso
+juego.asm|34||0|2|41046|L|,paso,,+used
+juego.asm|35||0|2|41046|T|
+juego.asm|37||0|2|41047|T|
+juego.asm|38||0|2|41049|T|
+juego.asm|39||0|2|41052|T|
+juego.asm|40||0|2|41053|T|
+juego.asm|41||0|2|41056|T|
+juego.asm|42||0|2|41058|T|
+juego.asm|43||0|2|41061|T|
+juego.asm|44||0|2|41064|T|
+juego.asm|45||0|2|41066|F|sin_gravedad
+juego.asm|45||0|2|41066|L|,sin_gravedad,,+used
+juego.asm|46||0|2|41066|T|
+juego.asm|48||0|2|41069|T|
+juego.asm|49||0|2|41072|T|
+juego.asm|50||0|2|41073|T|
+juego.asm|51||0|2|41075|T|
+juego.asm|52||0|2|41077|T|
+juego.asm|53||0|2|41079|T|
+juego.asm|54||0|2|41080|F|no_derecha
+juego.asm|54||0|2|41080|L|,no_derecha,,+used
+juego.asm|55||0|2|41080|T|
+juego.asm|56||0|2|41082|T|
+juego.asm|57||0|2|41084|T|
+juego.asm|59||0|2|41085|F|lateral
+juego.asm|59||0|2|41085|L|,lateral,,+used
+juego.asm|60||0|2|41085|T|
+juego.asm|61||0|2|41086|T|
+juego.asm|62||0|2|41087|T|
+juego.asm|63||0|2|41089|T|
+juego.asm|64||0|2|41090|T|
+juego.asm|65||0|2|41091|T|
+juego.asm|66||0|2|41092|T|
+juego.asm|67||0|2|41095|T|
+juego.asm|68||0|2|41096|T|
+juego.asm|69||0|2|41098|T|
+juego.asm|70||0|2|41101|T|
+juego.asm|71||0|2|41102|T|
+juego.asm|72||0|2|41104|F|lat_no
+juego.asm|72||0|2|41104|L|,lat_no,,+used
+juego.asm|73||0|2|41104|T|
+juego.asm|74||0|2|41105|T|
+juego.asm|75||0|2|41106|T|
+juego.asm|76||0|2|41107|T|
+juego.asm|77||0|2|41109|F|lat_si
+juego.asm|77||0|2|41109|L|,lat_si,,+used
+juego.asm|78||0|2|41109|T|
+juego.asm|79||0|2|41110|T|
+juego.asm|80||0|2|41113|F|sin_lateral
+juego.asm|80||0|2|41113|L|,sin_lateral,,+used
+juego.asm|82||0|2|41113|T|
+juego.asm|83||0|2|41114|T|
+juego.asm|84||0|2|41116|T|
+juego.asm|85||0|2|41118|T|
+juego.asm|86||0|2|41120|T|
+juego.asm|87||0|2|41122|T|
+juego.asm|88||0|2|41124|T|
+juego.asm|89||0|2|41125|F|girar_ya
+juego.asm|89||0|2|41125|L|,girar_ya,,+used
+juego.asm|90||0|2|41125|T|
+juego.asm|91||0|2|41128|F|sin_giro
+juego.asm|91||0|2|41128|L|,sin_giro,,+used
+juego.asm|93||0|2|41128|T|
+juego.asm|94||0|2|41129|T|
+juego.asm|95||0|2|41130|T|
+juego.asm|97||0|2|41132|T|
+juego.asm|98||0|2|41133|T|
+juego.asm|99||0|2|41136|T|
+juego.asm|100||0|2|41137|T|
+juego.asm|102||0|2|41139|T|
+juego.asm|103||0|2|41140|T|
+juego.asm|105||0|2|41143|T|
+juego.asm|106||0|2|41146|T|
+juego.asm|108||0|2|41149|T|
+juego.asm|109||0|2|41152|T|
+juego.asm|110||0|2|41155|T|
+juego.asm|111||0|2|41156|T|
+juego.asm|112||0|2|41159|T|
+juego.asm|113||0|2|41162|T|
+juego.asm|114||0|2|41163|T|
+juego.asm|116||0|2|41165|F|dibujar
+juego.asm|116||0|2|41165|L|,dibujar,,+used
+juego.asm|117||0|2|41165|T|
+juego.asm|118||0|2|41168|T|
+juego.asm|120||0|2|41170|F|fin_partida
+juego.asm|120||0|2|41170|L|,fin_partida,,+used
+juego.asm|121||0|2|41170|T|
+tetromino_next.asm|17||0|2|41173|F|sembrar_azar
+tetromino_next.asm|17||0|2|41173|L|,sembrar_azar,,+used
+tetromino_next.asm|18||0|2|41173|T|
+tetromino_next.asm|19||0|2|41175|T|
+tetromino_next.asm|20||0|2|41176|T|
+tetromino_next.asm|21||0|2|41178|T|
+tetromino_next.asm|22||0|2|41180|F|sembrar_ok
+tetromino_next.asm|22||0|2|41180|L|,sembrar_ok,,+used
+tetromino_next.asm|23||0|2|41180|T|
+tetromino_next.asm|24||0|2|41183|T|
+tetromino_next.asm|28||0|2|41184|F|nueva_pieza
+tetromino_next.asm|28||0|2|41184|L|,nueva_pieza,,+used
+tetromino_next.asm|29||0|2|41184|T|
+tetromino_next.asm|30||0|2|41185|F|np_tirar
+tetromino_next.asm|30||0|2|41185|L|,np_tirar,,+used
+tetromino_next.asm|31||0|2|41185|T|
+tetromino_next.asm|32||0|2|41188|T|
+tetromino_next.asm|33||0|2|41190|T|
+tetromino_next.asm|34||0|2|41192|T|
+tetromino_next.asm|35||0|2|41194|F|np_sin_tap
+tetromino_next.asm|35||0|2|41194|L|,np_sin_tap,,+used
+tetromino_next.asm|36||0|2|41194|T|
+tetromino_next.asm|37||0|2|41197|T|
+tetromino_next.asm|38||0|2|41199|T|
+tetromino_next.asm|39||0|2|41201|T|
+tetromino_next.asm|41||0|2|41203|T|
+tetromino_next.asm|42||0|2|41204|T|
+tetromino_next.asm|43:1:14||0|2|41207|T|
+tetromino_next.asm|43:14||0|2|41209|T|
+tetromino_next.asm|44||0|2|41210|T|
+tetromino_next.asm|45:1:17||0|2|41211|T|
+tetromino_next.asm|45:17:26||0|2|41212|T|
+tetromino_next.asm|45:26||0|2|41213|T|
+tetromino_next.asm|46||0|2|41214|T|
+tetromino_next.asm|47||0|2|41215|T|
+tetromino_next.asm|51||0|2|41216|F|iniciar_secuencia
+tetromino_next.asm|51||0|2|41216|L|,iniciar_secuencia,,+used
+tetromino_next.asm|52||0|2|41216|T|
+tetromino_next.asm|53||0|2|41219|T|
+tetromino_next.asm|54||0|2|41220|T|
+tetromino_next.asm|55||0|2|41223|T|
+tetromino_next.asm|56||0|2|41227|T|
+tetromino_next.asm|57||0|2|41228|T|
+tetromino_next.asm|65||0|2|41229|F|seleccionar_pieza
+tetromino_next.asm|65||0|2|41229|L|,seleccionar_pieza,,+used
+tetromino_next.asm|66||0|2|41229|T|
+tetromino_next.asm|67||0|2|41230|T|
+tetromino_next.asm|68||0|2|41233|T|
+tetromino_next.asm|69||0|2|41234|T|
+tetromino_next.asm|70||0|2|41237|T|
+tetromino_next.asm|71||0|2|41241|T|
+tetromino_next.asm|72||0|2|41242|T|
+tetromino_next.asm|72||0|2|41244|T|
+tetromino_next.asm|73||0|2|41246|T|
+tetromino_next.asm|74||0|2|41247|T|
+tetromino_next.asm|75||0|2|41249|T|
+tetromino_next.asm|76||0|2|41251|T|
+tetromino_next.asm|85||0|-1|10|D|PREV_FILA
+tetromino_next.asm|85||0|-1|10|L|,PREV_FILA,,+equ,+used
+tetromino_next.asm|86||0|-1|27|D|PREV_COL
+tetromino_next.asm|86||0|-1|27|L|,PREV_COL,,+equ,+used
+tetromino_next.asm|90||0|2|41252|F|pintar_siguiente
+tetromino_next.asm|90||0|2|41252|L|,pintar_siguiente,,+used
+tetromino_next.asm|91:1:14||0|2|41252|T|
+tetromino_next.asm|91:14:24||0|2|41253|T|
+tetromino_next.asm|91:24:34||0|2|41254|T|
+tetromino_next.asm|91:34:44||0|2|41255|T|
+tetromino_next.asm|91:44||0|2|41256|T|
+tetromino_next.asm|92||0|2|41258|T|
+tetromino_next.asm|93||0|2|41260|T|
+tetromino_next.asm|94||0|2|41262|F|ps_fila
+tetromino_next.asm|94||0|2|41262|L|,ps_fila,,+used
+tetromino_next.asm|95||0|2|41262|T|
+tetromino_next.asm|96||0|2|41264|T|
+tetromino_next.asm|97:1:17||0|2|41267|T|
+tetromino_next.asm|97:17||0|2|41269|T|
+tetromino_next.asm|98:1:17||0|2|41270|T|
+tetromino_next.asm|98:17||0|2|41272|T|
+tetromino_next.asm|99:1:17||0|2|41273|T|
+tetromino_next.asm|99:17||0|2|41275|T|
+tetromino_next.asm|100||0|2|41276|T|
+tetromino_next.asm|101||0|2|41278|T|
+tetromino_next.asm|102||0|2|41279|T|
+tetromino_next.asm|103||0|2|41280|T|
+tetromino_next.asm|105||0|2|41282|T|
+tetromino_next.asm|106||0|2|41286|T|
+tetromino_next.asm|107||0|2|41288|T|
+tetromino_next.asm|108||0|2|41290|T|
+tetromino_next.asm|109:1:13||0|2|41293|T|
+tetromino_next.asm|109:13:22||0|2|41295|T|
+tetromino_next.asm|109:22:31||0|2|41296|T|
+tetromino_next.asm|109:31:40||0|2|41297|T|
+tetromino_next.asm|109:40||0|2|41298|T|
+tetromino_next.asm|110||0|2|41299|T|
+piezas.asm|5:1:40||0|2|41300|F|T_0
+piezas.asm|5:1:40||0|2|41300|L|,T_0,,+used
+piezas.asm|7:1:41||0|2|41312|F|T_L1
+piezas.asm|7:1:41||0|2|41312|L|,T_L1,,+used
+piezas.asm|8:1:41||0|2|41324|F|T_L2
+piezas.asm|8:1:41||0|2|41324|L|,T_L2,,+used
+piezas.asm|9:1:41||0|2|41336|F|T_L3
+piezas.asm|9:1:41||0|2|41336|L|,T_L3,,+used
+piezas.asm|10:1:41||0|2|41348|F|T_L4
+piezas.asm|10:1:41||0|2|41348|L|,T_L4,,+used
+piezas.asm|12:1:41||0|2|41360|F|T_J1
+piezas.asm|12:1:41||0|2|41360|L|,T_J1,,+used
+piezas.asm|13:1:41||0|2|41372|F|T_J2
+piezas.asm|13:1:41||0|2|41372|L|,T_J2,,+used
+piezas.asm|14:1:41||0|2|41384|F|T_J3
+piezas.asm|14:1:41||0|2|41384|L|,T_J3,,+used
+piezas.asm|15:1:41||0|2|41396|F|T_J4
+piezas.asm|15:1:41||0|2|41396|L|,T_J4,,+used
+piezas.asm|17:1:42||0|2|41408|F|T_T1
+piezas.asm|17:1:42||0|2|41408|L|,T_T1,,+used
+piezas.asm|18:1:42||0|2|41420|F|T_T2
+piezas.asm|18:1:42||0|2|41420|L|,T_T2,,+used
+piezas.asm|19:1:42||0|2|41432|F|T_T3
+piezas.asm|19:1:42||0|2|41432|L|,T_T3,,+used
+piezas.asm|20:1:42||0|2|41444|F|T_T4
+piezas.asm|20:1:42||0|2|41444|L|,T_T4,,+used
+piezas.asm|22:1:42||0|2|41456|F|T_I1
+piezas.asm|22:1:42||0|2|41456|L|,T_I1,,+used
+piezas.asm|23:1:42||0|2|41468|F|T_I2
+piezas.asm|23:1:42||0|2|41468|L|,T_I2,,+used
+piezas.asm|25:1:42||0|2|41480|F|T_Z1
+piezas.asm|25:1:42||0|2|41480|L|,T_Z1,,+used
+piezas.asm|26:1:42||0|2|41492|F|T_Z2
+piezas.asm|26:1:42||0|2|41492|L|,T_Z2,,+used
+piezas.asm|28:1:42||0|2|41504|F|T_S1
+piezas.asm|28:1:42||0|2|41504|L|,T_S1,,+used
+piezas.asm|29:1:42||0|2|41516|F|T_S2
+piezas.asm|29:1:42||0|2|41516|L|,T_S2,,+used
+piezas.asm|35||0|2|41528|F|spawn_table
+piezas.asm|35||0|2|41528|L|,spawn_table,,+used
+piezas.asm|42||0|2|41542|F|pintar_tetromino
+piezas.asm|42||0|2|41542|L|,pintar_tetromino,,+used
+piezas.asm|43||0|2|41542|T|
+piezas.asm|44||0|2|41543|T|
+piezas.asm|45||0|2|41545|T|
+piezas.asm|46||0|2|41546|T|
+piezas.asm|47||0|2|41547|T|
+piezas.asm|48||0|2|41548|T|
+piezas.asm|50||0|2|41549|T|
+piezas.asm|51||0|2|41552|T|
+piezas.asm|52||0|2|41555|T|
+piezas.asm|53||0|2|41558|T|
+piezas.asm|53||0|2|41560|T|
+piezas.asm|54:1:13||0|2|41562|T|
+piezas.asm|54:13||0|2|41564|T|
+piezas.asm|56||0|2|41566|F|pintar_loop
+piezas.asm|56||0|2|41566|L|,pintar_loop,,+used
+piezas.asm|57||0|2|41566|T|
+piezas.asm|58||0|2|41569|T|
+piezas.asm|59||0|2|41571|T|
+piezas.asm|60||0|2|41573|T|
+piezas.asm|62||0|2|41575|T|
+piezas.asm|63||0|2|41576|F|siguiente_byte
+piezas.asm|63||0|2|41576|L|,siguiente_byte,,+used
+piezas.asm|64||0|2|41576|T|
+piezas.asm|65||0|2|41577|T|
+piezas.asm|66||0|2|41578|T|
+piezas.asm|68||0|2|41580|T|
+piezas.asm|69||0|2|41583|T|
+piezas.asm|70||0|2|41585|T|
+piezas.asm|71||0|2|41586|T|
+piezas.asm|72||0|2|41588|T|
+piezas.asm|73||0|2|41589|T|
+piezas.asm|74||0|2|41590|T|
+piezas.asm|76||0|2|41592|T|
+piezas.asm|77||0|2|41593|T|
+piezas.asm|78||0|2|41594|T|
+piezas.asm|79||0|2|41595|T|
+piezas.asm|80||0|2|41597|T|
+piezas.asm|81||0|2|41598|T|
+piezas.asm|83||0|2|41599|T|
+test_col.asm|3||0|2|41600|F|comprobar
+test_col.asm|3||0|2|41600|L|,comprobar,,+used
+test_col.asm|4||0|2|41600|T|
+test_col.asm|5||0|2|41602|T|
+test_col.asm|6||0|2|41604|T|
+test_col.asm|7||0|2|41605|T|
+test_col.asm|8||0|2|41606|T|
+test_col.asm|9||0|2|41607|T|
+test_col.asm|11||0|2|41608|T|
+test_col.asm|13||0|2|41611|T|
+test_col.asm|14||0|2|41614|T|
+test_col.asm|15||0|2|41617|T|
+test_col.asm|15||0|2|41619|T|
+test_col.asm|16||0|2|41621|T|
+test_col.asm|17||0|2|41623|T|
+test_col.asm|19||0|2|41625|F|validar_fila
+test_col.asm|19||0|2|41625|L|,validar_fila,,+used
+test_col.asm|20||0|2|41625|T|
+test_col.asm|21||0|2|41628|T|
+test_col.asm|22||0|2|41630|T|
+test_col.asm|23||0|2|41631|T|
+test_col.asm|25||0|2|41633|T|
+test_col.asm|26||0|2|41634|T|
+test_col.asm|27||0|2|41635|T|
+test_col.asm|29||0|2|41637|F|siguiente_cuadro
+test_col.asm|29||0|2|41637|L|,siguiente_cuadro,,+used
+test_col.asm|30||0|2|41637|T|
+test_col.asm|31||0|2|41638|T|
+test_col.asm|32||0|2|41639|T|
+test_col.asm|35||0|2|41641|T|
+test_col.asm|36||0|2|41644|T|
+test_col.asm|37||0|2|41646|T|
+test_col.asm|38||0|2|41647|T|
+test_col.asm|39||0|2|41649|T|
+test_col.asm|40||0|2|41650|T|
+test_col.asm|41||0|2|41651|T|
+test_col.asm|43||0|2|41653|T|
+test_col.asm|44||0|2|41655|T|
+test_col.asm|46||0|2|41657|F|colision_detectada
+test_col.asm|46||0|2|41657|L|,colision_detectada,,+used
+test_col.asm|47||0|2|41657|T|
+test_col.asm|49||0|2|41659|F|fin_comprobacion
+test_col.asm|49||0|2|41659|L|,fin_comprobacion,,+used
+test_col.asm|50||0|2|41659|T|
+test_col.asm|51||0|2|41660|T|
+test_col.asm|52||0|2|41661|T|
+test_col.asm|53||0|2|41662|T|
+test_col.asm|54||0|2|41664|T|
+test_col.asm|55||0|2|41665|T|
+test_col.asm|57||0|2|41667|T|
+clear.asm|3||0|2|41668|F|borrar_tetromino
+clear.asm|3||0|2|41668|L|,borrar_tetromino,,+used
+clear.asm|4||0|2|41668|T|
+clear.asm|5||0|2|41669|T|
+clear.asm|6||0|2|41671|T|
+clear.asm|7||0|2|41672|T|
+clear.asm|8||0|2|41673|T|
+clear.asm|9||0|2|41674|T|
+clear.asm|11||0|2|41675|T|
+clear.asm|12||0|2|41678|T|
+clear.asm|13||0|2|41681|T|
+clear.asm|14||0|2|41684|T|
+clear.asm|14||0|2|41686|T|
+clear.asm|15||0|2|41688|T|
+clear.asm|16||0|2|41690|T|
+clear.asm|18||0|2|41692|F|loop_filas
+clear.asm|18||0|2|41692|L|,loop_filas,,+used
+clear.asm|19||0|2|41692|T|
+clear.asm|20||0|2|41695|F|loop_columnas
+clear.asm|20||0|2|41695|L|,loop_columnas,,+used
+clear.asm|21||0|2|41695|T|
+clear.asm|22||0|2|41698|T|
+clear.asm|23||0|2|41700|T|
+clear.asm|24||0|2|41701|T|
+clear.asm|26||0|2|41703|T|
+clear.asm|28||0|2|41705|F|siguiente_columna
+clear.asm|28||0|2|41705|L|,siguiente_columna,,+used
+clear.asm|29||0|2|41705|T|
+clear.asm|30||0|2|41706|T|
+clear.asm|31||0|2|41707|T|
+clear.asm|33||0|2|41709|T|
+clear.asm|34||0|2|41711|T|
+clear.asm|35||0|2|41714|T|
+clear.asm|36||0|2|41716|T|
+clear.asm|37||0|2|41717|T|
+clear.asm|38||0|2|41718|T|
+clear.asm|40||0|2|41720|T|
+clear.asm|41||0|2|41721|T|
+clear.asm|42||0|2|41722|T|
+clear.asm|43||0|2|41723|T|
+clear.asm|44||0|2|41725|T|
+clear.asm|45||0|2|41726|T|
+clear.asm|47||0|2|41727|T|
+giro.asm|1||0|2|41728|F|GIRAR
+giro.asm|1||0|2|41728|L|,GIRAR,,+used
+giro.asm|17||0|2|41728|T|
+giro.asm|18||0|2|41729|T|
+giro.asm|19||0|2|41730|T|
+giro.asm|20||0|2|41732|T|
+giro.asm|21||0|2|41735|T|
+giro.asm|22||0|2|41738|T|
+giro.asm|23||0|2|41740|F|giro_der
+giro.asm|23||0|2|41740|L|,giro_der,,+used
+giro.asm|24||0|2|41740|T|
+giro.asm|25||0|2|41743|T|
+giro.asm|27||0|2|41746|F|giro_probar
+giro.asm|27||0|2|41746|L|,giro_probar,,+used
+giro.asm|28||0|2|41746|T|
+giro.asm|29||0|2|41748|T|
+giro.asm|30||0|2|41751|T|
+giro.asm|30||0|2|41753|T|
+giro.asm|32||0|2|41755|T|
+giro.asm|33||0|2|41758|T|
+giro.asm|34||0|2|41761|T|
+giro.asm|35||0|2|41762|F|giro_media
+giro.asm|35||0|2|41762|L|,giro_media,,+used
+giro.asm|36||0|2|41762|T|
+giro.asm|37||0|2|41764|T|
+giro.asm|38||0|2|41765|T|
+giro.asm|39||0|2|41766|T|
+giro.asm|41||0|2|41769|F|giro_bucle
+giro.asm|41||0|2|41769|L|,giro_bucle,,+used
+giro.asm|42||0|2|41769|T|
+giro.asm|43||0|2|41770|T|
+giro.asm|44||0|2|41771|T|
+giro.asm|45||0|2|41773|T|
+giro.asm|46||0|2|41775|T|
+giro.asm|47||0|2|41776|T|
+giro.asm|48||0|2|41777|T|
+giro.asm|49||0|2|41780|T|
+giro.asm|50||0|2|41781|T|
+giro.asm|51||0|2|41783|T|
+giro.asm|52||0|2|41786|T|
+giro.asm|53||0|2|41787|T|
+giro.asm|54||0|2|41789|T|
+giro.asm|55||0|2|41790|T|
+giro.asm|56||0|2|41793|T|
+giro.asm|57||0|2|41794|T|
+giro.asm|59||0|2|41796|F|giro_deshacer
+giro.asm|59||0|2|41796|L|,giro_deshacer,,+used
+giro.asm|60||0|2|41796|T|
+giro.asm|61||0|2|41798|T|
+giro.asm|62||0|2|41801|T|
+giro.asm|63||0|2|41802|F|giro_fin
+giro.asm|63||0|2|41802|L|,giro_fin,,+used
+giro.asm|64||0|2|41802|T|
+giro.asm|65||0|2|41803|T|
+giro.asm|67||0|2|41804|F|giro_kicks
+giro.asm|67||0|2|41804|L|,giro_kicks,,+used
+entrada.asm|6||0|-1|7|D|COL_IZQ_POZO
+entrada.asm|6||0|-1|7|L|,COL_IZQ_POZO,,+equ,+used
+entrada.asm|7||0|-1|24|D|COL_DER_POZO
+entrada.asm|7||0|-1|24|L|,COL_DER_POZO,,+equ,+used
+entrada.asm|17||0|2|41810|F|leer_teclas
+entrada.asm|17||0|2|41810|L|,leer_teclas,,+used
+entrada.asm|18:1:14||0|2|41810|T|
+entrada.asm|18:14:24||0|2|41811|T|
+entrada.asm|18:24||0|2|41812|T|
+entrada.asm|19:1:19||0|2|41813|T|
+entrada.asm|19:19||0|2|41816|T|
+entrada.asm|20||0|2|41818|T|
+entrada.asm|21:1:11||0|2|41819|T|
+entrada.asm|21:11||0|2|41820|T|
+entrada.asm|22||0|2|41821|T|
+entrada.asm|23||0|2|41823|T|
+entrada.asm|24:1:19||0|2|41824|T|
+entrada.asm|24:19||0|2|41827|T|
+entrada.asm|25||0|2|41829|T|
+entrada.asm|26:1:11||0|2|41830|T|
+entrada.asm|26:11||0|2|41831|T|
+entrada.asm|27||0|2|41832|T|
+entrada.asm|28:1:11||0|2|41834|T|
+entrada.asm|28:11||0|2|41835|T|
+entrada.asm|29||0|2|41836|T|
+entrada.asm|30:1:16||0|2|41839|T|
+entrada.asm|30:16||0|2|41840|T|
+entrada.asm|31:1:10||0|2|41841|T|
+entrada.asm|31:10||0|2|41842|T|
+entrada.asm|32:1:13||0|2|41843|T|
+entrada.asm|32:13:22||0|2|41844|T|
+entrada.asm|32:22||0|2|41845|T|
+entrada.asm|33||0|2|41846|T|
+entrada.asm|42||0|2|41847|F|en_rango
+entrada.asm|42||0|2|41847|L|,en_rango,,+used
+entrada.asm|43||0|2|41847|T|
+entrada.asm|44||0|2|41848|T|
+entrada.asm|45||0|2|41850|T|
+entrada.asm|46||0|2|41852|T|
+entrada.asm|47||0|2|41855|T|
+entrada.asm|48||0|2|41857|T|
+entrada.asm|49||0|2|41859|T|
+entrada.asm|50||0|2|41861|T|
+entrada.asm|51||0|2|41862|T|
+entrada.asm|52||0|2|41863|F|er_fuera
+entrada.asm|52||0|2|41863|L|,er_fuera,,+used
+entrada.asm|53||0|2|41863|T|
+entrada.asm|54||0|2|41865|T|
+lineas.asm|9||0|-1|7|D|COL_IZQ
+lineas.asm|9||0|-1|7|L|,COL_IZQ,,+equ,+used
+lineas.asm|10||0|-1|18|D|ANCHO_POZO
+lineas.asm|10||0|-1|18|L|,ANCHO_POZO,,+equ,+used
+lineas.asm|11||0|-1|21|D|FILA_BAJA
+lineas.asm|11||0|-1|21|L|,FILA_BAJA,,+equ,+used
+lineas.asm|16||0|2|41866|F|limpiar_lineas
+lineas.asm|16||0|2|41866|L|,limpiar_lineas,,+used
+lineas.asm|17:1:14||0|2|41866|T|
+lineas.asm|17:14:24||0|2|41867|T|
+lineas.asm|17:24:34||0|2|41868|T|
+lineas.asm|17:34||0|2|41869|T|
+lineas.asm|18||0|2|41871|T|
+lineas.asm|19||0|2|41873|T|
+lineas.asm|20||0|2|41875|F|ll_probar
+lineas.asm|20||0|2|41875|L|,ll_probar,,+used
+lineas.asm|21:1:22||0|2|41875|T|
+lineas.asm|21:22||0|2|41878|T|
+lineas.asm|22||0|2|41879|T|
+lineas.asm|23||0|2|41881|T|
+lineas.asm|24||0|2|41882|T|
+lineas.asm|25||0|2|41885|T|
+lineas.asm|29||0|2|41887|F|ll_arriba
+lineas.asm|29||0|2|41887|L|,ll_arriba,,+used
+lineas.asm|30:1:14||0|2|41887|T|
+lineas.asm|30:14||0|2|41888|T|
+lineas.asm|31||0|2|41889|T|
+lineas.asm|32:1:12||0|2|41891|T|
+lineas.asm|32:12||0|2|41892|T|
+lineas.asm|33||0|2|41894|F|ll_fin
+lineas.asm|33||0|2|41894|L|,ll_fin,,+used
+lineas.asm|34||0|2|41894|T|
+lineas.asm|35:1:13||0|2|41895|T|
+lineas.asm|35:13:22||0|2|41897|T|
+lineas.asm|35:22:31||0|2|41898|T|
+lineas.asm|35:31||0|2|41899|T|
+lineas.asm|36||0|2|41900|T|
+lineas.asm|40||0|2|41901|F|fila_llena
+lineas.asm|40||0|2|41901|L|,fila_llena,,+used
+lineas.asm|41:1:14||0|2|41901|T|
+lineas.asm|41:14:24||0|2|41902|T|
+lineas.asm|41:24||0|2|41903|T|
+lineas.asm|42||0|2|41904|T|
+lineas.asm|43||0|2|41906|T|
+lineas.asm|46||0|2|41909|T|
+lineas.asm|47||0|2|41911|F|fl_celda
+lineas.asm|47||0|2|41911|L|,fl_celda,,+used
+lineas.asm|48:1:17||0|2|41911|T|
+lineas.asm|48:17||0|2|41912|T|
+lineas.asm|49||0|2|41913|T|
+lineas.asm|50:1:13||0|2|41915|T|
+lineas.asm|50:13||0|2|41916|T|
+lineas.asm|51||0|2|41917|T|
+lineas.asm|52:1:14||0|2|41919|T|
+lineas.asm|52:14||0|2|41921|T|
+lineas.asm|53||0|2|41923|F|fl_hueco
+lineas.asm|53||0|2|41923|L|,fl_hueco,,+used
+lineas.asm|54||0|2|41923|T|
+lineas.asm|55||0|2|41925|F|fl_fin
+lineas.asm|55||0|2|41925|L|,fl_fin,,+used
+lineas.asm|56:1:13||0|2|41925|T|
+lineas.asm|56:13:22||0|2|41926|T|
+lineas.asm|56:22||0|2|41927|T|
+lineas.asm|57||0|2|41928|T|
+lineas.asm|62||0|2|41929|F|bajar_filas
+lineas.asm|62||0|2|41929|L|,bajar_filas,,+used
+lineas.asm|63:1:14||0|2|41929|T|
+lineas.asm|63:14:24||0|2|41930|T|
+lineas.asm|63:24:34||0|2|41931|T|
+lineas.asm|63:34||0|2|41932|T|
+lineas.asm|64:1:14||0|2|41933|T|
+lineas.asm|64:14||0|2|41934|T|
+lineas.asm|65||0|2|41935|T|
+lineas.asm|66||0|2|41937|T|
+lineas.asm|67||0|2|41939|T|
+lineas.asm|68||0|2|41942|T|
+lineas.asm|69:1:17||0|2|41943|T|
+lineas.asm|69:17||0|2|41946|T|
+lineas.asm|70||0|2|41947|F|bf_copiar
+lineas.asm|70||0|2|41947|L|,bf_copiar,,+used
+lineas.asm|71||0|2|41947|T|
+lineas.asm|72||0|2|41950|T|
+lineas.asm|73||0|2|41952|T|
+lineas.asm|74||0|2|41955|T|
+lineas.asm|75:1:16||0|2|41956|T|
+lineas.asm|75:16:29||0|2|41957|T|
+lineas.asm|75:29||0|2|41958|T|
+lineas.asm|76||0|2|41959|T|
+lineas.asm|77||0|2|41960|T|
+lineas.asm|78||0|2|41962|F|bf_fila0
+lineas.asm|78||0|2|41962|L|,bf_fila0,,+used
+lineas.asm|79:1:14||0|2|41962|T|
+lineas.asm|79:14||0|2|41964|T|
+lineas.asm|80||0|2|41966|T|
+lineas.asm|81||0|2|41969|T|
+lineas.asm|82||0|2|41971|F|bf_cero
+lineas.asm|82||0|2|41971|L|,bf_cero,,+used
+lineas.asm|83:1:17||0|2|41971|T|
+lineas.asm|83:17||0|2|41973|T|
+lineas.asm|84||0|2|41974|T|
+lineas.asm|85:1:13||0|2|41976|T|
+lineas.asm|85:13:22||0|2|41977|T|
+lineas.asm|85:22:31||0|2|41978|T|
+lineas.asm|85:31||0|2|41979|T|
+lineas.asm|86||0|2|41980|T|
+puntuacion.asm|13||0|-1|10|D|NIVEL_MAX
+puntuacion.asm|13||0|-1|10|L|,NIVEL_MAX,,+equ,+used
+puntuacion.asm|15||0|2|41981|F|PUNTOS_POR_LINEA
+puntuacion.asm|15||0|2|41981|L|,PUNTOS_POR_LINEA,,+used
+puntuacion.asm|16||0|2|41989|F|FRAMES_POR_NIVEL
+puntuacion.asm|16||0|2|41989|L|,FRAMES_POR_NIVEL,,+used
+puntuacion.asm|22||0|2|42000|F|anotar_lineas
+puntuacion.asm|22||0|2|42000|L|,anotar_lineas,,+used
+puntuacion.asm|23||0|2|42000|T|
+puntuacion.asm|24||0|2|42001|T|
+puntuacion.asm|25:1:14||0|2|42002|T|
+puntuacion.asm|25:14:24||0|2|42003|T|
+puntuacion.asm|25:24:34||0|2|42004|T|
+puntuacion.asm|25:34||0|2|42005|T|
+puntuacion.asm|26||0|2|42007|T|
+puntuacion.asm|28||0|2|42008|T|
+puntuacion.asm|29||0|2|42009|T|
+puntuacion.asm|30:1:14||0|2|42010|T|
+puntuacion.asm|30:14||0|2|42011|T|
+puntuacion.asm|31||0|2|42013|T|
+puntuacion.asm|32||0|2|42016|T|
+puntuacion.asm|33:1:17||0|2|42017|T|
+puntuacion.asm|33:17:26||0|2|42018|T|
+puntuacion.asm|33:26||0|2|42019|T|
+puntuacion.asm|34||0|2|42020|T|
+puntuacion.asm|36||0|2|42023|T|
+puntuacion.asm|37||0|2|42024|T|
+puntuacion.asm|38||0|2|42025|F|al_bucle
+puntuacion.asm|38||0|2|42025|L|,al_bucle,,+used
+puntuacion.asm|39:1:21||0|2|42025|T|
+puntuacion.asm|39:21:29||0|2|42028|T|
+puntuacion.asm|39:29||0|2|42029|T|
+puntuacion.asm|40:1:25||0|2|42032|T|
+puntuacion.asm|40:25:33||0|2|42035|T|
+puntuacion.asm|40:33||0|2|42036|T|
+puntuacion.asm|41||0|2|42039|T|
+puntuacion.asm|42:1:15||0|2|42041|T|
+puntuacion.asm|42:15||0|2|42043|T|
+puntuacion.asm|43||0|2|42046|T|
+puntuacion.asm|44||0|2|42049|T|
+puntuacion.asm|45||0|2|42051|T|
+puntuacion.asm|46:1:12||0|2|42053|T|
+puntuacion.asm|46:12||0|2|42054|T|
+puntuacion.asm|47||0|2|42057|F|al_siguiente
+puntuacion.asm|47||0|2|42057|L|,al_siguiente,,+used
+puntuacion.asm|48||0|2|42057|T|
+puntuacion.asm|50||0|2|42059|T|
+puntuacion.asm|51||0|2|42062|T|
+puntuacion.asm|52:1:13||0|2|42065|T|
+puntuacion.asm|52:13:22||0|2|42067|T|
+puntuacion.asm|52:22:31||0|2|42068|T|
+puntuacion.asm|52:31||0|2|42069|T|
+puntuacion.asm|53||0|2|42070|T|
+puntuacion.asm|57||0|2|42071|F|SumarPuntos
+puntuacion.asm|57||0|2|42071|L|,SumarPuntos,,+used
+puntuacion.asm|58||0|2|42071|T|
+puntuacion.asm|59:1:17||0|2|42074|T|
+puntuacion.asm|59:17:28||0|2|42075|T|
+puntuacion.asm|59:28:34||0|2|42076|T|
+puntuacion.asm|59:34||0|2|42077|T|
+puntuacion.asm|60:1:13||0|2|42078|T|
+puntuacion.asm|60:13:26||0|2|42079|T|
+puntuacion.asm|60:26:37||0|2|42080|T|
+puntuacion.asm|60:37:43||0|2|42081|T|
+puntuacion.asm|60:43||0|2|42082|T|
+puntuacion.asm|61:1:13||0|2|42083|T|
+puntuacion.asm|61:13:26||0|2|42084|T|
+puntuacion.asm|61:26:37||0|2|42085|T|
+puntuacion.asm|61:37:43||0|2|42087|T|
+puntuacion.asm|61:43||0|2|42088|T|
+puntuacion.asm|62||0|2|42089|T|
+puntuacion.asm|66||0|2|42090|F|ActualizarVelocidad
+puntuacion.asm|66||0|2|42090|L|,ActualizarVelocidad,,+used
+puntuacion.asm|67||0|2|42090|T|
+puntuacion.asm|68:1:19||0|2|42093|T|
+puntuacion.asm|68:19||0|2|42095|T|
+puntuacion.asm|69||0|2|42097|T|
+puntuacion.asm|70||0|2|42099|F|NivelOK
+puntuacion.asm|70||0|2|42099|L|,NivelOK,,+used
+puntuacion.asm|71:1:14||0|2|42099|T|
+puntuacion.asm|71:14||0|2|42100|T|
+puntuacion.asm|72:1:30||0|2|42102|T|
+puntuacion.asm|72:30||0|2|42105|T|
+puntuacion.asm|73:1:17||0|2|42106|T|
+puntuacion.asm|73:17||0|2|42107|T|
+puntuacion.asm|74||0|2|42110|T|
+puntuacion.asm|79||0|2|42111|F|reiniciar_marcador
+puntuacion.asm|79||0|2|42111|L|,reiniciar_marcador,,+used
+puntuacion.asm|80:1:14||0|2|42111|T|
+puntuacion.asm|80:14:24||0|2|42112|T|
+puntuacion.asm|80:24:34||0|2|42113|T|
+puntuacion.asm|80:34:44||0|2|42114|T|
+puntuacion.asm|80:44||0|2|42115|T|
+puntuacion.asm|81||0|2|42117|T|
+puntuacion.asm|82:1:21||0|2|42118|T|
+puntuacion.asm|82:21:40||0|2|42121|T|
+puntuacion.asm|82:40||0|2|42124|T|
+puntuacion.asm|83||0|2|42127|T|
+puntuacion.asm|84||0|2|42130|T|
+puntuacion.asm|85:1:15||0|2|42133|T|
+puntuacion.asm|85:15||0|2|42135|T|
+puntuacion.asm|86||0|2|42138|T|
+puntuacion.asm|87||0|2|42141|T|
+puntuacion.asm|88||0|2|42144|T|
+puntuacion.asm|89||0|2|42147|T|
+puntuacion.asm|90||0|2|42150|T|
+puntuacion.asm|91:1:13||0|2|42153|T|
+puntuacion.asm|91:13:22||0|2|42155|T|
+puntuacion.asm|91:22:31||0|2|42156|T|
+puntuacion.asm|91:31:40||0|2|42157|T|
+puntuacion.asm|91:40||0|2|42158|T|
+puntuacion.asm|92||0|2|42159|T|
+puntuacion.asm|95||0|2|42160|F|ImprimirEtiquetas
+puntuacion.asm|95||0|2|42160|L|,ImprimirEtiquetas,,+used
+puntuacion.asm|96:1:14||0|2|42160|T|
+puntuacion.asm|96:14||0|2|42162|T|
+puntuacion.asm|97:1:14||0|2|42163|T|
+puntuacion.asm|97:14:24||0|2|42165|T|
+puntuacion.asm|97:24:35||0|2|42167|T|
+puntuacion.asm|97:35:54||0|2|42169|T|
+puntuacion.asm|97:54||0|2|42173|T|
+puntuacion.asm|98:1:14||0|2|42176|T|
+puntuacion.asm|98:14:24||0|2|42178|T|
+puntuacion.asm|98:24:35||0|2|42180|T|
+puntuacion.asm|98:35:54||0|2|42182|T|
+puntuacion.asm|98:54||0|2|42186|T|
+puntuacion.asm|99:1:14||0|2|42189|T|
+puntuacion.asm|99:14:24||0|2|42191|T|
+puntuacion.asm|99:24:35||0|2|42193|T|
+puntuacion.asm|99:35:54||0|2|42195|T|
+puntuacion.asm|99:54||0|2|42199|T|
+puntuacion.asm|100:1:14||0|2|42202|T|
+puntuacion.asm|100:14:24||0|2|42204|T|
+puntuacion.asm|100:24:35||0|2|42206|T|
+puntuacion.asm|100:35:55||0|2|42208|T|
+puntuacion.asm|100:55||0|2|42212|T|
+puntuacion.asm|101:1:13||0|2|42215|T|
+puntuacion.asm|101:13||0|2|42216|T|
+puntuacion.asm|102||0|2|42218|T|
+puntuacion.asm|107||0|2|42219|F|ImprimirMarcador
+puntuacion.asm|107||0|2|42219|L|,ImprimirMarcador,,+used
+puntuacion.asm|108:1:14||0|2|42219|T|
+puntuacion.asm|108:14||0|2|42221|T|
+puntuacion.asm|109:1:14||0|2|42222|T|
+puntuacion.asm|109:14:24||0|2|42224|T|
+puntuacion.asm|109:24||0|2|42226|T|
+puntuacion.asm|110||0|2|42228|T|
+puntuacion.asm|111:1:23||0|2|42231|T|
+puntuacion.asm|111:23||0|2|42234|T|
+puntuacion.asm|112:1:23||0|2|42237|T|
+puntuacion.asm|112:23||0|2|42240|T|
+puntuacion.asm|113:1:23||0|2|42243|T|
+puntuacion.asm|113:23||0|2|42246|T|
+puntuacion.asm|114:1:14||0|2|42249|T|
+puntuacion.asm|114:14:24||0|2|42251|T|
+puntuacion.asm|114:24||0|2|42253|T|
+puntuacion.asm|115||0|2|42255|T|
+puntuacion.asm|116:1:21||0|2|42258|T|
+puntuacion.asm|116:21||0|2|42261|T|
+puntuacion.asm|117:1:14||0|2|42264|T|
+puntuacion.asm|117:14:24||0|2|42266|T|
+puntuacion.asm|117:24||0|2|42268|T|
+puntuacion.asm|118||0|2|42270|T|
+puntuacion.asm|119:1:20||0|2|42273|T|
+puntuacion.asm|119:20||0|2|42276|T|
+puntuacion.asm|120:1:13||0|2|42279|T|
+puntuacion.asm|120:13||0|2|42280|T|
+puntuacion.asm|121||0|2|42282|T|
+puntuacion.asm|125||0|2|42283|F|ImprimirBCD
+puntuacion.asm|125||0|2|42283|L|,ImprimirBCD,,+used
+puntuacion.asm|126||0|2|42283|T|
+puntuacion.asm|127:1:11||0|2|42284|T|
+puntuacion.asm|127:11:18||0|2|42285|T|
+puntuacion.asm|127:18:25||0|2|42286|T|
+puntuacion.asm|127:25||0|2|42287|T|
+puntuacion.asm|128:1:14||0|2|42288|T|
+puntuacion.asm|128:14||0|2|42290|T|
+puntuacion.asm|129:1:22||0|2|42292|T|
+puntuacion.asm|129:22||0|2|42295|T|
+puntuacion.asm|130:1:14||0|2|42296|T|
+puntuacion.asm|130:14||0|2|42298|T|
+puntuacion.asm|131||0|2|42300|T|
+puntuacion.asm|136||0|2|42303|F|ImprimirDec3
+puntuacion.asm|136||0|2|42303|L|,ImprimirDec3,,+used
+puntuacion.asm|137||0|2|42303|T|
+puntuacion.asm|138||0|2|42305|F|id_cientos
+puntuacion.asm|138||0|2|42305|L|,id_cientos,,+used
+puntuacion.asm|139||0|2|42305|T|
+puntuacion.asm|140||0|2|42307|T|
+puntuacion.asm|141||0|2|42309|T|
+puntuacion.asm|142||0|2|42311|T|
+puntuacion.asm|143||0|2|42312|T|
+puntuacion.asm|144||0|2|42314|F|id_fin_cientos
+puntuacion.asm|144||0|2|42314|L|,id_fin_cientos,,+used
+puntuacion.asm|145||0|2|42314|T|
+puntuacion.asm|146:1:14||0|2|42315|T|
+puntuacion.asm|146:14:27||0|2|42316|T|
+puntuacion.asm|146:27||0|2|42318|T|
+puntuacion.asm|147||0|2|42321|T|
+puntuacion.asm|148||0|2|42322|T|
+puntuacion.asm|149||0|2|42324|F|id_decenas
+puntuacion.asm|149||0|2|42324|L|,id_decenas,,+used
+puntuacion.asm|150||0|2|42324|T|
+puntuacion.asm|151||0|2|42326|T|
+puntuacion.asm|152||0|2|42328|T|
+puntuacion.asm|153||0|2|42330|T|
+puntuacion.asm|154||0|2|42331|T|
+puntuacion.asm|155||0|2|42333|F|id_fin_decenas
+puntuacion.asm|155||0|2|42333|L|,id_fin_decenas,,+used
+puntuacion.asm|156||0|2|42333|T|
+puntuacion.asm|157:1:14||0|2|42334|T|
+puntuacion.asm|157:14:27||0|2|42335|T|
+puntuacion.asm|157:27||0|2|42337|T|
+puntuacion.asm|158||0|2|42340|T|
+puntuacion.asm|159||0|2|42341|T|
+puntuacion.asm|160||0|2|42343|T|
+puntuacion.asm|163||0|2|42346|F|MsgPuntos
+puntuacion.asm|163||0|2|42346|L|,MsgPuntos,,+used
+puntuacion.asm|164||0|2|42352|F|MsgLineas
+puntuacion.asm|164||0|2|42352|L|,MsgLineas,,+used
+puntuacion.asm|165||0|2|42358|F|MsgNivel
+puntuacion.asm|165||0|2|42358|L|,MsgNivel,,+used
+puntuacion.asm|166||0|2|42364|F|MsgProxima
+puntuacion.asm|166||0|2|42364|L|,MsgProxima,,+used
+variables.asm|13||0|2|42369|F|PUNTOS
+variables.asm|13||0|2|42369|L|,PUNTOS,,+used
+variables.asm|14||0|2|42372|F|LINEAS
+variables.asm|14||0|2|42372|L|,LINEAS,,+used
+variables.asm|15||0|2|42373|F|NIVEL
+variables.asm|15||0|2|42373|L|,NIVEL,,+used
+variables.asm|16||0|2|42374|F|PROX_NIVEL
+variables.asm|16||0|2|42374|L|,PROX_NIVEL,,+used
+variables.asm|19||0|2|42375|F|FRAMES_POR_FILA
+variables.asm|19||0|2|42375|L|,FRAMES_POR_FILA,,+used
+variables.asm|20||0|2|42376|F|contador_frames
+variables.asm|20||0|2|42376|L|,contador_frames,,+used
+variables.asm|23||0|2|42377|F|teclas_ant
+variables.asm|23||0|2|42377|L|,teclas_ant,,+used
+variables.asm|28||0|2|42378|F|semilla
+variables.asm|28||0|2|42378|L|,semilla,,+used
+variables.asm|30||0|2|42379|F|siguiente_pieza
+variables.asm|30||0|2|42379|L|,siguiente_pieza,,+used
+variables.asm|36||0|2|42381|F|Medio
+variables.asm|36||0|2|42381|L|,Medio,,+used
