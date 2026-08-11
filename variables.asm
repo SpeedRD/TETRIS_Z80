@@ -18,6 +18,11 @@ PROX_NIVEL:      DB 10      ; filas que faltan para subir de nivel
 ; --- gravedad --------------------------------------------------------------
 FRAMES_POR_FILA: DB 48      ; frames entre dos caidas de una fila (nivel 0)
 contador_frames: DB 48      ; frames que faltan para la proxima caida
+contador_rapido: DB 4       ; frames que faltan para la proxima caida RAPIDA
+                            ; (soft drop, SPACE mantenida). Solo se decuenta
+                            ; mientras SPACE esta pulsada -- juego.asm; no
+                            ; toca ni reemplaza a contador_frames, que sigue
+                            ; su cuenta normal por debajo sin interrupcion
 
 ; --- entrada ---------------------------------------------------------------
 teclas_ant:      DB 0       ; mascara de la lectura anterior de leer_teclas.

@@ -92,16 +92,16 @@ and `COL_IZQ`/`ANCHO_POZO`/`FILA_BAJA` in `lineas.asm:9-11`.
 | `$4000-$57FF` | 6144 | Pixel display file | `L35 - Tetris_3D.asm:5` |
 | `$5800-$5AFF` | 768 | **Attribute file = the board** | `tableroJuego.asm:8` |
 | `$5B00-$7FFF` | 9472 | **Free. Nothing in this program touches it.** The old `TIEMPO_CAIDA`/`NIVEL_ACTUAL` at `$7000-$7003` and the accidental `$77EF` scratch byte all went with `caida.asm` and the `B=255` probe | — |
-| `$8000-$A58D` | 9614 | Program image (code + read-only data + the `variables.asm` block at the very end) | `main.asm:4` |
+| `$8000-$A5B9` | 9658 | Program image (code + read-only data + the `variables.asm` block at the very end) | `main.asm:4` |
 | ` $8041-$9B40` | 6912 | `TETRIS.scr` title picture, `INCBIN`. `$9B41` is `Pantalla_Ini` | `titulo.asm:32` |
 | ` $9CDB-$9CDF` | 5 | `SCR_CUR_PTR`, `SCR_ATTR_PTR`, `PRINT_ATTR` — print library cursor state | `L30.3 - printat.asm:158-160` |
 | ` $9CE0-$9FDF` | 768 | `CHARSET` (`charset.bin`, 96 glyphs, ASCII 32-127) | `L30.3 - printat.asm:162` |
-| ` $A154-$A237` | 228 | 19 piece records, 12 bytes each | `piezas.asm:5-29` |
-| ` $A238-$A245` | 14 | `spawn_table` — 7 read-only pointers, one per shape | `piezas.asm:35` |
-| ` $A34C-$A351` | 6 | `giro_kicks` — read-only kick offsets, after `GIRAR`'s `ret` | `giro.asm:67` |
-| ` $A3FD-$A410` | 20 | `PUNTOS_POR_LINEA`, `FRAMES_POR_NIVEL` — read-only score/speed tables | `puntuacion.asm:15-16` |
-| ` $A581-$A58D` | 13 | **`variables.asm` — every mutable byte in the program.** `PUNTOS` `$A581`, `LINEAS` `$A584`, `NIVEL` `$A585`, `PROX_NIVEL` `$A586`, `FRAMES_POR_FILA` `$A587`, `contador_frames` `$A588`, `teclas_ant` `$A589`, `semilla` `$A58A`, `siguiente_pieza` `$A58B`, `Medio` `$A58D` | `variables.asm:13-36` |
-| `$A58E-...` | — | Free RAM, uncontended. First byte past the image. | — |
+| ` $A16A-$A24D` | 228 | 19 piece records, 12 bytes each | `piezas.asm:5-29` |
+| ` $A24E-$A25B` | 14 | `spawn_table` — 7 read-only pointers, one per shape | `piezas.asm:35` |
+| ` $A362-$A367` | 6 | `giro_kicks` — read-only kick offsets, after `GIRAR`'s `ret` | `giro.asm:67` |
+| ` $A428-$A43A` | 19 | `PUNTOS_POR_LINEA`, `FRAMES_POR_NIVEL` — read-only score/speed tables | `puntuacion.asm:15-16` |
+| ` $A5AC-$A5B9` | 14 | **`variables.asm` — every mutable byte in the program.** `PUNTOS` `$A5AC`, `LINEAS` `$A5AF`, `NIVEL` `$A5B0`, `PROX_NIVEL` `$A5B1`, `FRAMES_POR_FILA` `$A5B2`, `contador_frames` `$A5B3`, `contador_rapido` `$A5B4`, `teclas_ant` `$A5B5`, `semilla` `$A5B6`, `siguiente_pieza` `$A5B7`, `Medio` `$A5B9` | `variables.asm:13-41` |
+| `$A5BA-...` | — | Free RAM, uncontended. First byte past the image. | — |
 | `$FFFF` downward | — | Stack. `LD SP, 0` means the first PUSH wraps to `$FFFE/$FFFF` | `main.asm:5, 15` |
 
 Every address above moves if anything earlier in the `INCLUDE` order changes size. Re-derive them
@@ -110,11 +110,14 @@ from `main.lst` rather than trusting this table after a structural edit.
 **Contention:** `$4000-$7FFF` is shared with the video chip; every access there is slowed
 unpredictably. `$8000-$FFFF` is not. See `interrupts-and-timing`.
 
-## 5. All mutable state is 13 bytes, in one block
+## 5. All mutable state is 14 bytes, in one block
 
-`variables.asm` at `$A581-$A58D` holds every byte the program writes: score, lines, level, the
-level countdown, the two gravity counters, the keyboard edge-detection byte, the LFSR seed, the
-preview slot, and `Medio`.
+`variables.asm` at `$A5AC-$A5B9` holds every byte the program writes: score, lines, level, the
+level countdown, the normal gravity reload/counter pair (`FRAMES_POR_FILA`/`contador_frames`), an
+independent soft-drop counter (`contador_rapido` — its own reload value, `FRAMES_CAIDA_RAPIDA`, is a
+code-side `EQU` in `juego.asm`, not a variable), the keyboard mask byte (edge state for K/J/Q/W,
+level state for SPACE — `entrada.asm`, `game-loop-and-collision`), the LFSR seed, the preview slot,
+and `Medio`.
 
 There is still **no board array** — the attribute file is the board (§2) — and no piece-position
 variable. Piece row is `B`, piece column `C`, current piece pointer `IX`; `Medio` is a *copy* of
@@ -125,21 +128,27 @@ variable. Piece row is `B`, piece column `C`, current piece pointer `IX`; `Medio
 
 **This is the single place variable placement is decided.** Every other skill cites this section
 and declares nothing. There is exactly **one** variables file, `variables.asm`, `INCLUDE`d
-**last** (`main.asm:45`), landing at `$A581`.
+**last** (`main.asm:45`), landing at `$A5AC`.
 
 Add your byte to that file, in the section it belongs to, and nowhere else. **A second declaration
 of an existing name is a duplicate-label error** (`Errors: 2, warnings: 4` — verified), so grep the
 file before adding.
 
 ```asm
-; the current contents, variables.asm:13-36 -- the ONLY place any of these exist
+; the current contents, variables.asm:13-41 -- the ONLY place any of these exist
 PUNTOS:          DB 0, 0, 0 ; packed BCD, 6 digits: pairs 1-2, 3-4, 5-6
 LINEAS:          DB 0       ; total rows cleared (8-bit binary)
 NIVEL:           DB 0       ; current level (8-bit binary)
 PROX_NIVEL:      DB 10      ; rows still needed to level up
 FRAMES_POR_FILA: DB 48      ; frames between one-row drops (level 0)
 contador_frames: DB 48      ; frames left until the next drop
-teclas_ant:      DB 0       ; previous leer_teclas mask; 1 = PRESSED (already inverted)
+contador_rapido: DB 4       ; frames left until the next SOFT-DROP row. Independent
+                            ;  of the pair above: only decrements while SPACE is
+                            ;  held (game-loop-and-collision), and is never reset
+                            ;  on release, so a new hold resumes where the last
+                            ;  one left off
+teclas_ant:      DB 0       ; previous leer_teclas mask; 1 = PRESSED (already
+                            ;  inverted), now including SPACE's bit
 semilla:         DB $A5     ; LFSR state. MUST be non-zero -- a zero LFSR stays zero
 siguiente_pieza: DW T_0     ; preview slot. Starts at a VALID record, never 0
 Medio:           DB 15      ; memory copy of the current column (C)
@@ -176,7 +185,7 @@ No memory-mapped hardware registers exist; all I/O uses `IN`/`OUT`. The keyboard
 ```
 
 The port number needs `BC`, which is exactly where the piece position lives, so every real caller
-pushes it first (`entrada.asm:18`, `pantallas.asm:92`). Omit the push and the piece teleports.
+pushes it first (`entrada.asm:25`, `pantallas.asm:92`). Omit the push and the piece teleports.
 
 **A pressed key is a `0` bit.** Test with `BIT n,A` + `JR Z`. To test "nothing pressed", **mask to
 bits 0-4 first and compare against `$1F`** — bits 5-7 are not keyboard data and bit 6 is the EAR
@@ -185,16 +194,26 @@ screen; see `interrupts-and-timing` §6.
 
 | Port | bit0 | bit1 | bit2 | bit3 | bit4 | Sites |
 |---|---|---|---|---|---|---|
-| `$FBFE` | Q | W | E | R | T | `titulo.asm:20`, `entrada.asm:24` |
-| `$BFFE` | ENTER | L | K | J | H | `entrada.asm:19` |
-| `$7FFE` | SPACE | SYM SHIFT | M | N | B | `pantallas.asm:92` |
+| `$FBFE` | Q | W | E | R | T | `titulo.asm:20`, `entrada.asm:31` |
+| `$BFFE` | ENTER | L | K | J | H | `entrada.asm:26` |
+| `$7FFE` | SPACE | SYM SHIFT | M | N | B | `entrada.asm:36`, `pantallas.asm:92` |
 | `$FDFE` | A | S | D | F | G | `pantallas.asm:96` |
 
-Controls as implemented: **Q** rotate left, **W** rotate right, **J** move left, **K** move right
-(all four read once per frame by `leer_teclas`, `entrada.asm:17-33`), **S** start
+Controls as implemented: **Q** rotate left, **W** rotate right, **J** move left, **K** move right,
+**SPACE** soft drop (all five read once per frame by `leer_teclas`, `entrada.asm:24-54`), **S** start
 (`pantallas.asm:98`), **N** quit (`pantallas.asm:95`), **Q** dismiss title (`titulo.asm:22`).
-**No down key is read**; a soft drop must claim a free key from the table above and add a bit to
-`leer_teclas`'s mask (and to `teclas_ant`'s meaning) rather than reading a port in the loop.
+
+**SPACE is read differently from the other four.** K/J/Q/W are edge-detected — `leer_teclas` reports
+only the not-pressed → pressed transition, so a held key reads `0` again next frame. SPACE (soft
+drop) is deliberately **level-triggered** instead: its bit reads `1` on *every* frame the key is
+down, not just the first, and `0` the instant it releases, because `juego.asm`'s fast-gravity gate
+needs "is it down right now", not "did it just go down" — an edge-triggered SPACE would drop one
+extra row per press and do nothing while held, a one-shot action rather than a soft drop. Both
+conventions are folded into the one byte `leer_teclas` returns and the one byte `teclas_ant`
+remembers between frames; see `game-loop-and-collision` §2 and §7 for the bit layout and the full
+contract. **Port `$7FFE` is now read from two places for two different reasons**: `entrada.asm`
+polls SPACE once per frame for gameplay, and `pantallas.asm:92` still separately blocks on N to quit
+from the menu — they don't share state and don't need to.
 
 **Port `$FE` is never written.** Writing it sets the border colour (bits 0-2) and toggles the
 beeper (bit 4) — so the game is silent and never sets the border.
@@ -209,6 +228,8 @@ beeper (bit 4) — so the game is silent and never sets the border.
 - **Printing text inside columns 7-24.** Non-zero attributes are solid; the text becomes an
   invisible wall. Print in columns 0-5 or 26-31, or row 23.
 - **Treating a keyboard bit as 1 = pressed.** It is active low: 0 = pressed.
+- **Treating SPACE's `leer_teclas` bit as edge-triggered like K/J/Q/W's.** It is level-triggered on
+  purpose, for soft drop (§7, `game-loop-and-collision`).
 - **Comparing a raw keyboard port byte against `$FF`.** Mask to `$1F` first (§7).
 - **Assuming `$5B00-$7FFF` is used.** It is entirely free; nothing lives below `$8000` any more.
 - **Reading a port without `push bc`.** The port number lands in `BC`, which is the piece position.

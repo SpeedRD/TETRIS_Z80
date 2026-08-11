@@ -6,13 +6,20 @@
 COL_IZQ_POZO EQU 7    ; primera columna interior del pozo
 COL_DER_POZO EQU 24   ; ultima columna interior del pozo
 
-; leer_teclas -- lectura no bloqueante con deteccion de flanco.
-;   Llamar UNA sola vez por pasada del bucle.
-;   Salida: A = mascara de las teclas que han pasado de SUELTA a PULSADA desde
-;           la llamada anterior:
-;             bit0 = K (derecha)   bit1 = J (izquierda)
-;             bit2 = Q (giro izq)  bit3 = W (giro drcha)
-;           A = 0 si no hay ninguna nueva.
+; leer_teclas -- lectura no bloqueante. Llamar UNA sola vez por pasada del
+;   bucle. El resultado mezcla dos convenios distintos en el mismo byte:
+;   Salida: A = bit0 = K (derecha)   bit1 = J (izquierda)   } FLANCO: 1 solo
+;                bit2 = Q (giro izq)  bit3 = W (giro drcha)  } en la pasada en
+;                                                             que pasan de
+;                                                             SUELTA a PULSADA
+;               bit4 = SPACE (caida rapida / soft drop)     } ESTADO: 1 en
+;                                                             TODAS las
+;                                                             pasadas mientras
+;                                                             siga pulsada, 0
+;                                                             en cuanto suelta
+;           A = 0 si no hay tecla nueva ni SPACE pulsada.
+;   SPACE es a proposito de nivel y no de flanco: gravedad rapida (juego.asm)
+;   necesita saber que SIGUE pulsada en cada pasada, no solo la primera.
 ;   Preserva BC, DE, HL, IX, IY. Destruye AF.
 leer_teclas:
     push bc : push de : push hl
@@ -25,10 +32,24 @@ leer_teclas:
     cpl
     rlca : rlca             ;  los subimos a los bits 2 y 3
     and %00001100           ;  bit2 = Q, bit3 = W
-    or e : ld e, a          ; E = las cuatro teclas, 1 = pulsada AHORA
+    or e : ld e, a          ; E = K/J/Q/W, 1 = pulsada AHORA
+    ld bc, $7FFE : in a,(c) ; media fila SPACE,SYM SHIFT,M,N,B: SPACE en bit0
+    cpl
+    and %00000001           ;  nos quedamos solo con SPACE
+    rlca : rlca : rlca : rlca ; lo subimos al bit4
+    or e : ld e, a          ; E = mascara ACTUAL completa (bits0-4), 1 =
+                            ;  pulsada AHORA MISMO -- esto es ESTADO, todavia
+                            ;  no flanco
     ld hl, teclas_ant       ; un byte: la misma mascara de la llamada anterior
     ld a,(hl) : ld (hl), e  ; leemos la vieja y guardamos la nueva
-    cpl : and e             ; suelta antes Y pulsada ahora = pulsacion NUEVA
+    cpl : and e             ; A = flanco nuevo de los CINCO bits; valido para
+                            ;  K/J/Q/W (bits0-3), pero el bit4 tambien saldria
+                            ;  de flanco aqui y SPACE no quiere eso
+    and %00001111           ; nos quedamos solo con el flanco de K/J/Q/W
+    ld d, a                 ; D = flanco K/J/Q/W, bit4 a cero
+    ld a, e
+    and %00010000           ; A = SOLO el estado actual de SPACE (bit4)
+    or d                    ; resultado: bits0-3 flanco, bit4 estado (nivel)
     pop hl : pop de : pop bc
     ret
 

@@ -11,10 +11,10 @@ Load this first. It says what each file is, what the Spanish names mean, and whi
 
 ZX Spectrum 48K Tetris in Z80 assembly, assembled with **sjasmplus 1.23.1**. One translation unit:
 `main.asm` (`ORG $8000`, `main.asm:4`) `INCLUDE`s 15 other `.asm` files (`main.asm:31-45`); the output
-is a raw 9614-byte image spanning `$8000-$A58D`. It is **a complete game**: pieces spawn, fall, move,
-rotate with wall kicks, lock, complete rows clear and compact, score/lines/level are kept and
-displayed, gravity speeds up with the level, the next piece is previewed, and game over reaches
-`Pantalla_Final` and restarts.
+is a raw 9658-byte image spanning `$8000-$A5B9`. It is **a complete game**: pieces spawn, fall (with
+a soft drop that falls faster while held), move, rotate with wall kicks, lock, complete rows clear
+and compact, score/lines/level are kept and displayed, gravity speeds up with the level, the next
+piece is previewed, and game over reaches `Pantalla_Final` and restarts.
 
 **Architecture is unchanged and stays unchanged.** The ZX Spectrum attribute file at `$5800` *is* the
 board — a cell is occupied iff its attribute byte is non-zero. The well is 18 columns wide. `B` =
@@ -31,16 +31,16 @@ neither is your change.
 | `L30.3 - printat.asm` | — | Text/print library: `PRINTAT`, `CLEARSCR`, charset | **COURSE-SUPPLIED** (header credits Daniel León, UFV 2020) — treat as stable, do not edit |
 | `L35 - Tetris_3D.asm` | — | Fills the pixel file with an 8-byte bevel pattern | **COURSE-SUPPLIED** — treat as stable; leaves `IY` corrupted, so its call site brackets it |
 | `tableroJuego.asm` | "game board" | Draws the well: borders at attribute columns 6 and 25, floor at row 22 (`:8,:19,:30`) | WORKING — interior is columns 7-24 = **18 wide**; brackets `Tetris_3D` with `di`/`ld iy,$5C3A`/`ei` |
-| `juego.asm` | "game" | The main loop: `iniciar`, `paso` | WORKING — `HALT`-synced frame loop; every candidate position is validated before it is drawn |
+| `juego.asm` | "game" | The main loop: `iniciar`, `paso` | WORKING — `HALT`-synced frame loop; every candidate position is validated before it is drawn; gravity has a normal rate and an independent, faster soft-drop rate while SPACE is held |
 | `tetromino_next.asm` | "next tetromino" | LFSR randomness, `seleccionar_pieza` (returns `B=0, C=15`), and `pintar_siguiente` — the preview | WORKING — picks a *shape* uniformly from `spawn_table`; preview box at rows 10-13, columns 27-30 |
 | `piezas.asm` | "pieces" | 19 twelve-byte piece records, `spawn_table`, `pintar_tetromino` | WORKING — all seven shapes have distinct colours |
 | `test_col.asm` | "collision test" | `comprobar`: returns `A=1` on collision, `A=0` clear | WORKING — and now called correctly, with the exact position about to be drawn |
 | `clear.asm` | (English) | `borrar_tetromino`: erases the piece by writing attribute `0` | WORKING |
 | `giro.asm` | "rotation" | `GIRAR`: takes a direction in `A`, recentres, kicks, validates and commits | WORKING — reads no keys, never blocks |
-| `entrada.asm` | "input" | `leer_teclas` (non-blocking, edge-detected J/K/Q/W) and `en_rango` (column bounds) | WORKING — new file |
+| `entrada.asm` | "input" | `leer_teclas` (non-blocking: edge-detected J/K/Q/W, plus a level-triggered SPACE bit for soft drop) and `en_rango` (column bounds) | WORKING — new file |
 | `lineas.asm` | "lines" | `limpiar_lineas`, `fila_llena`, `bajar_filas` — full-row detection and downward compaction | WORKING — new file |
 | `puntuacion.asm` | "score" | `anotar_lineas`, BCD score, level, speed table, marker printing | WORKING — new file; prints in columns 26-31 only |
-| `variables.asm` | "variables" | Every mutable byte the new code needs, in one block at `$A581` | WORKING — new file; **must stay the last `INCLUDE`** |
+| `variables.asm` | "variables" | Every mutable byte the new code needs, in one block at `$A5AC` | WORKING — new file; **must stay the last `INCLUDE`** |
 
 Data blobs: `TETRIS.scr` (`titulo.asm:32`) and `charset.bin` (`L30.3 - printat.asm:162`), both INCBIN;
 `TETRIS2.scr` is referenced by nothing.
@@ -55,12 +55,12 @@ output only `main.lst` matches the current sources — the per-file ones are sta
 
 | Identifier | Literal | What it is |
 |---|---|---|
-| `iniciar` | "to start" | `juego.asm:16` — seeds the sequence, spawns the first piece, enters the loop |
+| `iniciar` | "to start" | `juego.asm:23` — seeds the sequence, spawns the first piece, enters the loop |
 | `inicializar` | "to initialise" | `main.asm:14` — restart target (reset `SP` → menu → board → `iniciar`) |
-| `paso` | "step/pass" | `juego.asm:34` — top of the frame loop; opens with `HALT` |
-| `sin_gravedad` / `sin_lateral` / `sin_giro` | "without gravity/sideways/rotation" | `juego.asm:45,80,91` — skip labels for the three optional actions in a pass |
-| `dibujar` | "to draw" | `juego.asm:116` — the single paint of the validated `(B, C, IX)` |
-| `fin_partida` | "end of the game session" | `juego.asm:120` — `JP Pantalla_Final` |
+| `paso` | "step/pass" | `juego.asm:42` — top of the frame loop; opens with `HALT` |
+| `sin_gravedad` / `sin_lateral` / `sin_giro` | "without gravity/sideways/rotation" | `juego.asm:71,103,114` — skip labels for the three optional actions in a pass |
+| `dibujar` | "to draw" | `juego.asm:139` — the single paint of the validated `(B, C, IX)` |
+| `fin_partida` | "end of the game session" | `juego.asm:143` — `JP Pantalla_Final` |
 | `comprobar` | "to check" | `test_col.asm:3` — collision test; result in `A`, does **not** preserve `AF` |
 | `pintar_tetromino` | "paint tetromino" | `piezas.asm:42` — draw the piece at `B`,`C` |
 | `borrar_tetromino` | "erase tetromino" | `clear.asm:3` — erase the piece at `B`,`C` |
@@ -69,8 +69,8 @@ output only `main.lst` matches the current sources — the per-file ones are sta
 | `pintar_siguiente` | "paint the next one" | `tetromino_next.asm:90` — the preview box |
 | `dibujar_tablero` | "draw the board" | `tableroJuego.asm:4` — draw well borders and floor |
 | `GIRAR` | "to rotate" | `giro.asm:1` — rotate: recentre, kick, validate, commit. Direction in `A` |
-| `leer_teclas` | "read keys" | `entrada.asm:17` — one non-blocking, edge-detected read per pass |
-| `en_rango` | "in range" | `entrada.asm:42` — does the whole piece fit in columns 7-24? |
+| `leer_teclas` | "read keys" | `entrada.asm:24` — one non-blocking read per pass: edge-detected (K/J/Q/W) plus a level-triggered SPACE bit for soft drop |
+| `en_rango` | "in range" | `entrada.asm:63` — does the whole piece fit in columns 7-24? |
 | `limpiar_lineas` / `fila_llena` / `bajar_filas` | "clear lines" / "row full" / "lower the rows" | `lineas.asm:16,40,62` — clear detection and compaction |
 | `anotar_lineas` | "record the lines" | `puntuacion.asm:22` — score, lines, level and marker refresh, once per lock |
 | `ActualizarVelocidad` / `reiniciar_marcador` / `ImprimirMarcador` | "update the speed" / "reset the scoreboard" / "print the scoreboard" | `puntuacion.asm:66,79,107` |
@@ -81,10 +81,11 @@ output only `main.lst` matches the current sources — the per-file ones are sta
 | `FinDelJuego` | "end of the game" | `pantallas.asm:58` — prints thanks, then `fin: JR fin` (the deliberate quit path, via **N**) |
 | `InicioDePantalla` | "start of screen" | `titulo.asm:3` — title screen |
 | `PintarPantalla` | "paint screen" | `titulo.asm:8` — blits 6912 bytes to `$4000`, then falls into the key wait |
-| `Medio` | "middle" | `variables.asm:36` (`$A58D`) — the memory copy of `C`, kept in sync at every commit |
+| `Medio` | "middle" | `variables.asm:41` (`$A5B9`) — the memory copy of `C`, kept in sync at every commit |
 | `PUNTOS` / `LINEAS` / `NIVEL` / `PROX_NIVEL` | "points" / "lines" / "level" / "next level" | `variables.asm:13-16` — score (packed BCD) and progression counters |
-| `FRAMES_POR_FILA` / `contador_frames` / `FRAMES_POR_NIVEL` | "frames per row" / "frame counter" / "frames per level" | `variables.asm:19-20`, `puntuacion.asm:16` — the gravity clock |
-| `semilla` / `siguiente_pieza` / `teclas_ant` | "seed" / "next piece" / "previous keys" | `variables.asm:28,30,23` — LFSR state, preview slot, edge-detection state |
+| `FRAMES_POR_FILA` / `contador_frames` / `FRAMES_POR_NIVEL` | "frames per row" / "frame counter" / "frames per level" | `variables.asm:19-20`, `puntuacion.asm:16` — the normal gravity clock |
+| `contador_rapido` / `FRAMES_CAIDA_RAPIDA` | "fast counter" / "fast-fall frames" | `variables.asm:21`, `juego.asm:17` — the soft-drop gravity clock. Independent of the pair above: only decrements while SPACE is held, and is never reset on release, so a new hold resumes where the last one left off |
+| `semilla` / `siguiente_pieza` / `teclas_ant` | "seed" / "next piece" / "previous keys" | `variables.asm:33,35,28` — LFSR state, preview slot, previous `leer_teclas` mask (now covers SPACE too) |
 | `MensajeIniciar` / `MensajeReiniciar` / `MensajeGameOver` | "start message" / "restart message" / "game-over message" | `pantallas.asm:114`, `:120`, `:121` — zero-terminated, ASCII only |
 | `fin` | "end" | `pantallas.asm:67` — the infinite loop after "Gracias por jugar" |
 
@@ -112,7 +113,7 @@ not the name, regardless: `comprobar` returns `A=0` for **no collision**.
 | "add a score", "show the level" | `scoring-and-level`, `rendering-and-attributes` |
 | "the game restarts by itself", "game over never happens" | `game-loop-and-collision`, `failure-patterns` |
 | "gravity is too fast/slow", "it freezes" | `interrupts-and-timing` |
-| "add soft drop", "add a down key" | `game-loop-and-collision` (it owns input and the loop) and `entrada.asm`'s `leer_teclas`. No down key is read today; `memory-map`'s port table shows which half-row a new one would come from |
+| "add soft drop", "add a down key", "SPACE doesn't fall faster" | Already built — SPACE, level-triggered (not edge) via `leer_teclas` bit4, driving an independent `contador_rapido`/`FRAMES_CAIDA_RAPIDA` gravity gate. `game-loop-and-collision` §2/§6/§7 owns the loop side; `entrada.asm`'s `leer_teclas` owns the key read. Hard drop is a different, unbuilt feature — do not conflate the two |
 | "add sound", "set the border colour" | `memory-map` §7 — port `$FE` is still never written |
 | "it won't build", "unknown instruction", "what is `LD IX, DE`" | `assembler-conventions`, `build-and-verify` |
 | "how do I run it", "how do I check my change" | `build-and-verify` |
@@ -134,7 +135,7 @@ not the name, regardless: `comprobar` returns `A=0` for **no collision**.
    addresses through `IY`. → `interrupts-and-timing`
 5. **Include order in `main.asm:31-45` is load-bearing**, and `variables.asm` must stay last.
    Append new files before it; do not reorder. → `assembler-conventions`
-6. **The build must stay at 0 errors, 0 warnings** (currently 1440 lines, 9614 bytes). → `build-and-verify`
+6. **The build must stay at 0 errors, 0 warnings** (currently 1494 lines, 9658 bytes). → `build-and-verify`
 7. **Run `python3 tests/run_all.py`** — ~130 assertions over five suites plus the manual checklist,
    driving ZEsarUX. It cannot see tearing or flicker, so anything visual still needs a human.
    → `build-and-verify`
@@ -173,7 +174,10 @@ so text printed inside columns 7-24 becomes collidable geometry.
 - Making `comprobar` preserve `AF` "for consistency". It returns its result in `A` (`test_col.asm:43,47`).
 - Adding a score/level display without saving `IX`, which silently swaps the falling piece.
 - Wrapping `GIRAR` in a `comprobar` check. It validates, kicks and commits by itself
-  (`juego.asm:90`). → `piece-rotation`
+  (`juego.asm:113`). → `piece-rotation`
+- Making SPACE (soft drop) edge-detected like the other keys, or reading `leer_teclas` after the
+  erase like the loop used to for every key. Soft drop needs *this* pass's held state, not the
+  previous pass's or a one-shot new-press. → `game-loop-and-collision` §2, §7
 - Adding a routine that points `IY` somewhere without a `di`/`ei` bracket around that window, or
   putting the `ei` before the `pop iy`. → `interrupts-and-timing`
 - Declaring a variable outside `variables.asm`, or putting `variables.asm` anywhere but last in the

@@ -38,12 +38,12 @@ line is read rather than the exit code.
 
 | Suite | Covers |
 |---|---|
-| `test_entrada.py` | `leer_teclas` edge detection (held keys must not repeat, neighbouring keys on the same half-rows must not leak) and `en_rango` boundaries for 1-, 2- and 4-wide pieces |
+| `test_entrada.py` | `leer_teclas` edge detection (held keys must not repeat, neighbouring keys on the same half-rows must not leak), SPACE's level-triggered soft-drop bit (reports held on every call, not just the first, and clears the instant it releases, without disturbing the edge-triggered bits), and `en_rango` boundaries for 1-, 2- and 4-wide pieces |
 | `test_giro.py` | Every shape × every rotation state × columns 5–27 × both directions: cycles close, left/right are exact inverses, no rotation ever lands outside columns 7–24, a blocked rotation leaves `IX`/`C`/`Medio` untouched, and `GIRAR` never draws |
 | `test_lineas.py` | Single/double/quadruple clears, non-adjacent full rows, top-row clear, a completely full board, and that the well border survives all of it |
 | `test_puntuacion.py` | Points per clear, packed-BCD carry across digit boundaries, line counter, level-up at 10 lines, level cap, and the whole frames-per-level speed table |
 | `test_spawn.py` | Shape distribution (was 25%/6.25%, must now be ~14.3% each), LFSR never reaching zero, and that the previewed piece is the one that actually spawns |
-| `checklist6.py` | `build-and-verify` §6 end to end: title, menu, quit, well, gravity, J/K, Q/W, settling, and border integrity across several full games including game-over→restart |
+| `checklist6.py` | `build-and-verify` §6 end to end: title, menu, quit, well, gravity, J/K, Q/W, soft drop (SPACE falls faster while held, reverts to normal the instant it's released, and doesn't block J/K/Q/W while held), settling, and border integrity across several full games including game-over→restart |
 
 ## Harness notes
 

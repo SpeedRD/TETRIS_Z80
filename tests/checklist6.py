@@ -127,6 +127,52 @@ i0 = ix(); tap("Q", 60); i1 = ix(); tap("W", 60); i2 = ix()
 check("8. Q and W rotate the piece", i1 != i0 and i2 == i0,
       f"(IX {i0:04X} -> {i1:04X} -> {i2:04X}, and back)")
 
+# 8b-8d: soft drop (SPACE) -- still on the default, unmodified gravity speed
+# (the FRAMES_POR_FILA poke for tests 9/10 happens further down), so a
+# genuine speed difference is unmistakable: default level 0 is 48
+# frames/row (~0.96 s/row); FRAMES_CAIDA_RAPIDA is 4 (~0.08 s/row).
+def row():
+    return int(z.cmd("get-registers").split("BC=")[1][:2], 16)
+
+r0 = row(); time.sleep(1.0); r1 = row()
+baseline_rows = r1 - r0
+check("8b. baseline gravity with SPACE not held", baseline_rows <= 2,
+      f"({baseline_rows} rows in 1.0s)")
+
+keys("SPACE")                       # hold SPACE, do not release yet
+r0 = row(); time.sleep(0.5); r1 = row()
+held_rows = r1 - r0
+check("8c. holding SPACE falls faster than normal gravity",
+      held_rows > baseline_rows and held_rows >= 3,
+      f"({held_rows} rows in 0.5s held vs {baseline_rows} rows in 1.0s baseline)")
+
+keys()                               # release SPACE
+r0 = row(); time.sleep(1.0); r1 = row()
+after_rows = r1 - r0
+check("8d. releasing SPACE returns to normal gravity immediately",
+      after_rows <= 2, f"({after_rows} rows in 1.0s right after release)")
+
+# 8e-8f: a movement/rotation key pressed AT THE SAME TIME as SPACE must
+# still register. Each burst holds SPACE only for the tap itself (not
+# continuously across both sub-checks) so the fast gravity it triggers
+# cannot run long enough to lock the piece mid-check and confuse the result.
+c0 = col()
+keys("SPACE", "J"); time.sleep(0.06); keys(); time.sleep(0.10)
+c1 = col()
+keys("SPACE", "K"); time.sleep(0.06); keys(); time.sleep(0.10)
+c2 = col()
+check("8e. J/K still move the piece sideways while SPACE is held",
+      c1 < c0 and c2 > c1, f"(column {c0} -> {c1} -> {c2})")
+
+i0b = ix()
+keys("SPACE", "Q"); time.sleep(0.06); keys(); time.sleep(0.10)
+i1b = ix()
+keys("SPACE", "W"); time.sleep(0.06); keys(); time.sleep(0.10)
+i2b = ix()
+check("8f. Q/W still rotate the piece while SPACE is held",
+      i1b != i0b and i2b == i0b,
+      f"(IX {i0b:04X} -> {i1b:04X} -> {i2b:04X}, and back)")
+
 # 9 & 10 -------------------------------------------------------------
 z.cmd(f"write-memory-raw {resolve('FRAMES_POR_FILA'):04X}H 03")
 z.cmd(f"write-memory-raw {resolve('contador_frames'):04X}H 03")

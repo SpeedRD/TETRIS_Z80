@@ -481,1049 +481,1103 @@
   9+  A03D              ;   B  = fila       C  = columna      IX = registro de la pieza
  10+  A03D              ;   (Medio) = copia en memoria de C; debe coincidir con C en cada comprobar
  11+  A03D              ;   D  = desplazamiento lateral pedido en esta pasada (0, +1 o -1)
- 12+  A03D              ;   E  = mascara de teclas nuevas de leer_teclas
- 13+  A03D              ;   H  = 1 si en esta pasada toca bajar una fila, 0 si no
- 14+  A03D              ;HL, DE y AF son libres para las rutinas llamadas; B, C e IX no lo son.
- 15+  A03D
- 16+  A03D              iniciar:
- 17+  A03D CD 00 A1         CALL iniciar_secuencia  ; semilla del azar y primera pieza anunciada
- 18+  A040
- 19+  A040 CD 7F A4         CALL reiniciar_marcador ; puntos/lineas/nivel a cero y rotulos en pantalla.
- 20+  A043                                          ;  Aqui todavia no hay ninguna pieza, asi que es el
- 21+  A043                                          ;  unico sitio donde imprimir es gratis.
- 22+  A043
- 23+  A043 CD 0D A1         CALL seleccionar_pieza  ; IX = pieza, B = 0, C = 15
- 24+  A046 CD 24 A1         CALL pintar_siguiente   ; muestra la que viene detras
- 25+  A049 79               LD A, C
- 26+  A04A 32 8D A5         LD (Medio), A           ; Medio siempre refleja C
- 27+  A04D
- 28+  A04D CD 80 A2         CALL comprobar          ; fin de partida = la pieza nueva no cabe en su
- 29+  A050 B7               OR A                    ;  posicion de aparicion. Antes esto se hacia con
- 30+  A051 20 7F            JR NZ, fin_partida      ;  B=255, que leia RAM fuera de la pantalla ($77EF).
- 31+  A053
- 32+  A053 CD 46 A2         CALL pintar_tetromino   ; pintamos una vez, para que el primer borrado
- 33+  A056                                          ;  del bucle tenga algo que borrar
- 34+  A056              paso:
- 35+  A056 76               HALT                    ; dormimos hasta el tick de 50 Hz. El borrado y el
- 36+  A057                                          ;  repintado caen justo detras, en el borde superior.
- 37+  A057 26 00            LD H, 0                 ; por defecto esta pasada no baja
- 38+  A059 3A 88 A5         LD A,(contador_frames)
- 39+  A05C 3D               DEC A
- 40+  A05D 32 88 A5         LD (contador_frames), A
- 41+  A060 20 08            JR NZ, sin_gravedad
- 42+  A062 3A 87 A5         LD A,(FRAMES_POR_FILA)  ; se agoto la cuenta: recargamos y pedimos bajada
- 43+  A065 32 88 A5         LD (contador_frames), A
- 44+  A068 26 01            LD H, 1
- 45+  A06A              sin_gravedad:
- 46+  A06A CD C4 A2         CALL borrar_tetromino   ; borra en el (B,C) ACTUAL con el IX ACTUAL
- 47+  A06D
- 48+  A06D CD 52 A3         CALL leer_teclas        ; A = teclas que acaban de pulsarse; nunca bloquea
- 49+  A070 5F               LD E, A                 ; E sobrevive a en_rango, comprobar y GIRAR
- 50+  A071 16 00            LD D, 0                 ; D = desplazamiento lateral
- 51+  A073 CB 43            BIT 0, E
- 52+  A075 28 01            JR Z, no_derecha
- 53+  A077 14               INC D                   ; K -> una columna a la derecha
- 54+  A078              no_derecha:
- 55+  A078 CB 4B            BIT 1, E
- 56+  A07A 28 01            JR Z, lateral
- 57+  A07C 15               DEC D                   ; J -> una columna a la izquierda
- 58+  A07D                                          ;  (las dos a la vez se anulan: D = 0)
- 59+  A07D              lateral:
- 60+  A07D 7A               LD A, D
- 61+  A07E B7               OR A
- 62+  A07F 28 18            JR Z, sin_lateral
- 63+  A081 79               LD A, C
- 64+  A082 82               ADD A, D
- 65+  A083 4F               LD C, A                 ; C = columna candidata
- 66+  A084 CD 77 A3         CALL en_rango           ; 1. ¿sigue dentro de las columnas 7-24?
- 67+  A087 B7               OR A
- 68+  A088 20 06            JR NZ, lat_no
- 69+  A08A CD 80 A2         CALL comprobar          ; 2. ¿libre de bloques ya asentados?
- 70+  A08D B7               OR A
- 71+  A08E 28 05            JR Z, lat_si
- 72+  A090              lat_no:
- 73+  A090 79               LD A, C                 ; bloqueada: devolvemos la columna vieja. NO se
- 74+  A091 92               SUB D                   ;  salta la gravedad de esta pasada.
- 75+  A092 4F               LD C, A
- 76+  A093 18 04            JR sin_lateral
- 77+  A095              lat_si:
- 78+  A095 79               LD A, C
- 79+  A096 32 8D A5         LD (Medio), A           ; Medio se actualiza en cada confirmacion
- 80+  A099              sin_lateral:
- 81+  A099
- 82+  A099 7B               LD A, E
- 83+  A09A E6 0C            AND %00001100           ; ¿ni Q ni W recien pulsadas?
- 84+  A09C 28 0A            JR Z, sin_giro
- 85+  A09E CB 53            BIT 2, E
- 86+  A0A0 3E 00            LD A, 0                 ; Q -> A = 0, girar a la izquierda
- 87+  A0A2 20 01            JR NZ, girar_ya         ;  (LD no toca los flags de BIT)
- 88+  A0A4 3C               INC A                   ; W -> A = 1, girar a la derecha
- 89+  A0A5              girar_ya:
- 90+  A0A5 CD 00 A3         CALL GIRAR              ; comprueba limites, retranquea, valida y CONFIRMA
- 91+  A0A8              sin_giro:                   ;  el solo. NUNCA envolverlo en comprobar.
- 92+  A0A8
- 93+  A0A8 7C               LD A, H
- 94+  A0A9 B7               OR A
- 95+  A0AA 28 21            JR Z, dibujar           ; no es pasada de gravedad: solo repintar
- 96+  A0AC
- 97+  A0AC 04               INC B                   ; B = fila candidata
- 98+  A0AD CD 80 A2         CALL comprobar
- 99+  A0B0 B7               OR A
-100+  A0B1 28 1A            JR Z, dibujar           ; libre: la caida queda confirmada
-101+  A0B3
-102+  A0B3 05               DEC B                   ; bloqueada: deshacemos la caida, la pieza se queda
-103+  A0B4 CD 46 A2         CALL pintar_tetromino   ; y la fijamos en el fichero de atributos
-104+  A0B7
-105+  A0B7 CD 8A A3         CALL limpiar_lineas     ; A = filas eliminadas (0..4)
-106+  A0BA CD 10 A4         CALL anotar_lineas      ; puntua, sube de nivel y refresca el marcador
-107+  A0BD
-108+  A0BD CD 0D A1         CALL seleccionar_pieza  ; IX = pieza siguiente, B = 0, C = 15
-109+  A0C0 CD 24 A1         CALL pintar_siguiente   ; refresca el recuadro con la nueva anunciada
-110+  A0C3 79               LD A, C
-111+  A0C4 32 8D A5         LD (Medio), A
-112+  A0C7 CD 80 A2         CALL comprobar          ; fin de partida = la nueva no cabe al aparecer
-113+  A0CA B7               OR A
-114+  A0CB 20 05            JR NZ, fin_partida
-115+  A0CD
-116+  A0CD              dibujar:
-117+  A0CD CD 46 A2         CALL pintar_tetromino   ; pintamos el (B, C, IX) ya validado
-118+  A0D0 18 84            JR paso
-119+  A0D2
-120+  A0D2              fin_partida:
-121+  A0D2 C3 6C 9B         JP Pantalla_Final       ; JP, no CALL: no vuelve nunca
-122+  A0D5
+ 12+  A03D              ;   E  = mascara de leer_teclas: bits0-3 flanco nuevo (K/J/Q/W), bit4 = SPACE
+ 13+  A03D              ;        mantenida AHORA (caida rapida / soft drop), no flanco
+ 14+  A03D              ;   H  = 1 si en esta pasada toca bajar una fila, 0 si no
+ 15+  A03D              ;HL, DE y AF son libres para las rutinas llamadas; B, C e IX no lo son.
+ 16+  A03D
+ 17+  A03D              FRAMES_CAIDA_RAPIDA EQU 4   ; frames entre caidas mientras SPACE esta pulsada.
+ 18+  A03D                                          ; Mas rapido que cualquier nivel normal (la tabla
+ 19+  A03D                                          ; FRAMES_POR_NIVEL de puntuacion.asm no baja de 6),
+ 20+  A03D                                          ; pero no instantaneo: esto es soft drop, no hard
+ 21+  A03D                                          ; drop.
+ 22+  A03D
+ 23+  A03D              iniciar:
+ 24+  A03D CD 16 A1         CALL iniciar_secuencia  ; semilla del azar y primera pieza anunciada
+ 25+  A040
+ 26+  A040 CD AA A4         CALL reiniciar_marcador ; puntos/lineas/nivel a cero y rotulos en pantalla.
+ 27+  A043                                          ;  Aqui todavia no hay ninguna pieza, asi que es el
+ 28+  A043                                          ;  unico sitio donde imprimir es gratis.
+ 29+  A043
+ 30+  A043 CD 23 A1         CALL seleccionar_pieza  ; IX = pieza, B = 0, C = 15
+ 31+  A046 CD 3A A1         CALL pintar_siguiente   ; muestra la que viene detras
+ 32+  A049 79               LD A, C
+ 33+  A04A 32 B9 A5         LD (Medio), A           ; Medio siempre refleja C
+ 34+  A04D
+ 35+  A04D CD 96 A2         CALL comprobar          ; fin de partida = la pieza nueva no cabe en su
+ 36+  A050 B7               OR A                    ;  posicion de aparicion. Antes esto se hacia con
+ 37+  A051 C2 E8 A0         JP NZ, fin_partida      ;  B=255, que leia RAM fuera de la pantalla ($77EF).
+ 38+  A054                                          ;  JP, no JR: fin_partida ha quedado fuera de rango
+ 39+  A054
+ 40+  A054 CD 5C A2         CALL pintar_tetromino   ; pintamos una vez, para que el primer borrado
+ 41+  A057                                          ;  del bucle tenga algo que borrar
+ 42+  A057              paso:
+ 43+  A057 76               HALT                    ; dormimos hasta el tick de 50 Hz. El borrado y el
+ 44+  A058                                          ;  repintado caen justo detras, en el borde superior.
+ 45+  A058 26 00            LD H, 0                 ; por defecto esta pasada no baja
+ 46+  A05A
+ 47+  A05A CD 68 A3         CALL leer_teclas        ; A = teclas; nunca bloquea. Se lee YA aqui, antes
+ 48+  A05D                                          ;  del borrado, porque la gravedad rapida de abajo
+ 49+  A05D                                          ;  necesita el bit4 (SPACE) de esta misma pasada.
+ 50+  A05D                                          ;  borrar_tetromino preserva DE, asi que E aguanta.
+ 51+  A05D 5F               LD E, A                 ; E sobrevive a borrar_tetromino, en_rango,
+ 52+  A05E 16 00            LD D, 0                 ;  comprobar y GIRAR. D = desplazamiento lateral
+ 53+  A060
+ 54+  A060 3A B3 A5         LD A,(contador_frames)  ; gravedad NORMAL: cuenta siempre, la mantenga o
+ 55+  A063 3D               DEC A                   ;  no SPACE pulsada, para que soltar la tecla
+ 56+  A064 32 B3 A5         LD (contador_frames), A ;  vuelva a la velocidad normal sin ningun salto
+ 57+  A067 20 08            JR NZ, comprobar_rapida
+ 58+  A069 3A B2 A5         LD A,(FRAMES_POR_FILA)  ; se agoto la cuenta: recargamos y pedimos bajada
+ 59+  A06C 32 B3 A5         LD (contador_frames), A
+ 60+  A06F 26 01            LD H, 1
+ 61+  A071              comprobar_rapida:
+ 62+  A071 CB 63            BIT 4, E                ; gravedad RAPIDA (soft drop): SUMA una bajada
+ 63+  A073 28 10            JR Z, sin_gravedad       ;  mas si toca, nunca sustituye a la de arriba.
+ 64+  A075 3A B4 A5         LD A,(contador_rapido)  ;  Solo se decuenta mientras SPACE sigue pulsada:
+ 65+  A078 3D               DEC A                   ;  al soltarla la cuenta se queda congelada donde
+ 66+  A079 32 B4 A5         LD (contador_rapido), A ;  estaba, lista para retomarse la proxima vez.
+ 67+  A07C 20 07            JR NZ, sin_gravedad
+ 68+  A07E 3E 04            LD A, FRAMES_CAIDA_RAPIDA
+ 69+  A080 32 B4 A5         LD (contador_rapido), A
+ 70+  A083 26 01            LD H, 1
+ 71+  A085              sin_gravedad:
+ 72+  A085 CD DA A2         CALL borrar_tetromino   ; borra en el (B,C) ACTUAL con el IX ACTUAL
+ 73+  A088
+ 74+  A088 CB 43            BIT 0, E
+ 75+  A08A 28 01            JR Z, no_derecha
+ 76+  A08C 14               INC D                   ; K -> una columna a la derecha
+ 77+  A08D              no_derecha:
+ 78+  A08D CB 4B            BIT 1, E
+ 79+  A08F 28 01            JR Z, lateral
+ 80+  A091 15               DEC D                   ; J -> una columna a la izquierda
+ 81+  A092                                          ;  (las dos a la vez se anulan: D = 0)
+ 82+  A092              lateral:
+ 83+  A092 7A               LD A, D
+ 84+  A093 B7               OR A
+ 85+  A094 28 18            JR Z, sin_lateral
+ 86+  A096 79               LD A, C
+ 87+  A097 82               ADD A, D
+ 88+  A098 4F               LD C, A                 ; C = columna candidata
+ 89+  A099 CD A2 A3         CALL en_rango           ; 1. ¿sigue dentro de las columnas 7-24?
+ 90+  A09C B7               OR A
+ 91+  A09D 20 06            JR NZ, lat_no
+ 92+  A09F CD 96 A2         CALL comprobar          ; 2. ¿libre de bloques ya asentados?
+ 93+  A0A2 B7               OR A
+ 94+  A0A3 28 05            JR Z, lat_si
+ 95+  A0A5              lat_no:
+ 96+  A0A5 79               LD A, C                 ; bloqueada: devolvemos la columna vieja. NO se
+ 97+  A0A6 92               SUB D                   ;  salta la gravedad de esta pasada.
+ 98+  A0A7 4F               LD C, A
+ 99+  A0A8 18 04            JR sin_lateral
+100+  A0AA              lat_si:
+101+  A0AA 79               LD A, C
+102+  A0AB 32 B9 A5         LD (Medio), A           ; Medio se actualiza en cada confirmacion
+103+  A0AE              sin_lateral:
+104+  A0AE
+105+  A0AE 7B               LD A, E
+106+  A0AF E6 0C            AND %00001100           ; ¿ni Q ni W recien pulsadas?
+107+  A0B1 28 0A            JR Z, sin_giro
+108+  A0B3 CB 53            BIT 2, E
+109+  A0B5 3E 00            LD A, 0                 ; Q -> A = 0, girar a la izquierda
+110+  A0B7 20 01            JR NZ, girar_ya         ;  (LD no toca los flags de BIT)
+111+  A0B9 3C               INC A                   ; W -> A = 1, girar a la derecha
+112+  A0BA              girar_ya:
+113+  A0BA CD 16 A3         CALL GIRAR              ; comprueba limites, retranquea, valida y CONFIRMA
+114+  A0BD              sin_giro:                   ;  el solo. NUNCA envolverlo en comprobar.
+115+  A0BD
+116+  A0BD 7C               LD A, H
+117+  A0BE B7               OR A
+118+  A0BF 28 21            JR Z, dibujar           ; no es pasada de gravedad: solo repintar
+119+  A0C1
+120+  A0C1 04               INC B                   ; B = fila candidata
+121+  A0C2 CD 96 A2         CALL comprobar
+122+  A0C5 B7               OR A
+123+  A0C6 28 1A            JR Z, dibujar           ; libre: la caida queda confirmada
+124+  A0C8
+125+  A0C8 05               DEC B                   ; bloqueada: deshacemos la caida, la pieza se queda
+126+  A0C9 CD 5C A2         CALL pintar_tetromino   ; y la fijamos en el fichero de atributos
+127+  A0CC
+128+  A0CC CD B5 A3         CALL limpiar_lineas     ; A = filas eliminadas (0..4)
+129+  A0CF CD 3B A4         CALL anotar_lineas      ; puntua, sube de nivel y refresca el marcador
+130+  A0D2
+131+  A0D2 CD 23 A1         CALL seleccionar_pieza  ; IX = pieza siguiente, B = 0, C = 15
+132+  A0D5 CD 3A A1         CALL pintar_siguiente   ; refresca el recuadro con la nueva anunciada
+133+  A0D8 79               LD A, C
+134+  A0D9 32 B9 A5         LD (Medio), A
+135+  A0DC CD 96 A2         CALL comprobar          ; fin de partida = la nueva no cabe al aparecer
+136+  A0DF B7               OR A
+137+  A0E0 20 06            JR NZ, fin_partida
+138+  A0E2
+139+  A0E2              dibujar:
+140+  A0E2 CD 5C A2         CALL pintar_tetromino   ; pintamos el (B, C, IX) ya validado
+141+  A0E5 C3 57 A0         JP paso                 ; JP, no JR: paso ha quedado fuera de rango
+142+  A0E8
+143+  A0E8              fin_partida:
+144+  A0E8 C3 6C 9B         JP Pantalla_Final       ; JP, no CALL: no vuelve nunca
+145+  A0EB
 # file closed: juego.asm
- 37   A0D5                  INCLUDE "tetromino_next.asm"
+ 37   A0EB                  INCLUDE "tetromino_next.asm"
 # file opened: tetromino_next.asm
-  1+  A0D5              ;Programa para seleccionar y posicionar la proxima pieza
-  2+  A0D5
-  3+  A0D5              ; La version anterior elegia un ESTADO DE GIRO al azar entre los 19 registros,
-  4+  A0D5              ; no una pieza: las piezas aparecian giradas al azar y las formas con 4 estados
-  5+  A0D5              ; (L, J, T) salian el 75% de las veces. Ademas usaba "ld a,r" como fuente de
-  6+  A0D5              ; azar (el contador de refresco, que avanza de forma casi fija por un camino de
-  7+  A0D5              ; instrucciones fijo) y plegaba 19..31 sobre 0..12, con lo que los indices 0-12
-  8+  A0D5              ; salian el doble que los 13-18.
-  9+  A0D5              ;
- 10+  A0D5              ; Ahora se elige una FORMA de una tabla de 7 estados de aparicion, todos
- 11+  A0D5              ; verticales/canonicos, con un LFSR de 8 bits.
- 12+  A0D5
- 13+  A0D5              ; sembrar_azar -- toma una semilla del contador de refresco. Se llama una vez
- 14+  A0D5              ;   por partida, justo despues de que el jugador pulse S, asi que el numero de
- 15+  A0D5              ;   vueltas de la espera de teclado la hace realmente variable.
- 16+  A0D5              ;   Destruye AF.
- 17+  A0D5              sembrar_azar:
- 18+  A0D5 ED 5F            ld a, r                 ; contador de refresco: 0..127
- 19+  A0D7 B7               or a
- 20+  A0D8 20 02            jr nz, sembrar_ok
- 21+  A0DA 3E A5            ld a, $A5               ; un LFSR que valga cero se queda en cero para siempre
- 22+  A0DC              sembrar_ok:
- 23+  A0DC 32 8A A5         ld (semilla), a
- 24+  A0DF C9               ret
- 25+  A0E0
- 26+  A0E0              ; nueva_pieza -- sortea una forma y devuelve su registro de aparicion.
- 27+  A0E0              ;   Salida: DE = direccion del registro. Destruye AF y DE. Preserva BC, HL, IX, IY.
- 28+  A0E0              nueva_pieza:
- 29+  A0E0 E5               push hl
- 30+  A0E1              np_tirar:
- 31+  A0E1 3A 8A A5         ld a, (semilla)         ; LFSR de Galois de 8 bits, periodo 255, nunca da 0
- 32+  A0E4 CB 3F            srl a                   ; desplaza a la derecha, el bit bajo va al acarreo
- 33+  A0E6 30 02            jr nc, np_sin_tap
- 34+  A0E8 EE B4            xor $B4                 ; polinomio de realimentacion
- 35+  A0EA              np_sin_tap:
- 36+  A0EA 32 8A A5         ld (semilla), a
- 37+  A0ED E6 07            and 7
- 38+  A0EF FE 07            cp 7
- 39+  A0F1 28 EE            jr z, np_tirar          ; descartamos el 7 -> uniforme 0..6. El reintento
- 40+  A0F3                                          ;  queda por DEBAJO del push: no hay fuga de pila.
- 41+  A0F3 87               add a, a                ; *2: cada entrada de la tabla son 2 bytes
- 42+  A0F4 21 38 A2         ld hl, spawn_table
- 43+  A0F7 16 00            ld d, 0
- 43+  A0F9 5F             ld e, a
- 44+  A0FA 19               add hl, de
- 45+  A0FB 5E               ld e, (hl)
- 45+  A0FC 23             inc hl
- 45+  A0FD 56             ld d, (hl)
- 46+  A0FE E1               pop hl
- 47+  A0FF C9               ret
- 48+  A100
- 49+  A100              ; iniciar_secuencia -- semilla y primera pieza anunciada. Una vez por partida,
- 50+  A100              ;   antes del primer seleccionar_pieza. Destruye AF.
- 51+  A100              iniciar_secuencia:
- 52+  A100 CD D5 A0         call sembrar_azar
- 53+  A103 D5               push de
- 54+  A104 CD E0 A0         call nueva_pieza
- 55+  A107 ED 53 8B A5      ld (siguiente_pieza), de
- 56+  A10B D1               pop de
- 57+  A10C C9               ret
- 58+  A10D
- 59+  A10D              ; seleccionar_pieza -- pone en juego la pieza ya anunciada y sortea la
- 60+  A10D              ;   siguiente, de modo que el jugador siempre ve una por adelantado.
- 61+  A10D              ;   Salida: IX = registro de aparicion, B = 0 (fila), C = 15 (columna).
- 62+  A10D              ;   Destruye AF, BC, DE, IX. Preserva HL e IY.
- 63+  A10D              ;   C = 15 es la UNICA definicion de la columna de aparicion; (Medio) se deriva
- 64+  A10D              ;   de ella en juego.asm.
- 65+  A10D              seleccionar_pieza:
- 66+  A10D E5               push hl                 ; la version anterior preservaba HL: lo mantenemos
- 67+  A10E 2A 8B A5         ld hl, (siguiente_pieza)
- 68+  A111 E5               push hl                 ; la anunciada pasa a jugarse
- 69+  A112 CD E0 A0         call nueva_pieza        ; DE = la proxima a anunciar
- 70+  A115 ED 53 8B A5      ld (siguiente_pieza), de
- 71+  A119 D1               pop de                  ; DE = la que toca jugar ahora
- 72+  A11A DD 62 DD 6B      ld ix, de               ; instruccion falsa de sjasmplus -> LD IXH,D : LD IXL,E
- 73+  A11E E1               pop hl
- 74+  A11F 06 00            ld b, 0                 ; fila de aparicion
- 75+  A121 0E 0F            ld c, 15                ; columna de aparicion
- 76+  A123 C9               ret
- 77+  A124
- 78+  A124              ; ---------------------------------------------------------------------------
- 79+  A124              ; Vista previa de la proxima pieza
- 80+  A124              ;
- 81+  A124              ; Se dibuja FUERA del pozo a proposito: "ocupado" es "byte de atributo distinto
- 82+  A124              ; de cero", asi que cualquier cosa pintada en las columnas 7-24 se convertiria
- 83+  A124              ; en geometria solida. en_rango mantiene la pieza en juego dentro de esas
- 84+  A124              ; columnas, asi que el recuadro no puede tocarse nunca.
- 85+  A124              PREV_FILA EQU 10        ; esquina superior izquierda del recuadro
- 86+  A124              PREV_COL  EQU 27        ; columnas 27-30, filas 10-13: caja de 4x4
- 87+  A124
- 88+  A124              ; pintar_siguiente -- borra el recuadro y dibuja en el la pieza anunciada.
- 89+  A124              ;   Preserva AF, BC, DE, HL, IX, IY.
- 90+  A124              pintar_siguiente:
- 91+  A124 F5               push af
- 91+  A125 C5             push bc
- 91+  A126 D5             push de
- 91+  A127 E5             push hl
- 91+  A128 DD E5          push ix
- 92+  A12A 06 0A            ld b, PREV_FILA
- 93+  A12C 16 04            ld d, 4                 ; 4 filas que limpiar
- 94+  A12E              ps_fila:
- 95+  A12E 0E 1B            ld c, PREV_COL
- 96+  A130 CD 86 9C         call CRtoATTR           ; HL = direccion del atributo; PRESERVA BC
- 97+  A133 36 00            ld (hl), 0
- 97+  A135 23             inc hl     ; las 4 celdas de la fila, a cero (negro), igual
- 98+  A136 36 00            ld (hl), 0
- 98+  A138 23             inc hl     ;  que el interior del pozo
- 99+  A139 36 00            ld (hl), 0
- 99+  A13B 23             inc hl
-100+  A13C 36 00            ld (hl), 0
-101+  A13E 04               inc b
-102+  A13F 15               dec d
-103+  A140 20 EC            jr nz, ps_fila
-104+  A142
-105+  A142 DD 2A 8B A5      ld ix, (siguiente_pieza)
-106+  A146 06 0A            ld b, PREV_FILA
-107+  A148 0E 1B            ld c, PREV_COL
-108+  A14A CD 46 A2         call pintar_tetromino
-109+  A14D DD E1            pop ix
-109+  A14F E1             pop hl
-109+  A150 D1             pop de
-109+  A151 C1             pop bc
-109+  A152 F1             pop af
-110+  A153 C9               ret
-111+  A154
+  1+  A0EB              ;Programa para seleccionar y posicionar la proxima pieza
+  2+  A0EB
+  3+  A0EB              ; La version anterior elegia un ESTADO DE GIRO al azar entre los 19 registros,
+  4+  A0EB              ; no una pieza: las piezas aparecian giradas al azar y las formas con 4 estados
+  5+  A0EB              ; (L, J, T) salian el 75% de las veces. Ademas usaba "ld a,r" como fuente de
+  6+  A0EB              ; azar (el contador de refresco, que avanza de forma casi fija por un camino de
+  7+  A0EB              ; instrucciones fijo) y plegaba 19..31 sobre 0..12, con lo que los indices 0-12
+  8+  A0EB              ; salian el doble que los 13-18.
+  9+  A0EB              ;
+ 10+  A0EB              ; Ahora se elige una FORMA de una tabla de 7 estados de aparicion, todos
+ 11+  A0EB              ; verticales/canonicos, con un LFSR de 8 bits.
+ 12+  A0EB
+ 13+  A0EB              ; sembrar_azar -- toma una semilla del contador de refresco. Se llama una vez
+ 14+  A0EB              ;   por partida, justo despues de que el jugador pulse S, asi que el numero de
+ 15+  A0EB              ;   vueltas de la espera de teclado la hace realmente variable.
+ 16+  A0EB              ;   Destruye AF.
+ 17+  A0EB              sembrar_azar:
+ 18+  A0EB ED 5F            ld a, r                 ; contador de refresco: 0..127
+ 19+  A0ED B7               or a
+ 20+  A0EE 20 02            jr nz, sembrar_ok
+ 21+  A0F0 3E A5            ld a, $A5               ; un LFSR que valga cero se queda en cero para siempre
+ 22+  A0F2              sembrar_ok:
+ 23+  A0F2 32 B6 A5         ld (semilla), a
+ 24+  A0F5 C9               ret
+ 25+  A0F6
+ 26+  A0F6              ; nueva_pieza -- sortea una forma y devuelve su registro de aparicion.
+ 27+  A0F6              ;   Salida: DE = direccion del registro. Destruye AF y DE. Preserva BC, HL, IX, IY.
+ 28+  A0F6              nueva_pieza:
+ 29+  A0F6 E5               push hl
+ 30+  A0F7              np_tirar:
+ 31+  A0F7 3A B6 A5         ld a, (semilla)         ; LFSR de Galois de 8 bits, periodo 255, nunca da 0
+ 32+  A0FA CB 3F            srl a                   ; desplaza a la derecha, el bit bajo va al acarreo
+ 33+  A0FC 30 02            jr nc, np_sin_tap
+ 34+  A0FE EE B4            xor $B4                 ; polinomio de realimentacion
+ 35+  A100              np_sin_tap:
+ 36+  A100 32 B6 A5         ld (semilla), a
+ 37+  A103 E6 07            and 7
+ 38+  A105 FE 07            cp 7
+ 39+  A107 28 EE            jr z, np_tirar          ; descartamos el 7 -> uniforme 0..6. El reintento
+ 40+  A109                                          ;  queda por DEBAJO del push: no hay fuga de pila.
+ 41+  A109 87               add a, a                ; *2: cada entrada de la tabla son 2 bytes
+ 42+  A10A 21 4E A2         ld hl, spawn_table
+ 43+  A10D 16 00            ld d, 0
+ 43+  A10F 5F             ld e, a
+ 44+  A110 19               add hl, de
+ 45+  A111 5E               ld e, (hl)
+ 45+  A112 23             inc hl
+ 45+  A113 56             ld d, (hl)
+ 46+  A114 E1               pop hl
+ 47+  A115 C9               ret
+ 48+  A116
+ 49+  A116              ; iniciar_secuencia -- semilla y primera pieza anunciada. Una vez por partida,
+ 50+  A116              ;   antes del primer seleccionar_pieza. Destruye AF.
+ 51+  A116              iniciar_secuencia:
+ 52+  A116 CD EB A0         call sembrar_azar
+ 53+  A119 D5               push de
+ 54+  A11A CD F6 A0         call nueva_pieza
+ 55+  A11D ED 53 B7 A5      ld (siguiente_pieza), de
+ 56+  A121 D1               pop de
+ 57+  A122 C9               ret
+ 58+  A123
+ 59+  A123              ; seleccionar_pieza -- pone en juego la pieza ya anunciada y sortea la
+ 60+  A123              ;   siguiente, de modo que el jugador siempre ve una por adelantado.
+ 61+  A123              ;   Salida: IX = registro de aparicion, B = 0 (fila), C = 15 (columna).
+ 62+  A123              ;   Destruye AF, BC, DE, IX. Preserva HL e IY.
+ 63+  A123              ;   C = 15 es la UNICA definicion de la columna de aparicion; (Medio) se deriva
+ 64+  A123              ;   de ella en juego.asm.
+ 65+  A123              seleccionar_pieza:
+ 66+  A123 E5               push hl                 ; la version anterior preservaba HL: lo mantenemos
+ 67+  A124 2A B7 A5         ld hl, (siguiente_pieza)
+ 68+  A127 E5               push hl                 ; la anunciada pasa a jugarse
+ 69+  A128 CD F6 A0         call nueva_pieza        ; DE = la proxima a anunciar
+ 70+  A12B ED 53 B7 A5      ld (siguiente_pieza), de
+ 71+  A12F D1               pop de                  ; DE = la que toca jugar ahora
+ 72+  A130 DD 62 DD 6B      ld ix, de               ; instruccion falsa de sjasmplus -> LD IXH,D : LD IXL,E
+ 73+  A134 E1               pop hl
+ 74+  A135 06 00            ld b, 0                 ; fila de aparicion
+ 75+  A137 0E 0F            ld c, 15                ; columna de aparicion
+ 76+  A139 C9               ret
+ 77+  A13A
+ 78+  A13A              ; ---------------------------------------------------------------------------
+ 79+  A13A              ; Vista previa de la proxima pieza
+ 80+  A13A              ;
+ 81+  A13A              ; Se dibuja FUERA del pozo a proposito: "ocupado" es "byte de atributo distinto
+ 82+  A13A              ; de cero", asi que cualquier cosa pintada en las columnas 7-24 se convertiria
+ 83+  A13A              ; en geometria solida. en_rango mantiene la pieza en juego dentro de esas
+ 84+  A13A              ; columnas, asi que el recuadro no puede tocarse nunca.
+ 85+  A13A              PREV_FILA EQU 10        ; esquina superior izquierda del recuadro
+ 86+  A13A              PREV_COL  EQU 27        ; columnas 27-30, filas 10-13: caja de 4x4
+ 87+  A13A
+ 88+  A13A              ; pintar_siguiente -- borra el recuadro y dibuja en el la pieza anunciada.
+ 89+  A13A              ;   Preserva AF, BC, DE, HL, IX, IY.
+ 90+  A13A              pintar_siguiente:
+ 91+  A13A F5               push af
+ 91+  A13B C5             push bc
+ 91+  A13C D5             push de
+ 91+  A13D E5             push hl
+ 91+  A13E DD E5          push ix
+ 92+  A140 06 0A            ld b, PREV_FILA
+ 93+  A142 16 04            ld d, 4                 ; 4 filas que limpiar
+ 94+  A144              ps_fila:
+ 95+  A144 0E 1B            ld c, PREV_COL
+ 96+  A146 CD 86 9C         call CRtoATTR           ; HL = direccion del atributo; PRESERVA BC
+ 97+  A149 36 00            ld (hl), 0
+ 97+  A14B 23             inc hl     ; las 4 celdas de la fila, a cero (negro), igual
+ 98+  A14C 36 00            ld (hl), 0
+ 98+  A14E 23             inc hl     ;  que el interior del pozo
+ 99+  A14F 36 00            ld (hl), 0
+ 99+  A151 23             inc hl
+100+  A152 36 00            ld (hl), 0
+101+  A154 04               inc b
+102+  A155 15               dec d
+103+  A156 20 EC            jr nz, ps_fila
+104+  A158
+105+  A158 DD 2A B7 A5      ld ix, (siguiente_pieza)
+106+  A15C 06 0A            ld b, PREV_FILA
+107+  A15E 0E 1B            ld c, PREV_COL
+108+  A160 CD 5C A2         call pintar_tetromino
+109+  A163 DD E1            pop ix
+109+  A165 E1             pop hl
+109+  A166 D1             pop de
+109+  A167 C1             pop bc
+109+  A168 F1             pop af
+110+  A169 C9               ret
+111+  A16A
 # file closed: tetromino_next.asm
- 38   A154                  INCLUDE "piezas.asm"
+ 38   A16A                  INCLUDE "piezas.asm"
 # file opened: piezas.asm
-  1+  A154              ; Programa para definir y dibujar cada pieza o tetromino
-  2+  A154
-  3+  A154              ; Datos de los tetrominos: filas, columnas, patrón de bits, giros
-  4+  A154              ;Tetromino O
-  5+  A154 02 02 30 30  T_0: DB 2, 2, 6*8, 6*8, 6*8, 6*8, 0, 0
-  5+  A158 30 30 00 00
-  5+  A15C 54 A1 54 A1    DW T_0, T_0
-  6+  A160              ;Tetromino L
-  7+  A160 03 02 20 00  T_L1: DB 3, 2, 4*8, 0, 4*8, 0, 4*8, 4*8
-  7+  A164 20 00 20 20
-  7+  A168 6C A1 78 A1    DW T_L2, T_L3
-  8+  A16C 02 03 00 00  T_L2: DB 2, 3, 0, 0, 4*8, 4*8, 4*8, 4*8
-  8+  A170 20 20 20 20
-  8+  A174 84 A1 60 A1    DW T_L4, T_L1
-  9+  A178 02 03 20 20  T_L3: DB 2, 3, 4*8, 4*8, 4*8, 4*8, 0, 0
-  9+  A17C 20 20 00 00
-  9+  A180 60 A1 84 A1    DW T_L1, T_L4
- 10+  A184 03 02 20 20  T_L4: DB 3, 2, 4*8, 4*8, 0, 4*8, 0, 4*8
- 10+  A188 00 20 00 20
- 10+  A18C 78 A1 6C A1    DW T_L3, T_L2
- 11+  A190              ;Tetromino J
- 12+  A190 03 02 00 10  T_J1: DB 3, 2, 0, 2*8, 0, 2*8, 2*8, 2*8
- 12+  A194 00 10 10 10
- 12+  A198 9C A1 A8 A1    DW T_J2, T_J3
- 13+  A19C 02 03 10 10  T_J2: DB 2, 3, 2*8, 2*8, 2*8, 0, 0, 2*8
- 13+  A1A0 10 00 00 10
- 13+  A1A4 B4 A1 90 A1    DW T_J4, T_J1
- 14+  A1A8 02 03 10 00  T_J3: DB 2, 3, 2*8, 0, 0, 2*8, 2*8, 2*8
- 14+  A1AC 00 10 10 10
- 14+  A1B0 90 A1 B4 A1    DW T_J1, T_J4
- 15+  A1B4 03 02 10 10  T_J4: DB 3, 2, 2*8, 2*8, 2*8, 0, 2*8, 0
- 15+  A1B8 10 00 10 00
- 15+  A1BC A8 A1 9C A1    DW T_J3, T_J2
- 16+  A1C0              ;Tetromino T
- 17+  A1C0 02 03 28 28  T_T1: DB 2, 3, 5*8, 5*8, 5*8, 0, 5*8, 0
- 17+  A1C4 28 00 28 00
- 17+  A1C8 CC A1 D8 A1    DW T_T2, T_T3
- 18+  A1CC 03 02 28 00  T_T2: DB 3, 2, 5*8, 0, 5*8, 5*8, 5*8, 0
- 18+  A1D0 28 28 28 00
- 18+  A1D4 E4 A1 C0 A1    DW T_T4, T_T1
- 19+  A1D8 03 02 00 28  T_T3: DB 3, 2, 0, 5*8, 5*8, 5*8, 0, 5*8
- 19+  A1DC 28 28 00 28
- 19+  A1E0 C0 A1 E4 A1    DW T_T1, T_T4
- 20+  A1E4 02 03 00 28  T_T4: DB 2, 3, 0, 5*8, 0, 5*8, 5*8, 5*8
- 20+  A1E8 00 28 28 28
- 20+  A1EC D8 A1 CC A1    DW T_T3, T_T2
- 21+  A1F0              ;Tetromino I -- era 6*8, el mismo amarillo que la O. Ahora 1*8 (azul).
- 22+  A1F0 04 01 08 08  T_I1: DB 4, 1, 1*8, 1*8, 1*8, 1*8, 0, 0
- 22+  A1F4 08 08 00 00
- 22+  A1F8 FC A1 FC A1    DW T_I2, T_I2
- 23+  A1FC 01 04 08 08  T_I2: DB 1, 4, 1*8, 1*8, 1*8, 1*8, 0, 0
- 23+  A200 08 08 00 00
- 23+  A204 F0 A1 F0 A1    DW T_I1, T_I1
- 24+  A208              ;Tetromino Z
- 25+  A208 02 03 38 38  T_Z1: DB 2, 3, 7*8, 7*8, 0, 0, 7*8, 7*8
- 25+  A20C 00 00 38 38
- 25+  A210 14 A2 14 A2    DW T_Z2, T_Z2
- 26+  A214 03 02 00 38  T_Z2: DB 3, 2, 0, 7*8, 7*8, 7*8, 7*8, 0
- 26+  A218 38 38 38 00
- 26+  A21C 08 A2 08 A2    DW T_Z1, T_Z1
- 27+  A220              ;Tetromino S -- era 7*8, el mismo blanco que la Z. Ahora 3*8 (magenta).
- 28+  A220 02 03 00 18  T_S1: DB 2, 3, 0, 3*8, 3*8, 3*8, 3*8, 0
- 28+  A224 18 18 18 00
- 28+  A228 2C A2 2C A2    DW T_S2, T_S2
- 29+  A22C 03 02 18 00  T_S2: DB 3, 2, 3*8, 0, 3*8, 3*8, 0, 3*8
- 29+  A230 18 18 00 18
- 29+  A234 20 A2 20 A2    DW T_S1, T_S1
- 30+  A238
- 31+  A238              ; Estados de aparicion, uno por FORMA (no por giro). Son datos de SOLO LECTURA,
- 32+  A238              ; asi que no les afecta el problema de adyacencia que tenia "Medio": al elegir
- 33+  A238              ; de aqui, nada vuelve a indexar aritmeticamente la tabla de registros, con lo
- 34+  A238              ; que desaparece el riesgo de que un indice se pase del ultimo registro.
- 35+  A238 54 A1 60 A1  spawn_table: DW T_0, T_L1, T_J1, T_T1, T_I1, T_Z1, T_S1
- 35+  A23C 90 A1 C0 A1
- 35+  A240 F0 A1 08 A2
- 35+  A244 20 A2
- 36+  A246
- 37+  A246              ; "Medio" (la columna en curso) vivia aqui, incrustado en la imagen de codigo
- 38+  A246              ; justo detras del ultimo registro de pieza y sin ningun margen. Ahora esta en
- 39+  A246              ; variables.asm, con el resto del estado mutable.
- 40+  A246
- 41+  A246              ; Rutina para pintar el tetromino en pantalla
- 42+  A246              pintar_tetromino:
- 43+  A246 F5               push af
- 44+  A247 FD E5            push iy
- 45+  A249 E5               push hl
- 46+  A24A D5               push de
- 47+  A24B C5               push bc
- 48+  A24C F3               di                     ; IY va a apuntar al patron; la ROM ($0038) exige IY=$5C3A
- 49+  A24D
- 50+  A24D CD AB 9B         call CalcularAtributo  ; Calcular la dirección en HL
- 51+  A250 DD 46 00         ld b, (ix)             ; Obtener filas en B
- 52+  A253 DD 4E 01         ld c, (ix+1)           ; Obtener columnas en C
- 53+  A256 DD E5 FD E1      ld iy, ix
- 54+  A25A FD 23            inc iy
- 54+  A25C FD 23          inc iy        ; Ajustar IY a la dirección del patrón de bits del tetromino
- 55+  A25E
- 56+  A25E              pintar_loop:
- 57+  A25E FD 7E 00         ld a, (iy)
- 58+  A261 FD 23            inc iy
- 59+  A263 FE 00            cp 0                   ; Verificar si el byte es cero
- 60+  A265 28 01            jr z, siguiente_byte
- 61+  A267
- 62+  A267 77               ld (hl), a             ; Pintar el byte en pantalla
- 63+  A268              siguiente_byte:
- 64+  A268 23               inc hl                 ; Mover a la siguiente posición en memoria de video
- 65+  A269 0D               dec c                  ; Decrementar el contador de columnas
- 66+  A26A 20 F2            jr nz, pintar_loop     ; Repetir hasta que C sea cero
- 67+  A26C
- 68+  A26C DD 4E 01         ld c, (ix+1)           ; Resetear C para la siguiente fila
- 69+  A26F 3E 20            ld a, 32
- 70+  A271 91               sub c
- 71+  A272 16 00            ld d, 0
- 72+  A274 5F               ld e, a
- 73+  A275 19               add hl, de             ; Mover a la siguiente fila en memoria de video
- 74+  A276 10 E6            djnz pintar_loop       ; Repetir para todas las filas
- 75+  A278
- 76+  A278 C1               pop bc
- 77+  A279 D1               pop de
- 78+  A27A E1               pop hl
- 79+  A27B FD E1            pop iy
- 80+  A27D FB               ei                     ; IY ya vale lo que tenia el llamante: seguro reanudar
- 81+  A27E F1               pop af
- 82+  A27F
- 83+  A27F C9               ret
- 84+  A280
+  1+  A16A              ; Programa para definir y dibujar cada pieza o tetromino
+  2+  A16A
+  3+  A16A              ; Datos de los tetrominos: filas, columnas, patrón de bits, giros
+  4+  A16A              ;Tetromino O
+  5+  A16A 02 02 30 30  T_0: DB 2, 2, 6*8, 6*8, 6*8, 6*8, 0, 0
+  5+  A16E 30 30 00 00
+  5+  A172 6A A1 6A A1    DW T_0, T_0
+  6+  A176              ;Tetromino L
+  7+  A176 03 02 20 00  T_L1: DB 3, 2, 4*8, 0, 4*8, 0, 4*8, 4*8
+  7+  A17A 20 00 20 20
+  7+  A17E 82 A1 8E A1    DW T_L2, T_L3
+  8+  A182 02 03 00 00  T_L2: DB 2, 3, 0, 0, 4*8, 4*8, 4*8, 4*8
+  8+  A186 20 20 20 20
+  8+  A18A 9A A1 76 A1    DW T_L4, T_L1
+  9+  A18E 02 03 20 20  T_L3: DB 2, 3, 4*8, 4*8, 4*8, 4*8, 0, 0
+  9+  A192 20 20 00 00
+  9+  A196 76 A1 9A A1    DW T_L1, T_L4
+ 10+  A19A 03 02 20 20  T_L4: DB 3, 2, 4*8, 4*8, 0, 4*8, 0, 4*8
+ 10+  A19E 00 20 00 20
+ 10+  A1A2 8E A1 82 A1    DW T_L3, T_L2
+ 11+  A1A6              ;Tetromino J
+ 12+  A1A6 03 02 00 10  T_J1: DB 3, 2, 0, 2*8, 0, 2*8, 2*8, 2*8
+ 12+  A1AA 00 10 10 10
+ 12+  A1AE B2 A1 BE A1    DW T_J2, T_J3
+ 13+  A1B2 02 03 10 10  T_J2: DB 2, 3, 2*8, 2*8, 2*8, 0, 0, 2*8
+ 13+  A1B6 10 00 00 10
+ 13+  A1BA CA A1 A6 A1    DW T_J4, T_J1
+ 14+  A1BE 02 03 10 00  T_J3: DB 2, 3, 2*8, 0, 0, 2*8, 2*8, 2*8
+ 14+  A1C2 00 10 10 10
+ 14+  A1C6 A6 A1 CA A1    DW T_J1, T_J4
+ 15+  A1CA 03 02 10 10  T_J4: DB 3, 2, 2*8, 2*8, 2*8, 0, 2*8, 0
+ 15+  A1CE 10 00 10 00
+ 15+  A1D2 BE A1 B2 A1    DW T_J3, T_J2
+ 16+  A1D6              ;Tetromino T
+ 17+  A1D6 02 03 28 28  T_T1: DB 2, 3, 5*8, 5*8, 5*8, 0, 5*8, 0
+ 17+  A1DA 28 00 28 00
+ 17+  A1DE E2 A1 EE A1    DW T_T2, T_T3
+ 18+  A1E2 03 02 28 00  T_T2: DB 3, 2, 5*8, 0, 5*8, 5*8, 5*8, 0
+ 18+  A1E6 28 28 28 00
+ 18+  A1EA FA A1 D6 A1    DW T_T4, T_T1
+ 19+  A1EE 03 02 00 28  T_T3: DB 3, 2, 0, 5*8, 5*8, 5*8, 0, 5*8
+ 19+  A1F2 28 28 00 28
+ 19+  A1F6 D6 A1 FA A1    DW T_T1, T_T4
+ 20+  A1FA 02 03 00 28  T_T4: DB 2, 3, 0, 5*8, 0, 5*8, 5*8, 5*8
+ 20+  A1FE 00 28 28 28
+ 20+  A202 EE A1 E2 A1    DW T_T3, T_T2
+ 21+  A206              ;Tetromino I -- era 6*8, el mismo amarillo que la O. Ahora 1*8 (azul).
+ 22+  A206 04 01 08 08  T_I1: DB 4, 1, 1*8, 1*8, 1*8, 1*8, 0, 0
+ 22+  A20A 08 08 00 00
+ 22+  A20E 12 A2 12 A2    DW T_I2, T_I2
+ 23+  A212 01 04 08 08  T_I2: DB 1, 4, 1*8, 1*8, 1*8, 1*8, 0, 0
+ 23+  A216 08 08 00 00
+ 23+  A21A 06 A2 06 A2    DW T_I1, T_I1
+ 24+  A21E              ;Tetromino Z
+ 25+  A21E 02 03 38 38  T_Z1: DB 2, 3, 7*8, 7*8, 0, 0, 7*8, 7*8
+ 25+  A222 00 00 38 38
+ 25+  A226 2A A2 2A A2    DW T_Z2, T_Z2
+ 26+  A22A 03 02 00 38  T_Z2: DB 3, 2, 0, 7*8, 7*8, 7*8, 7*8, 0
+ 26+  A22E 38 38 38 00
+ 26+  A232 1E A2 1E A2    DW T_Z1, T_Z1
+ 27+  A236              ;Tetromino S -- era 7*8, el mismo blanco que la Z. Ahora 3*8 (magenta).
+ 28+  A236 02 03 00 18  T_S1: DB 2, 3, 0, 3*8, 3*8, 3*8, 3*8, 0
+ 28+  A23A 18 18 18 00
+ 28+  A23E 42 A2 42 A2    DW T_S2, T_S2
+ 29+  A242 03 02 18 00  T_S2: DB 3, 2, 3*8, 0, 3*8, 3*8, 0, 3*8
+ 29+  A246 18 18 00 18
+ 29+  A24A 36 A2 36 A2    DW T_S1, T_S1
+ 30+  A24E
+ 31+  A24E              ; Estados de aparicion, uno por FORMA (no por giro). Son datos de SOLO LECTURA,
+ 32+  A24E              ; asi que no les afecta el problema de adyacencia que tenia "Medio": al elegir
+ 33+  A24E              ; de aqui, nada vuelve a indexar aritmeticamente la tabla de registros, con lo
+ 34+  A24E              ; que desaparece el riesgo de que un indice se pase del ultimo registro.
+ 35+  A24E 6A A1 76 A1  spawn_table: DW T_0, T_L1, T_J1, T_T1, T_I1, T_Z1, T_S1
+ 35+  A252 A6 A1 D6 A1
+ 35+  A256 06 A2 1E A2
+ 35+  A25A 36 A2
+ 36+  A25C
+ 37+  A25C              ; "Medio" (la columna en curso) vivia aqui, incrustado en la imagen de codigo
+ 38+  A25C              ; justo detras del ultimo registro de pieza y sin ningun margen. Ahora esta en
+ 39+  A25C              ; variables.asm, con el resto del estado mutable.
+ 40+  A25C
+ 41+  A25C              ; Rutina para pintar el tetromino en pantalla
+ 42+  A25C              pintar_tetromino:
+ 43+  A25C F5               push af
+ 44+  A25D FD E5            push iy
+ 45+  A25F E5               push hl
+ 46+  A260 D5               push de
+ 47+  A261 C5               push bc
+ 48+  A262 F3               di                     ; IY va a apuntar al patron; la ROM ($0038) exige IY=$5C3A
+ 49+  A263
+ 50+  A263 CD AB 9B         call CalcularAtributo  ; Calcular la dirección en HL
+ 51+  A266 DD 46 00         ld b, (ix)             ; Obtener filas en B
+ 52+  A269 DD 4E 01         ld c, (ix+1)           ; Obtener columnas en C
+ 53+  A26C DD E5 FD E1      ld iy, ix
+ 54+  A270 FD 23            inc iy
+ 54+  A272 FD 23          inc iy        ; Ajustar IY a la dirección del patrón de bits del tetromino
+ 55+  A274
+ 56+  A274              pintar_loop:
+ 57+  A274 FD 7E 00         ld a, (iy)
+ 58+  A277 FD 23            inc iy
+ 59+  A279 FE 00            cp 0                   ; Verificar si el byte es cero
+ 60+  A27B 28 01            jr z, siguiente_byte
+ 61+  A27D
+ 62+  A27D 77               ld (hl), a             ; Pintar el byte en pantalla
+ 63+  A27E              siguiente_byte:
+ 64+  A27E 23               inc hl                 ; Mover a la siguiente posición en memoria de video
+ 65+  A27F 0D               dec c                  ; Decrementar el contador de columnas
+ 66+  A280 20 F2            jr nz, pintar_loop     ; Repetir hasta que C sea cero
+ 67+  A282
+ 68+  A282 DD 4E 01         ld c, (ix+1)           ; Resetear C para la siguiente fila
+ 69+  A285 3E 20            ld a, 32
+ 70+  A287 91               sub c
+ 71+  A288 16 00            ld d, 0
+ 72+  A28A 5F               ld e, a
+ 73+  A28B 19               add hl, de             ; Mover a la siguiente fila en memoria de video
+ 74+  A28C 10 E6            djnz pintar_loop       ; Repetir para todas las filas
+ 75+  A28E
+ 76+  A28E C1               pop bc
+ 77+  A28F D1               pop de
+ 78+  A290 E1               pop hl
+ 79+  A291 FD E1            pop iy
+ 80+  A293 FB               ei                     ; IY ya vale lo que tenia el llamante: seguro reanudar
+ 81+  A294 F1               pop af
+ 82+  A295
+ 83+  A295 C9               ret
+ 84+  A296
 # file closed: piezas.asm
- 39   A280                  INCLUDE "test_col.asm"
+ 39   A296                  INCLUDE "test_col.asm"
 # file opened: test_col.asm
-  1+  A280              ;Programa para validar la colision
-  2+  A280
-  3+  A280              comprobar:
-  4+  A280 DD E5            push ix
-  5+  A282 FD E5            push iy
-  6+  A284 E5               push hl
-  7+  A285 D5               push de
-  8+  A286 C5               push bc
-  9+  A287 F3               di                   ; IY va a apuntar al patron; la ROM ($0038) exige IY=$5C3A
- 10+  A288
- 11+  A288 CD AB 9B         CALL CalcularAtributo
- 12+  A28B                  ; Configurar las filas y columnas del tetromino
- 13+  A28B DD 46 00         ld b, (ix)           ; Filas en B
- 14+  A28E DD 4E 01         ld c, (ix+1)         ; Columnas en C
- 15+  A291 DD E5 FD E1      ld iy, ix
- 16+  A295 FD 23            inc iy
- 17+  A297 FD 23            inc iy               ; Ajustar IY a la dirección del patrón de bits del tetromino
- 18+  A299
- 19+  A299              validar_fila:
- 20+  A299 FD 7E 00         ld a, (iy)
- 21+  A29C FD 23            inc iy
- 22+  A29E B7               or a
- 23+  A29F 28 04            jr z, siguiente_cuadro
- 24+  A2A1
- 25+  A2A1 7E               ld a, (hl)
- 26+  A2A2 B7               or a
- 27+  A2A3 20 14            jr nz, colision_detectada
- 28+  A2A5
- 29+  A2A5              siguiente_cuadro:
- 30+  A2A5 23               inc hl
- 31+  A2A6 0D               dec c
- 32+  A2A7 20 F0            jr nz, validar_fila
- 33+  A2A9
- 34+  A2A9                  ; Avanzar a la siguiente fila del tetromino
- 35+  A2A9 DD 4E 01         ld c, (ix+1)
- 36+  A2AC 3E 20            ld a, 32
- 37+  A2AE 91               sub c
- 38+  A2AF 16 00            ld d, 0
- 39+  A2B1 5F               ld e, a
- 40+  A2B2 19               add hl, de
- 41+  A2B3 10 E4            djnz validar_fila
- 42+  A2B5
- 43+  A2B5 3E 00            ld a, 0              ; No hay colisión
- 44+  A2B7 18 02            jr fin_comprobacion
- 45+  A2B9
- 46+  A2B9              colision_detectada:
- 47+  A2B9 3E 01            ld a, 1              ; Colisión detectada
- 48+  A2BB
- 49+  A2BB              fin_comprobacion:
- 50+  A2BB C1               pop bc
- 51+  A2BC D1               pop de
- 52+  A2BD E1               pop hl
- 53+  A2BE FD E1            pop iy
- 54+  A2C0 FB               ei                   ; IY ya vale lo que tenia el llamante: seguro reanudar
- 55+  A2C1 DD E1            pop ix               ; AF no se restaura a proposito: A es el valor de retorno
- 56+  A2C3
- 57+  A2C3 C9               ret
+  1+  A296              ;Programa para validar la colision
+  2+  A296
+  3+  A296              comprobar:
+  4+  A296 DD E5            push ix
+  5+  A298 FD E5            push iy
+  6+  A29A E5               push hl
+  7+  A29B D5               push de
+  8+  A29C C5               push bc
+  9+  A29D F3               di                   ; IY va a apuntar al patron; la ROM ($0038) exige IY=$5C3A
+ 10+  A29E
+ 11+  A29E CD AB 9B         CALL CalcularAtributo
+ 12+  A2A1                  ; Configurar las filas y columnas del tetromino
+ 13+  A2A1 DD 46 00         ld b, (ix)           ; Filas en B
+ 14+  A2A4 DD 4E 01         ld c, (ix+1)         ; Columnas en C
+ 15+  A2A7 DD E5 FD E1      ld iy, ix
+ 16+  A2AB FD 23            inc iy
+ 17+  A2AD FD 23            inc iy               ; Ajustar IY a la dirección del patrón de bits del tetromino
+ 18+  A2AF
+ 19+  A2AF              validar_fila:
+ 20+  A2AF FD 7E 00         ld a, (iy)
+ 21+  A2B2 FD 23            inc iy
+ 22+  A2B4 B7               or a
+ 23+  A2B5 28 04            jr z, siguiente_cuadro
+ 24+  A2B7
+ 25+  A2B7 7E               ld a, (hl)
+ 26+  A2B8 B7               or a
+ 27+  A2B9 20 14            jr nz, colision_detectada
+ 28+  A2BB
+ 29+  A2BB              siguiente_cuadro:
+ 30+  A2BB 23               inc hl
+ 31+  A2BC 0D               dec c
+ 32+  A2BD 20 F0            jr nz, validar_fila
+ 33+  A2BF
+ 34+  A2BF                  ; Avanzar a la siguiente fila del tetromino
+ 35+  A2BF DD 4E 01         ld c, (ix+1)
+ 36+  A2C2 3E 20            ld a, 32
+ 37+  A2C4 91               sub c
+ 38+  A2C5 16 00            ld d, 0
+ 39+  A2C7 5F               ld e, a
+ 40+  A2C8 19               add hl, de
+ 41+  A2C9 10 E4            djnz validar_fila
+ 42+  A2CB
+ 43+  A2CB 3E 00            ld a, 0              ; No hay colisión
+ 44+  A2CD 18 02            jr fin_comprobacion
+ 45+  A2CF
+ 46+  A2CF              colision_detectada:
+ 47+  A2CF 3E 01            ld a, 1              ; Colisión detectada
+ 48+  A2D1
+ 49+  A2D1              fin_comprobacion:
+ 50+  A2D1 C1               pop bc
+ 51+  A2D2 D1               pop de
+ 52+  A2D3 E1               pop hl
+ 53+  A2D4 FD E1            pop iy
+ 54+  A2D6 FB               ei                   ; IY ya vale lo que tenia el llamante: seguro reanudar
+ 55+  A2D7 DD E1            pop ix               ; AF no se restaura a proposito: A es el valor de retorno
+ 56+  A2D9
+ 57+  A2D9 C9               ret
 # file closed: test_col.asm
- 40   A2C4                  INCLUDE "clear.asm"
+ 40   A2DA                  INCLUDE "clear.asm"
 # file opened: clear.asm
-  1+  A2C4              ; Programa para borrar un tetromino de la pantalla
-  2+  A2C4
-  3+  A2C4              borrar_tetromino:
-  4+  A2C4 F5               push af
-  5+  A2C5 FD E5            push iy
-  6+  A2C7 E5               push hl
-  7+  A2C8 D5               push de
-  8+  A2C9 C5               push bc
-  9+  A2CA F3               di                    ; IY va a apuntar al patron; la ROM ($0038) exige IY=$5C3A
- 10+  A2CB
- 11+  A2CB CD AB 9B         call CalcularAtributo
- 12+  A2CE DD 46 00         ld b, (ix)            ; Guardar filas en B
- 13+  A2D1 DD 4E 01         ld c, (ix+1)          ; Guardar columnas en C
- 14+  A2D4 DD E5 FD E1      ld iy, ix
- 15+  A2D8 FD 23            inc iy
- 16+  A2DA FD 23            inc iy                ; Ajustar IY a la dirección del patrón de bits del tetromino
- 17+  A2DC
- 18+  A2DC              loop_filas:
- 19+  A2DC DD 4E 01         ld c, (ix+1)          ; Restaurar columnas en C para la nueva fila
- 20+  A2DF              loop_columnas:
- 21+  A2DF FD 7E 00         ld a, (iy)            ; Cargar el byte del patrón del tetromino
- 22+  A2E2 FD 23            inc iy
- 23+  A2E4 B7               or a                  ; Verificar si el byte es cero
- 24+  A2E5 28 02            jr z, siguiente_columna ; Si es cero, saltar a la siguiente columna
- 25+  A2E7
- 26+  A2E7 36 00            ld (hl), 0            ; Borrar el byte en pantalla
- 27+  A2E9
- 28+  A2E9              siguiente_columna:
- 29+  A2E9 23               inc hl                ; Mover a la siguiente posición en memoria de video
- 30+  A2EA 0D               dec c                 ; Decrementar el contador de columnas
- 31+  A2EB 20 F2            jr nz, loop_columnas  ; Repetir hasta que C sea cero
- 32+  A2ED
- 33+  A2ED 3E 20            ld a, 32
- 34+  A2EF DD 96 01         sub (ix+1)            ; Calcular el offset para la siguiente fila
- 35+  A2F2 16 00            ld d, 0
- 36+  A2F4 5F               ld e, a
- 37+  A2F5 19               add hl, de            ; Mover a la siguiente fila en memoria de video
- 38+  A2F6 10 E4            djnz loop_filas       ; Repetir para todas las filas
- 39+  A2F8
- 40+  A2F8 C1               pop bc
- 41+  A2F9 D1               pop de
- 42+  A2FA E1               pop hl
- 43+  A2FB FD E1            pop iy
- 44+  A2FD FB               ei                    ; IY ya vale lo que tenia el llamante: seguro reanudar
- 45+  A2FE F1               pop af
- 46+  A2FF
- 47+  A2FF C9               ret
- 48+  A300
+  1+  A2DA              ; Programa para borrar un tetromino de la pantalla
+  2+  A2DA
+  3+  A2DA              borrar_tetromino:
+  4+  A2DA F5               push af
+  5+  A2DB FD E5            push iy
+  6+  A2DD E5               push hl
+  7+  A2DE D5               push de
+  8+  A2DF C5               push bc
+  9+  A2E0 F3               di                    ; IY va a apuntar al patron; la ROM ($0038) exige IY=$5C3A
+ 10+  A2E1
+ 11+  A2E1 CD AB 9B         call CalcularAtributo
+ 12+  A2E4 DD 46 00         ld b, (ix)            ; Guardar filas en B
+ 13+  A2E7 DD 4E 01         ld c, (ix+1)          ; Guardar columnas en C
+ 14+  A2EA DD E5 FD E1      ld iy, ix
+ 15+  A2EE FD 23            inc iy
+ 16+  A2F0 FD 23            inc iy                ; Ajustar IY a la dirección del patrón de bits del tetromino
+ 17+  A2F2
+ 18+  A2F2              loop_filas:
+ 19+  A2F2 DD 4E 01         ld c, (ix+1)          ; Restaurar columnas en C para la nueva fila
+ 20+  A2F5              loop_columnas:
+ 21+  A2F5 FD 7E 00         ld a, (iy)            ; Cargar el byte del patrón del tetromino
+ 22+  A2F8 FD 23            inc iy
+ 23+  A2FA B7               or a                  ; Verificar si el byte es cero
+ 24+  A2FB 28 02            jr z, siguiente_columna ; Si es cero, saltar a la siguiente columna
+ 25+  A2FD
+ 26+  A2FD 36 00            ld (hl), 0            ; Borrar el byte en pantalla
+ 27+  A2FF
+ 28+  A2FF              siguiente_columna:
+ 29+  A2FF 23               inc hl                ; Mover a la siguiente posición en memoria de video
+ 30+  A300 0D               dec c                 ; Decrementar el contador de columnas
+ 31+  A301 20 F2            jr nz, loop_columnas  ; Repetir hasta que C sea cero
+ 32+  A303
+ 33+  A303 3E 20            ld a, 32
+ 34+  A305 DD 96 01         sub (ix+1)            ; Calcular el offset para la siguiente fila
+ 35+  A308 16 00            ld d, 0
+ 36+  A30A 5F               ld e, a
+ 37+  A30B 19               add hl, de            ; Mover a la siguiente fila en memoria de video
+ 38+  A30C 10 E4            djnz loop_filas       ; Repetir para todas las filas
+ 39+  A30E
+ 40+  A30E C1               pop bc
+ 41+  A30F D1               pop de
+ 42+  A310 E1               pop hl
+ 43+  A311 FD E1            pop iy
+ 44+  A313 FB               ei                    ; IY ya vale lo que tenia el llamante: seguro reanudar
+ 45+  A314 F1               pop af
+ 46+  A315
+ 47+  A315 C9               ret
+ 48+  A316
 # file closed: clear.asm
- 41   A300                  INCLUDE "giro.asm"
+ 41   A316                  INCLUDE "giro.asm"
 # file opened: giro.asm
-  1+  A300              GIRAR:
-  2+  A300              ;--------------------------------------------------------------------
-  3+  A300              ;Gira la pieza actual: valida, aplica retranqueo (wall kick) y CONFIRMA
-  4+  A300              ;aqui dentro. El llamante NO debe volver a comprobar el resultado.
-  5+  A300              ;
-  6+  A300              ;No lee el teclado ni espera a que se suelte ninguna tecla: el bucle
-  7+  A300              ;llama a leer_teclas una vez por pasada y pasa la direccion en A. Leer
-  8+  A300              ;aqui dejaria la pieza invisible entre el borrado y el repintado.
-  9+  A300              ;
- 10+  A300              ;Param. de Entrada: IX = registro actual, B = fila, C = columna,
- 11+  A300              ;                   (Medio) = columna, A = 0 girar izquierda (Q),
- 12+  A300              ;                   A distinto de 0 girar derecha (W)
- 13+  A300              ;Param. de Salida : si cabe -> IX = registro nuevo, C y (Medio) = columna nueva
- 14+  A300              ;                   si no cabe -> IX, C y (Medio) intactos
- 15+  A300              ;Destruye AF y DE. Preserva B, HL, IY. C es SALIDA si el giro cabe.
- 16+  A300              ;--------------------------------------------------------------------
- 17+  A300 E5               PUSH HL
- 18+  A301 B7               OR  A
- 19+  A302 20 08            JR  NZ, giro_der
- 20+  A304 DD 56 09         LD  D,(IX + 9)          ; +8/+9 = sucesor al girar a la izquierda
- 21+  A307 DD 5E 08         LD  E,(IX + 8)          ;  (byte bajo primero)
- 22+  A30A 18 06            JR  giro_probar
- 23+  A30C              giro_der:
- 24+  A30C DD 56 0B         LD  D,(IX + 11)         ; +10/+11 = sucesor al girar a la derecha
- 25+  A30F DD 5E 0A         LD  E,(IX + 10)
- 26+  A312
- 27+  A312              giro_probar:
- 28+  A312 DD E5            PUSH IX                 ; estado al que volver si no cabe en ningun sitio
- 29+  A314 DD 7E 01         LD  A,(IX + 1)          ; ancho de la pieza VIEJA: leerlo antes de mover IX
- 30+  A317 DD 62 DD 6B      LD  IX, DE              ; IX = estado candidato (instruccion falsa, ver
- 31+  A31B                                          ;  assembler-conventions: LD IXH,D : LD IXL,E)
- 32+  A31B DD 96 01         SUB (IX + 1)            ; A = ancho_viejo - ancho_nuevo, con signo (-3..+3)
- 33+  A31E F2 22 A3         JP  P, giro_media
- 34+  A321 3C               INC A                   ; los negativos deben redondear hacia cero, no hacia
- 35+  A322              giro_media:                 ;  -infinito, para que girar e desgirar vuelva a la
- 36+  A322 CB 2F            SRA A                   ;  misma columna. A = (viejo-nuevo)/2
- 37+  A324 81               ADD A, C                ; anclamos por el centro, no por la esquina superior
- 38+  A325 5F               LD  E, A                ; E = columna base recentrada: aun es una CANDIDATA
- 39+  A326 21 4C A3         LD  HL, giro_kicks
- 40+  A329
- 41+  A329              giro_bucle:
- 42+  A329 7E               LD  A,(HL)
- 43+  A32A 23               INC HL
- 44+  A32B FE 80            CP  $80                 ; centinela: se han agotado las candidatas
- 45+  A32D 28 15            JR  Z, giro_deshacer
- 46+  A32F 83               ADD A, E                ; columna candidata = base recentrada + retranqueo
- 47+  A330 4F               LD  C, A                ; las dos pruebas leen la fila de B y la columna de C
- 48+  A331 CD 77 A3         CALL en_rango           ; PRUEBA 1 geometria: ¿cabe entera en las columnas
- 49+  A334 B7               OR  A                   ;  7-24? comprobar no puede ver esto
- 50+  A335 20 F2            JR  NZ, giro_bucle
- 51+  A337 CD 80 A2         CALL comprobar          ; PRUEBA 2 solape: A=0 cabe, A=1 choca con un bloque
- 52+  A33A B7               OR  A                   ;  o con el borde. Preserva BC/DE/HL/IX/IY.
- 53+  A33B 20 EC            JR  NZ, giro_bucle
- 54+  A33D 79               LD  A, C
- 55+  A33E 32 8D A5         LD  (Medio), A          ; CONFIRMAMOS tambien la columna en memoria: el bucle
- 56+  A341 D1               POP DE                  ;  recarga C desde Medio y deshariamos el retranqueo.
- 57+  A342 18 06            JR  giro_fin            ; descartamos el IX viejo: vale el nuevo
- 58+  A344
- 59+  A344              giro_deshacer:
- 60+  A344 DD E1            POP IX                  ; no cabia en ningun sitio: recuperamos la forma...
- 61+  A346 3A 8D A5         LD  A,(Medio)
- 62+  A349 4F               LD  C, A                ; ...y la columna. (Medio) es la copia de respaldo de C.
- 63+  A34A              giro_fin:
- 64+  A34A E1               POP HL
- 65+  A34B C9               RET
- 66+  A34C
- 67+  A34C 00 FF 01 FE  giro_kicks: DB 0, -1, 1, -2, 2, $80   ; en el sitio, luego 1 y luego 2 celdas a
- 67+  A350 02 80
- 68+  A352                                                    ; cada lado. Datos de solo lectura,
- 69+  A352                                                    ; despues del RET: nunca se ejecutan.
- 70+  A352
+  1+  A316              GIRAR:
+  2+  A316              ;--------------------------------------------------------------------
+  3+  A316              ;Gira la pieza actual: valida, aplica retranqueo (wall kick) y CONFIRMA
+  4+  A316              ;aqui dentro. El llamante NO debe volver a comprobar el resultado.
+  5+  A316              ;
+  6+  A316              ;No lee el teclado ni espera a que se suelte ninguna tecla: el bucle
+  7+  A316              ;llama a leer_teclas una vez por pasada y pasa la direccion en A. Leer
+  8+  A316              ;aqui dejaria la pieza invisible entre el borrado y el repintado.
+  9+  A316              ;
+ 10+  A316              ;Param. de Entrada: IX = registro actual, B = fila, C = columna,
+ 11+  A316              ;                   (Medio) = columna, A = 0 girar izquierda (Q),
+ 12+  A316              ;                   A distinto de 0 girar derecha (W)
+ 13+  A316              ;Param. de Salida : si cabe -> IX = registro nuevo, C y (Medio) = columna nueva
+ 14+  A316              ;                   si no cabe -> IX, C y (Medio) intactos
+ 15+  A316              ;Destruye AF y DE. Preserva B, HL, IY. C es SALIDA si el giro cabe.
+ 16+  A316              ;--------------------------------------------------------------------
+ 17+  A316 E5               PUSH HL
+ 18+  A317 B7               OR  A
+ 19+  A318 20 08            JR  NZ, giro_der
+ 20+  A31A DD 56 09         LD  D,(IX + 9)          ; +8/+9 = sucesor al girar a la izquierda
+ 21+  A31D DD 5E 08         LD  E,(IX + 8)          ;  (byte bajo primero)
+ 22+  A320 18 06            JR  giro_probar
+ 23+  A322              giro_der:
+ 24+  A322 DD 56 0B         LD  D,(IX + 11)         ; +10/+11 = sucesor al girar a la derecha
+ 25+  A325 DD 5E 0A         LD  E,(IX + 10)
+ 26+  A328
+ 27+  A328              giro_probar:
+ 28+  A328 DD E5            PUSH IX                 ; estado al que volver si no cabe en ningun sitio
+ 29+  A32A DD 7E 01         LD  A,(IX + 1)          ; ancho de la pieza VIEJA: leerlo antes de mover IX
+ 30+  A32D DD 62 DD 6B      LD  IX, DE              ; IX = estado candidato (instruccion falsa, ver
+ 31+  A331                                          ;  assembler-conventions: LD IXH,D : LD IXL,E)
+ 32+  A331 DD 96 01         SUB (IX + 1)            ; A = ancho_viejo - ancho_nuevo, con signo (-3..+3)
+ 33+  A334 F2 38 A3         JP  P, giro_media
+ 34+  A337 3C               INC A                   ; los negativos deben redondear hacia cero, no hacia
+ 35+  A338              giro_media:                 ;  -infinito, para que girar e desgirar vuelva a la
+ 36+  A338 CB 2F            SRA A                   ;  misma columna. A = (viejo-nuevo)/2
+ 37+  A33A 81               ADD A, C                ; anclamos por el centro, no por la esquina superior
+ 38+  A33B 5F               LD  E, A                ; E = columna base recentrada: aun es una CANDIDATA
+ 39+  A33C 21 62 A3         LD  HL, giro_kicks
+ 40+  A33F
+ 41+  A33F              giro_bucle:
+ 42+  A33F 7E               LD  A,(HL)
+ 43+  A340 23               INC HL
+ 44+  A341 FE 80            CP  $80                 ; centinela: se han agotado las candidatas
+ 45+  A343 28 15            JR  Z, giro_deshacer
+ 46+  A345 83               ADD A, E                ; columna candidata = base recentrada + retranqueo
+ 47+  A346 4F               LD  C, A                ; las dos pruebas leen la fila de B y la columna de C
+ 48+  A347 CD A2 A3         CALL en_rango           ; PRUEBA 1 geometria: ¿cabe entera en las columnas
+ 49+  A34A B7               OR  A                   ;  7-24? comprobar no puede ver esto
+ 50+  A34B 20 F2            JR  NZ, giro_bucle
+ 51+  A34D CD 96 A2         CALL comprobar          ; PRUEBA 2 solape: A=0 cabe, A=1 choca con un bloque
+ 52+  A350 B7               OR  A                   ;  o con el borde. Preserva BC/DE/HL/IX/IY.
+ 53+  A351 20 EC            JR  NZ, giro_bucle
+ 54+  A353 79               LD  A, C
+ 55+  A354 32 B9 A5         LD  (Medio), A          ; CONFIRMAMOS tambien la columna en memoria: el bucle
+ 56+  A357 D1               POP DE                  ;  recarga C desde Medio y deshariamos el retranqueo.
+ 57+  A358 18 06            JR  giro_fin            ; descartamos el IX viejo: vale el nuevo
+ 58+  A35A
+ 59+  A35A              giro_deshacer:
+ 60+  A35A DD E1            POP IX                  ; no cabia en ningun sitio: recuperamos la forma...
+ 61+  A35C 3A B9 A5         LD  A,(Medio)
+ 62+  A35F 4F               LD  C, A                ; ...y la columna. (Medio) es la copia de respaldo de C.
+ 63+  A360              giro_fin:
+ 64+  A360 E1               POP HL
+ 65+  A361 C9               RET
+ 66+  A362
+ 67+  A362 00 FF 01 FE  giro_kicks: DB 0, -1, 1, -2, 2, $80   ; en el sitio, luego 1 y luego 2 celdas a
+ 67+  A366 02 80
+ 68+  A368                                                    ; cada lado. Datos de solo lectura,
+ 69+  A368                                                    ; despues del RET: nunca se ejecutan.
+ 70+  A368
 # file closed: giro.asm
- 42   A352                  INCLUDE "entrada.asm"
+ 42   A368                  INCLUDE "entrada.asm"
 # file opened: entrada.asm
-  1+  A352              ; entrada.asm -- lectura de teclado no bloqueante y limite lateral del pozo
-  2+  A352              ;
-  3+  A352              ; Sustituye a las dos esperas de "soltar tecla" (giro.asm, movimiento.asm), que
-  4+  A352              ; congelaban gravedad y dibujado mientras una tecla estuviera pulsada.
-  5+  A352
-  6+  A352              COL_IZQ_POZO EQU 7    ; primera columna interior del pozo
-  7+  A352              COL_DER_POZO EQU 24   ; ultima columna interior del pozo
-  8+  A352
-  9+  A352              ; leer_teclas -- lectura no bloqueante con deteccion de flanco.
- 10+  A352              ;   Llamar UNA sola vez por pasada del bucle.
- 11+  A352              ;   Salida: A = mascara de las teclas que han pasado de SUELTA a PULSADA desde
- 12+  A352              ;           la llamada anterior:
- 13+  A352              ;             bit0 = K (derecha)   bit1 = J (izquierda)
- 14+  A352              ;             bit2 = Q (giro izq)  bit3 = W (giro drcha)
- 15+  A352              ;           A = 0 si no hay ninguna nueva.
- 16+  A352              ;   Preserva BC, DE, HL, IX, IY. Destruye AF.
- 17+  A352              leer_teclas:
- 18+  A352 C5               push bc
- 18+  A353 D5             push de
- 18+  A354 E5             push hl
- 19+  A355 01 FE BF         ld bc, $BFFE
- 19+  A358 ED 78          in a,(c) ; media fila ENTER,L,K,J,H. ACTIVO A NIVEL BAJO:
- 20+  A35A 2F               cpl                     ;  una tecla pulsada lee 0, asi que invertimos.
- 21+  A35B 0F               rrca
- 21+  A35C 0F             rrca             ;  K esta en el bit2 y J en el bit3: los bajamos.
- 22+  A35D E6 03            and %00000011           ;  bit0 = K, bit1 = J (descarta bits 5-7, que no
- 23+  A35F 5F               ld e, a                 ;  son teclado y tras el cpl valen basura)
- 24+  A360 01 FE FB         ld bc, $FBFE
- 24+  A363 ED 78          in a,(c) ; media fila Q,W,E,R,T: Q en bit0, W en bit1
- 25+  A365 2F               cpl
- 26+  A366 07               rlca
- 26+  A367 07             rlca             ;  los subimos a los bits 2 y 3
- 27+  A368 E6 0C            and %00001100           ;  bit2 = Q, bit3 = W
- 28+  A36A B3               or e
- 28+  A36B 5F             ld e, a          ; E = las cuatro teclas, 1 = pulsada AHORA
- 29+  A36C 21 89 A5         ld hl, teclas_ant       ; un byte: la misma mascara de la llamada anterior
- 30+  A36F 7E               ld a,(hl)
- 30+  A370 73             ld (hl), e  ; leemos la vieja y guardamos la nueva
- 31+  A371 2F               cpl
- 31+  A372 A3             and e             ; suelta antes Y pulsada ahora = pulsacion NUEVA
- 32+  A373 E1               pop hl
- 32+  A374 D1             pop de
- 32+  A375 C1             pop bc
- 33+  A376 C9               ret
- 34+  A377
- 35+  A377              ; en_rango -- ¿cabe la pieza IX entera en la columna C?
- 36+  A377              ;   comprobar no puede responder a esto: solo ve el borde porque su byte de
- 37+  A377              ;   atributo es distinto de cero, asi que una candidata que se haya SALTADO el
- 38+  A377              ;   borde lee celdas vacias fuera del pozo y la aceptaria.
- 39+  A377              ;   Entrada: C = columna candidata, IX = registro de la pieza; (ix+1) = ancho.
- 40+  A377              ;   Salida : A = 0 cabe, A = 1 se sale.
- 41+  A377              ;   Preserva BC, DE, HL, IX, IY. Destruye AF.
- 42+  A377              en_rango:
- 43+  A377 79               ld a, c
- 44+  A378 FE 07            cp COL_IZQ_POZO
- 45+  A37A 38 0B            jr c, er_fuera          ; C < 7 -> a la izquierda de la pared izquierda
- 46+  A37C DD 86 01         add a,(ix+1)            ; A = C + ancho
- 47+  A37F 38 06            jr c, er_fuera          ; desbordo los 8 bits: C estaba lejisimos
- 48+  A381 FE 1A            cp COL_DER_POZO + 2     ; la ultima celda es C+ancho-1 y debe ser <= 24,
- 49+  A383 30 02            jr nc, er_fuera         ;  o sea C+ancho <= 25, o sea C+ancho < 26
- 50+  A385 AF               xor a                   ; A = 0: todas las celdas caen entre 7 y 24
- 51+  A386 C9               ret
- 52+  A387              er_fuera:
- 53+  A387 3E 01            ld a, 1
- 54+  A389 C9               ret
- 55+  A38A
+  1+  A368              ; entrada.asm -- lectura de teclado no bloqueante y limite lateral del pozo
+  2+  A368              ;
+  3+  A368              ; Sustituye a las dos esperas de "soltar tecla" (giro.asm, movimiento.asm), que
+  4+  A368              ; congelaban gravedad y dibujado mientras una tecla estuviera pulsada.
+  5+  A368
+  6+  A368              COL_IZQ_POZO EQU 7    ; primera columna interior del pozo
+  7+  A368              COL_DER_POZO EQU 24   ; ultima columna interior del pozo
+  8+  A368
+  9+  A368              ; leer_teclas -- lectura no bloqueante. Llamar UNA sola vez por pasada del
+ 10+  A368              ;   bucle. El resultado mezcla dos convenios distintos en el mismo byte:
+ 11+  A368              ;   Salida: A = bit0 = K (derecha)   bit1 = J (izquierda)   } FLANCO: 1 solo
+ 12+  A368              ;                bit2 = Q (giro izq)  bit3 = W (giro drcha)  } en la pasada en
+ 13+  A368              ;                                                             que pasan de
+ 14+  A368              ;                                                             SUELTA a PULSADA
+ 15+  A368              ;               bit4 = SPACE (caida rapida / soft drop)     } ESTADO: 1 en
+ 16+  A368              ;                                                             TODAS las
+ 17+  A368              ;                                                             pasadas mientras
+ 18+  A368              ;                                                             siga pulsada, 0
+ 19+  A368              ;                                                             en cuanto suelta
+ 20+  A368              ;           A = 0 si no hay tecla nueva ni SPACE pulsada.
+ 21+  A368              ;   SPACE es a proposito de nivel y no de flanco: gravedad rapida (juego.asm)
+ 22+  A368              ;   necesita saber que SIGUE pulsada en cada pasada, no solo la primera.
+ 23+  A368              ;   Preserva BC, DE, HL, IX, IY. Destruye AF.
+ 24+  A368              leer_teclas:
+ 25+  A368 C5               push bc
+ 25+  A369 D5             push de
+ 25+  A36A E5             push hl
+ 26+  A36B 01 FE BF         ld bc, $BFFE
+ 26+  A36E ED 78          in a,(c) ; media fila ENTER,L,K,J,H. ACTIVO A NIVEL BAJO:
+ 27+  A370 2F               cpl                     ;  una tecla pulsada lee 0, asi que invertimos.
+ 28+  A371 0F               rrca
+ 28+  A372 0F             rrca             ;  K esta en el bit2 y J en el bit3: los bajamos.
+ 29+  A373 E6 03            and %00000011           ;  bit0 = K, bit1 = J (descarta bits 5-7, que no
+ 30+  A375 5F               ld e, a                 ;  son teclado y tras el cpl valen basura)
+ 31+  A376 01 FE FB         ld bc, $FBFE
+ 31+  A379 ED 78          in a,(c) ; media fila Q,W,E,R,T: Q en bit0, W en bit1
+ 32+  A37B 2F               cpl
+ 33+  A37C 07               rlca
+ 33+  A37D 07             rlca             ;  los subimos a los bits 2 y 3
+ 34+  A37E E6 0C            and %00001100           ;  bit2 = Q, bit3 = W
+ 35+  A380 B3               or e
+ 35+  A381 5F             ld e, a          ; E = K/J/Q/W, 1 = pulsada AHORA
+ 36+  A382 01 FE 7F         ld bc, $7FFE
+ 36+  A385 ED 78          in a,(c) ; media fila SPACE,SYM SHIFT,M,N,B: SPACE en bit0
+ 37+  A387 2F               cpl
+ 38+  A388 E6 01            and %00000001           ;  nos quedamos solo con SPACE
+ 39+  A38A 07               rlca
+ 39+  A38B 07             rlca
+ 39+  A38C 07             rlca
+ 39+  A38D 07             rlca ; lo subimos al bit4
+ 40+  A38E B3               or e
+ 40+  A38F 5F             ld e, a          ; E = mascara ACTUAL completa (bits0-4), 1 =
+ 41+  A390                                          ;  pulsada AHORA MISMO -- esto es ESTADO, todavia
+ 42+  A390                                          ;  no flanco
+ 43+  A390 21 B5 A5         ld hl, teclas_ant       ; un byte: la misma mascara de la llamada anterior
+ 44+  A393 7E               ld a,(hl)
+ 44+  A394 73             ld (hl), e  ; leemos la vieja y guardamos la nueva
+ 45+  A395 2F               cpl
+ 45+  A396 A3             and e             ; A = flanco nuevo de los CINCO bits; valido para
+ 46+  A397                                          ;  K/J/Q/W (bits0-3), pero el bit4 tambien saldria
+ 47+  A397                                          ;  de flanco aqui y SPACE no quiere eso
+ 48+  A397 E6 0F            and %00001111           ; nos quedamos solo con el flanco de K/J/Q/W
+ 49+  A399 57               ld d, a                 ; D = flanco K/J/Q/W, bit4 a cero
+ 50+  A39A 7B               ld a, e
+ 51+  A39B E6 10            and %00010000           ; A = SOLO el estado actual de SPACE (bit4)
+ 52+  A39D B2               or d                    ; resultado: bits0-3 flanco, bit4 estado (nivel)
+ 53+  A39E E1               pop hl
+ 53+  A39F D1             pop de
+ 53+  A3A0 C1             pop bc
+ 54+  A3A1 C9               ret
+ 55+  A3A2
+ 56+  A3A2              ; en_rango -- ¿cabe la pieza IX entera en la columna C?
+ 57+  A3A2              ;   comprobar no puede responder a esto: solo ve el borde porque su byte de
+ 58+  A3A2              ;   atributo es distinto de cero, asi que una candidata que se haya SALTADO el
+ 59+  A3A2              ;   borde lee celdas vacias fuera del pozo y la aceptaria.
+ 60+  A3A2              ;   Entrada: C = columna candidata, IX = registro de la pieza; (ix+1) = ancho.
+ 61+  A3A2              ;   Salida : A = 0 cabe, A = 1 se sale.
+ 62+  A3A2              ;   Preserva BC, DE, HL, IX, IY. Destruye AF.
+ 63+  A3A2              en_rango:
+ 64+  A3A2 79               ld a, c
+ 65+  A3A3 FE 07            cp COL_IZQ_POZO
+ 66+  A3A5 38 0B            jr c, er_fuera          ; C < 7 -> a la izquierda de la pared izquierda
+ 67+  A3A7 DD 86 01         add a,(ix+1)            ; A = C + ancho
+ 68+  A3AA 38 06            jr c, er_fuera          ; desbordo los 8 bits: C estaba lejisimos
+ 69+  A3AC FE 1A            cp COL_DER_POZO + 2     ; la ultima celda es C+ancho-1 y debe ser <= 24,
+ 70+  A3AE 30 02            jr nc, er_fuera         ;  o sea C+ancho <= 25, o sea C+ancho < 26
+ 71+  A3B0 AF               xor a                   ; A = 0: todas las celdas caen entre 7 y 24
+ 72+  A3B1 C9               ret
+ 73+  A3B2              er_fuera:
+ 74+  A3B2 3E 01            ld a, 1
+ 75+  A3B4 C9               ret
+ 76+  A3B5
 # file closed: entrada.asm
- 43   A38A                  INCLUDE "lineas.asm"
+ 43   A3B5                  INCLUDE "lineas.asm"
 # file opened: lineas.asm
-  1+  A38A              ; lineas.asm -- deteccion y borrado de lineas completas
-  2+  A38A              ;
-  3+  A38A              ; El fichero de atributos ES el tablero: una celda esta ocupada si su byte de
-  4+  A38A              ; atributo es distinto de cero. El interior del pozo son las columnas 7-24
-  5+  A38A              ; (18 celdas) y las filas 0-21; la fila 22 es el suelo y las columnas 6 y 25
-  6+  A38A              ; son las paredes. NUNCA se escribe en el borde: nadie lo vuelve a pintar
-  7+  A38A              ; despues de dibujar_tablero, y un solo byte suelto abre un agujero permanente.
-  8+  A38A
-  9+  A38A              COL_IZQ    EQU 7        ; primera columna interior
- 10+  A38A              ANCHO_POZO EQU 18       ; ancho interior: columnas 7..24 inclusive
- 11+  A38A              FILA_BAJA  EQU 21       ; fila interior mas baja (la 22 es el suelo)
- 12+  A38A
- 13+  A38A              ; limpiar_lineas -- elimina todas las filas completas y compacta el tablero.
- 14+  A38A              ;   Entrada: nada.  Salida: A = numero de filas eliminadas (0..4 en la practica)
- 15+  A38A              ;   Preserva BC, DE, HL, IX, IY. Destruye AF.
- 16+  A38A              limpiar_lineas:
- 17+  A38A C5               push bc
- 17+  A38B D5             push de
- 17+  A38C E5             push hl
- 17+  A38D DD E5          push ix  ; BC = fila/columna de la pieza e
- 18+  A38F 0E 00            ld c, 0                  ; C = cuenta de filas eliminadas
- 19+  A391 06 15            ld b, FILA_BAJA          ; B = fila a examinar; empezamos abajo y subimos
- 20+  A393              ll_probar:
- 21+  A393 CD AD A3         call fila_llena
- 21+  A396 B7             or a   ; A = 1 si la fila B esta completa
- 22+  A397 28 06            jr z, ll_arriba          ; no lo esta -> subimos una fila
- 23+  A399 0C               inc c
- 24+  A39A CD C9 A3         call bajar_filas         ; bajamos sobre ella todo lo que tenia encima
- 25+  A39D 18 F4            jr ll_probar             ; VOLVEMOS A PROBAR LA MISMA FILA B: tras el
- 26+  A39F                                           ;  desplazamiento en el indice B hay una fila
- 27+  A39F                                           ;  DISTINTA. Poner "dec b" aqui es el fallo
- 28+  A39F                                           ;  clasico: un doble hueco borraria una sola fila.
- 29+  A39F              ll_arriba:
- 30+  A39F 78               ld a, b
- 30+  A3A0 B7             or a
- 31+  A3A1 28 03            jr z, ll_fin             ; la fila 0 era la ultima por probar -> hemos acabado
- 32+  A3A3 05               dec b
- 32+  A3A4 18 ED          jr ll_probar
- 33+  A3A6              ll_fin:
- 34+  A3A6 79               ld a, c                  ; devolvemos la cuenta; la consume puntuacion.asm
- 35+  A3A7 DD E1            pop ix
- 35+  A3A9 E1             pop hl
- 35+  A3AA D1             pop de
- 35+  A3AB C1             pop bc   ; espejo exacto de los push
- 36+  A3AC C9               ret
- 37+  A3AD
- 38+  A3AD              ; fila_llena -- Entrada: B = fila 0..21.  Salida: A = 1 completa, 0 no.
- 39+  A3AD              ;   Preserva BC, DE, HL. Destruye AF.
- 40+  A3AD              fila_llena:
- 41+  A3AD C5               push bc
- 41+  A3AE D5             push de
- 41+  A3AF E5             push hl
- 42+  A3B0 0E 07            ld c, COL_IZQ
- 43+  A3B2 CD 86 9C         call CRtoATTR            ; HL = $5800 + B*32 + 7. A diferencia de
- 44+  A3B5                                           ;  CalcularAtributo, esta PRESERVA BC, que es lo
- 45+  A3B5                                           ;  que mantiene vivo el contador de filas.
- 46+  A3B5 1E 12            ld e, ANCHO_POZO         ; exactamente 18 celdas: nunca 32, o los bytes de
- 47+  A3B7              fl_celda:                    ;  la pared (siempre 55) darian toda fila por llena
- 48+  A3B7 7E               ld a, (hl)
- 48+  A3B8 B7             or a
- 49+  A3B9 28 08            jr z, fl_hueco           ; con una celda vacia basta: la fila no esta completa
- 50+  A3BB 23               inc hl
- 50+  A3BC 1D             dec e
- 51+  A3BD 20 F8            jr nz, fl_celda          ; dec e fija los flags; inc hl no los toca
- 52+  A3BF 3E 01            ld a, 1
- 52+  A3C1 18 02          jr fl_fin
- 53+  A3C3              fl_hueco:
- 54+  A3C3 3E 00            ld a, 0
- 55+  A3C5              fl_fin:
- 56+  A3C5 E1               pop hl
- 56+  A3C6 D1             pop de
- 56+  A3C7 C1             pop bc
- 57+  A3C8 C9               ret
- 58+  A3C9
- 59+  A3C9              ; bajar_filas -- Entrada: B = la fila recien eliminada (0..21).
- 60+  A3C9              ;   Copia una fila hacia abajo todo lo que hay encima y deja la fila 0 vacia.
- 61+  A3C9              ;   Preserva AF, BC, DE, HL.
- 62+  A3C9              bajar_filas:
- 63+  A3C9 F5               push af
- 63+  A3CA C5             push bc
- 63+  A3CB D5             push de
- 63+  A3CC E5             push hl
- 64+  A3CD 78               ld a, b
- 64+  A3CE B7             or a           ; A = numero de copias a hacer = B
- 65+  A3CF 28 19            jr z, bf_fila0           ; se elimino la fila 0: no hay nada encima
- 66+  A3D1 0E 07            ld c, COL_IZQ
- 67+  A3D3 CD 86 9C         call CRtoATTR            ; HL = destino = $5800 + B*32 + 7
- 68+  A3D6 EB               ex de, hl                ; DE = destino
- 69+  A3D7 21 E0 FF         ld hl, -32
- 69+  A3DA 19             add hl, de  ; HL = origen = destino - 32 = una fila mas arriba
- 70+  A3DB              bf_copiar:
- 71+  A3DB 01 12 00         ld bc, ANCHO_POZO
- 72+  A3DE ED B0            ldir                     ; 18 bytes (HL)->(DE); ambos avanzan 18, BC -> 0
- 73+  A3E0 01 CE FF         ld bc, -(ANCHO_POZO + 32); deshacemos los 18 y subimos una fila mas
- 74+  A3E3 09               add hl, bc               ; HL -= 50
- 75+  A3E4 EB               ex de, hl
- 75+  A3E5 09             add hl, bc
- 75+  A3E6 EB             ex de, hl   ; DE -= 50 (el Z80 no tiene "add de,bc")
- 76+  A3E7 3D               dec a                    ; add hl,bc no toca Z; dec a si
- 77+  A3E8 20 F1            jr nz, bf_copiar
- 78+  A3EA              bf_fila0:
- 79+  A3EA 06 00            ld b, 0
- 79+  A3EC 0E 07          ld c, COL_IZQ  ; vaciamos las 18 celdas de la fila 0, o la fila
- 80+  A3EE CD 86 9C         call CRtoATTR            ;  de arriba se duplicaria hacia abajo para siempre
- 81+  A3F1 06 12            ld b, ANCHO_POZO
- 82+  A3F3              bf_cero:
- 83+  A3F3 36 00            ld (hl), 0
- 83+  A3F5 23             inc hl
- 84+  A3F6 10 FB            djnz bf_cero
- 85+  A3F8 E1               pop hl
- 85+  A3F9 D1             pop de
- 85+  A3FA C1             pop bc
- 85+  A3FB F1             pop af
- 86+  A3FC C9               ret
- 87+  A3FD
+  1+  A3B5              ; lineas.asm -- deteccion y borrado de lineas completas
+  2+  A3B5              ;
+  3+  A3B5              ; El fichero de atributos ES el tablero: una celda esta ocupada si su byte de
+  4+  A3B5              ; atributo es distinto de cero. El interior del pozo son las columnas 7-24
+  5+  A3B5              ; (18 celdas) y las filas 0-21; la fila 22 es el suelo y las columnas 6 y 25
+  6+  A3B5              ; son las paredes. NUNCA se escribe en el borde: nadie lo vuelve a pintar
+  7+  A3B5              ; despues de dibujar_tablero, y un solo byte suelto abre un agujero permanente.
+  8+  A3B5
+  9+  A3B5              COL_IZQ    EQU 7        ; primera columna interior
+ 10+  A3B5              ANCHO_POZO EQU 18       ; ancho interior: columnas 7..24 inclusive
+ 11+  A3B5              FILA_BAJA  EQU 21       ; fila interior mas baja (la 22 es el suelo)
+ 12+  A3B5
+ 13+  A3B5              ; limpiar_lineas -- elimina todas las filas completas y compacta el tablero.
+ 14+  A3B5              ;   Entrada: nada.  Salida: A = numero de filas eliminadas (0..4 en la practica)
+ 15+  A3B5              ;   Preserva BC, DE, HL, IX, IY. Destruye AF.
+ 16+  A3B5              limpiar_lineas:
+ 17+  A3B5 C5               push bc
+ 17+  A3B6 D5             push de
+ 17+  A3B7 E5             push hl
+ 17+  A3B8 DD E5          push ix  ; BC = fila/columna de la pieza e
+ 18+  A3BA 0E 00            ld c, 0                  ; C = cuenta de filas eliminadas
+ 19+  A3BC 06 15            ld b, FILA_BAJA          ; B = fila a examinar; empezamos abajo y subimos
+ 20+  A3BE              ll_probar:
+ 21+  A3BE CD D8 A3         call fila_llena
+ 21+  A3C1 B7             or a   ; A = 1 si la fila B esta completa
+ 22+  A3C2 28 06            jr z, ll_arriba          ; no lo esta -> subimos una fila
+ 23+  A3C4 0C               inc c
+ 24+  A3C5 CD F4 A3         call bajar_filas         ; bajamos sobre ella todo lo que tenia encima
+ 25+  A3C8 18 F4            jr ll_probar             ; VOLVEMOS A PROBAR LA MISMA FILA B: tras el
+ 26+  A3CA                                           ;  desplazamiento en el indice B hay una fila
+ 27+  A3CA                                           ;  DISTINTA. Poner "dec b" aqui es el fallo
+ 28+  A3CA                                           ;  clasico: un doble hueco borraria una sola fila.
+ 29+  A3CA              ll_arriba:
+ 30+  A3CA 78               ld a, b
+ 30+  A3CB B7             or a
+ 31+  A3CC 28 03            jr z, ll_fin             ; la fila 0 era la ultima por probar -> hemos acabado
+ 32+  A3CE 05               dec b
+ 32+  A3CF 18 ED          jr ll_probar
+ 33+  A3D1              ll_fin:
+ 34+  A3D1 79               ld a, c                  ; devolvemos la cuenta; la consume puntuacion.asm
+ 35+  A3D2 DD E1            pop ix
+ 35+  A3D4 E1             pop hl
+ 35+  A3D5 D1             pop de
+ 35+  A3D6 C1             pop bc   ; espejo exacto de los push
+ 36+  A3D7 C9               ret
+ 37+  A3D8
+ 38+  A3D8              ; fila_llena -- Entrada: B = fila 0..21.  Salida: A = 1 completa, 0 no.
+ 39+  A3D8              ;   Preserva BC, DE, HL. Destruye AF.
+ 40+  A3D8              fila_llena:
+ 41+  A3D8 C5               push bc
+ 41+  A3D9 D5             push de
+ 41+  A3DA E5             push hl
+ 42+  A3DB 0E 07            ld c, COL_IZQ
+ 43+  A3DD CD 86 9C         call CRtoATTR            ; HL = $5800 + B*32 + 7. A diferencia de
+ 44+  A3E0                                           ;  CalcularAtributo, esta PRESERVA BC, que es lo
+ 45+  A3E0                                           ;  que mantiene vivo el contador de filas.
+ 46+  A3E0 1E 12            ld e, ANCHO_POZO         ; exactamente 18 celdas: nunca 32, o los bytes de
+ 47+  A3E2              fl_celda:                    ;  la pared (siempre 55) darian toda fila por llena
+ 48+  A3E2 7E               ld a, (hl)
+ 48+  A3E3 B7             or a
+ 49+  A3E4 28 08            jr z, fl_hueco           ; con una celda vacia basta: la fila no esta completa
+ 50+  A3E6 23               inc hl
+ 50+  A3E7 1D             dec e
+ 51+  A3E8 20 F8            jr nz, fl_celda          ; dec e fija los flags; inc hl no los toca
+ 52+  A3EA 3E 01            ld a, 1
+ 52+  A3EC 18 02          jr fl_fin
+ 53+  A3EE              fl_hueco:
+ 54+  A3EE 3E 00            ld a, 0
+ 55+  A3F0              fl_fin:
+ 56+  A3F0 E1               pop hl
+ 56+  A3F1 D1             pop de
+ 56+  A3F2 C1             pop bc
+ 57+  A3F3 C9               ret
+ 58+  A3F4
+ 59+  A3F4              ; bajar_filas -- Entrada: B = la fila recien eliminada (0..21).
+ 60+  A3F4              ;   Copia una fila hacia abajo todo lo que hay encima y deja la fila 0 vacia.
+ 61+  A3F4              ;   Preserva AF, BC, DE, HL.
+ 62+  A3F4              bajar_filas:
+ 63+  A3F4 F5               push af
+ 63+  A3F5 C5             push bc
+ 63+  A3F6 D5             push de
+ 63+  A3F7 E5             push hl
+ 64+  A3F8 78               ld a, b
+ 64+  A3F9 B7             or a           ; A = numero de copias a hacer = B
+ 65+  A3FA 28 19            jr z, bf_fila0           ; se elimino la fila 0: no hay nada encima
+ 66+  A3FC 0E 07            ld c, COL_IZQ
+ 67+  A3FE CD 86 9C         call CRtoATTR            ; HL = destino = $5800 + B*32 + 7
+ 68+  A401 EB               ex de, hl                ; DE = destino
+ 69+  A402 21 E0 FF         ld hl, -32
+ 69+  A405 19             add hl, de  ; HL = origen = destino - 32 = una fila mas arriba
+ 70+  A406              bf_copiar:
+ 71+  A406 01 12 00         ld bc, ANCHO_POZO
+ 72+  A409 ED B0            ldir                     ; 18 bytes (HL)->(DE); ambos avanzan 18, BC -> 0
+ 73+  A40B 01 CE FF         ld bc, -(ANCHO_POZO + 32); deshacemos los 18 y subimos una fila mas
+ 74+  A40E 09               add hl, bc               ; HL -= 50
+ 75+  A40F EB               ex de, hl
+ 75+  A410 09             add hl, bc
+ 75+  A411 EB             ex de, hl   ; DE -= 50 (el Z80 no tiene "add de,bc")
+ 76+  A412 3D               dec a                    ; add hl,bc no toca Z; dec a si
+ 77+  A413 20 F1            jr nz, bf_copiar
+ 78+  A415              bf_fila0:
+ 79+  A415 06 00            ld b, 0
+ 79+  A417 0E 07          ld c, COL_IZQ  ; vaciamos las 18 celdas de la fila 0, o la fila
+ 80+  A419 CD 86 9C         call CRtoATTR            ;  de arriba se duplicaria hacia abajo para siempre
+ 81+  A41C 06 12            ld b, ANCHO_POZO
+ 82+  A41E              bf_cero:
+ 83+  A41E 36 00            ld (hl), 0
+ 83+  A420 23             inc hl
+ 84+  A421 10 FB            djnz bf_cero
+ 85+  A423 E1               pop hl
+ 85+  A424 D1             pop de
+ 85+  A425 C1             pop bc
+ 85+  A426 F1             pop af
+ 86+  A427 C9               ret
+ 87+  A428
 # file closed: lineas.asm
- 44   A3FD                  INCLUDE "puntuacion.asm"
+ 44   A428                  INCLUDE "puntuacion.asm"
 # file opened: puntuacion.asm
-  1+  A3FD              ; puntuacion.asm -- puntos, lineas, nivel y su marcador en pantalla
-  2+  A3FD              ;
-  3+  A3FD              ; Las VARIABLES (PUNTOS, LINEAS, NIVEL, PROX_NIVEL, FRAMES_POR_FILA) se
-  4+  A3FD              ; declaran en variables.asm y SOLO alli: declararlas tambien aqui es un error
-  5+  A3FD              ; de etiqueta duplicada. Este fichero aporta el codigo y sus tablas de solo
-  6+  A3FD              ; lectura.
-  7+  A3FD              ;
-  8+  A3FD              ; El marcador se pinta en las columnas 26-31, FUERA del pozo. Es una
-  9+  A3FD              ; restriccion de correccion, no de gusto: "ocupado" significa "byte de
- 10+  A3FD              ; atributo distinto de cero", asi que cualquier texto dentro de las columnas
- 11+  A3FD              ; 7-24 se convertiria en un muro invisible para comprobar.
- 12+  A3FD
- 13+  A3FD              NIVEL_MAX EQU 10
- 14+  A3FD
- 15+  A3FD 00 01 00 03  PUNTOS_POR_LINEA: DW $0100, $0300, $0500, $0800  ; BCD, indice (filas-1)*2
- 15+  A401 00 05 00 08
- 16+  A405 30 28 21 1B  FRAMES_POR_NIVEL: DB 48,40,33,27,22,18,15,12,10,8,6  ; niveles 0..10, a 50 fps
- 16+  A409 16 12 0F 0C
- 16+  A40D 0A 08 06
- 17+  A410
- 18+  A410              ; anotar_lineas -- contabiliza un borrado de lineas.
- 19+  A410              ;   Entrada: A = filas eliminadas (0..4). Si es 0 no hace nada.
- 20+  A410              ;   Actualiza puntos, lineas, nivel y velocidad, y refresca el marcador.
- 21+  A410              ;   Preserva BC, DE, HL, IX, IY. Destruye AF.
- 22+  A410              anotar_lineas:
- 23+  A410 B7               or a
- 24+  A411 C8               ret z                        ; no se elimino ninguna fila
- 25+  A412 C5               push bc
- 25+  A413 D5             push de
- 25+  A414 E5             push hl
- 25+  A415 DD E5          push ix
- 26+  A417 F5               push af                      ; nos guardamos la cuenta
- 27+  A418
- 28+  A418 3D               dec a                        ; --- puntos: indice (filas-1)*2
- 29+  A419 87               add a, a
- 30+  A41A 5F               ld e, a
- 30+  A41B 16 00          ld d, 0
- 31+  A41D 21 FD A3         ld hl, PUNTOS_POR_LINEA
- 32+  A420 19               add hl, de
- 33+  A421 5E               ld e, (hl)
- 33+  A422 23             inc hl
- 33+  A423 56             ld d, (hl)   ; DE = premio en BCD
- 34+  A424 CD 57 A4         call SumarPuntos
- 35+  A427
- 36+  A427 F1               pop af                       ; --- lineas y nivel, una vuelta por fila
- 37+  A428 47               ld b, a
- 38+  A429              al_bucle:
- 39+  A429 3A 84 A5         ld a, (LINEAS)
- 39+  A42C 3C             inc a
- 39+  A42D 32 84 A5       ld (LINEAS), a
- 40+  A430 3A 86 A5         ld a, (PROX_NIVEL)
- 40+  A433 3D             dec a
- 40+  A434 32 86 A5       ld (PROX_NIVEL), a
- 41+  A437 20 10            jr nz, al_siguiente
- 42+  A439 3E 0A            ld a, 10
- 42+  A43B 32 86 A5       ld (PROX_NIVEL), a      ; otras 10 filas hasta el proximo nivel
- 43+  A43E 3A 85 A5         ld a, (NIVEL)
- 44+  A441 FE 0A            cp NIVEL_MAX
- 45+  A443 30 04            jr nc, al_siguiente                ; ya estamos en el tope
- 46+  A445 3C               inc a
- 46+  A446 32 85 A5       ld (NIVEL), a
- 47+  A449              al_siguiente:
- 48+  A449 10 DE            djnz al_bucle
- 49+  A44B
- 50+  A44B CD 6A A4         call ActualizarVelocidad
- 51+  A44E CD EB A4         call ImprimirMarcador
- 52+  A451 DD E1            pop ix
- 52+  A453 E1             pop hl
- 52+  A454 D1             pop de
- 52+  A455 C1             pop bc
- 53+  A456 C9               ret
- 54+  A457
- 55+  A457              ; SumarPuntos -- suma DE (BCD de 4 digitos) al marcador de 6 digitos.
- 56+  A457              ;   Destruye AF y HL.
- 57+  A457              SumarPuntos:
- 58+  A457 21 81 A5         LD HL, PUNTOS
- 59+  A45A 7E               LD A, (HL)
- 59+  A45B 83             ADD A, E
- 59+  A45C 27             DAA
- 59+  A45D 77             LD (HL), A          ; DAA vuelve decimal la
- 60+  A45E 23               INC HL
- 60+  A45F 7E             LD A, (HL)
- 60+  A460 8A             ADC A, D
- 60+  A461 27             DAA
- 60+  A462 77             LD (HL), A ;  suma binaria. LD no
- 61+  A463 23               INC HL
- 61+  A464 7E             LD A, (HL)
- 61+  A465 CE 00          ADC A, 0
- 61+  A467 27             DAA
- 61+  A468 77             LD (HL), A ;  toca flags: el
- 62+  A469 C9               RET                                               ;  acarreo sobrevive.
- 63+  A46A
- 64+  A46A              ; ActualizarVelocidad -- copia la velocidad del nivel actual a la gravedad.
- 65+  A46A              ;   Destruye AF, DE y HL.
- 66+  A46A              ActualizarVelocidad:
- 67+  A46A 3A 85 A5         LD A, (NIVEL)
- 68+  A46D FE 0A            CP NIVEL_MAX
- 68+  A46F 38 02          JR C, NivelOK
- 69+  A471 3E 0A            LD A, NIVEL_MAX             ; tope: nunca indexar mas alla de la tabla
- 70+  A473              NivelOK:
- 71+  A473 5F               LD E, A
- 71+  A474 16 00          LD D, 0
- 72+  A476 21 05 A4         LD HL, FRAMES_POR_NIVEL
- 72+  A479 19             ADD HL, DE
- 73+  A47A 7E               LD A, (HL)
- 73+  A47B 32 87 A5       LD (FRAMES_POR_FILA), A   ; suelo de 6 frames (~120 ms):
- 74+  A47E C9               RET                                    ;  una tabla no puede dar 0
- 75+  A47F
- 76+  A47F              ; reiniciar_marcador -- pone el marcador a cero y pinta rotulos y valores.
- 77+  A47F              ;   Se llama al empezar una partida, cuando aun no hay ninguna pieza en juego.
- 78+  A47F              ;   Preserva AF, BC, DE, HL, IX, IY.
- 79+  A47F              reiniciar_marcador:
- 80+  A47F F5               push af
- 80+  A480 C5             push bc
- 80+  A481 D5             push de
- 80+  A482 E5             push hl
- 80+  A483 DD E5          push ix
- 81+  A485 AF               xor a
- 82+  A486 32 81 A5         ld (PUNTOS), a
- 82+  A489 32 82 A5       ld (PUNTOS+1), a
- 82+  A48C 32 83 A5       ld (PUNTOS+2), a
- 83+  A48F 32 84 A5         ld (LINEAS), a
- 84+  A492 32 85 A5         ld (NIVEL), a
- 85+  A495 3E 0A            ld a, 10
- 85+  A497 32 86 A5       ld (PROX_NIVEL), a
- 86+  A49A CD 6A A4         call ActualizarVelocidad           ; FRAMES_POR_FILA = tabla[0] = 48
- 87+  A49D 3A 87 A5         ld a, (FRAMES_POR_FILA)
- 88+  A4A0 32 88 A5         ld (contador_frames), a
- 89+  A4A3 CD B0 A4         call ImprimirEtiquetas
- 90+  A4A6 CD EB A4         call ImprimirMarcador
- 91+  A4A9 DD E1            pop ix
- 91+  A4AB E1             pop hl
- 91+  A4AC D1             pop de
- 91+  A4AD C1             pop bc
- 91+  A4AE F1             pop af
- 92+  A4AF C9               ret
- 93+  A4B0
- 94+  A4B0              ; ImprimirEtiquetas -- rotulos fijos, una sola vez por partida.
- 95+  A4B0              ImprimirEtiquetas:
- 96+  A4B0 DD E5            push ix
- 96+  A4B2 C5             push bc                  ; IX = pieza, B/C = posicion de la pieza
- 97+  A4B3 3E 06            ld a, 6
- 97+  A4B5 06 00          ld b, 0
- 97+  A4B7 0E 1A          ld c, 26
- 97+  A4B9 DD 21 6A A5    ld ix, MsgPuntos
- 97+  A4BD CD 5C 9C       call PRINTAT
- 98+  A4C0 3E 06            ld a, 6
- 98+  A4C2 06 03          ld b, 3
- 98+  A4C4 0E 1A          ld c, 26
- 98+  A4C6 DD 21 70 A5    ld ix, MsgLineas
- 98+  A4CA CD 5C 9C       call PRINTAT
- 99+  A4CD 3E 06            ld a, 6
- 99+  A4CF 06 06          ld b, 6
- 99+  A4D1 0E 1A          ld c, 26
- 99+  A4D3 DD 21 76 A5    ld ix, MsgNivel
- 99+  A4D7 CD 5C 9C       call PRINTAT
-100+  A4DA 3E 06            ld a, 6
-100+  A4DC 06 09          ld b, 9
-100+  A4DE 0E 1A          ld c, 26
-100+  A4E0 DD 21 7C A5    ld ix, MsgProxima
-100+  A4E4 CD 5C 9C       call PRINTAT
-101+  A4E7 C1               pop bc
-101+  A4E8 DD E1          pop ix
-102+  A4EA C9               ret
-103+  A4EB
-104+  A4EB              ; ImprimirMarcador -- refresca los tres valores. Solo se llama cuando alguno
-105+  A4EB              ;   ha cambiado: repintar texto en cada frame es puro desperdicio.
-106+  A4EB              ;   Preserva BC e IX, que son la posicion y el puntero de la pieza en curso.
-107+  A4EB              ImprimirMarcador:
-108+  A4EB DD E5            push ix
-108+  A4ED C5             push bc
-109+  A4EE 3E 07            ld a, 7
-109+  A4F0 06 01          ld b, 1
-109+  A4F2 0E 1A          ld c, 26
-110+  A4F4 CD 6B 9C         call PREP_PRT                      ; fija atributo y los dos cursores
-111+  A4F7 3A 83 A5         ld a, (PUNTOS+2)
-111+  A4FA CD 2B A5       call ImprimirBCD ; el par mas significativo primero
-112+  A4FD 3A 82 A5         ld a, (PUNTOS+1)
-112+  A500 CD 2B A5       call ImprimirBCD
-113+  A503 3A 81 A5         ld a, (PUNTOS)
-113+  A506 CD 2B A5       call ImprimirBCD
-114+  A509 3E 07            ld a, 7
-114+  A50B 06 04          ld b, 4
-114+  A50D 0E 1A          ld c, 26
-115+  A50F CD 6B 9C         call PREP_PRT
-116+  A512 3A 84 A5         ld a, (LINEAS)
-116+  A515 CD 3F A5       call ImprimirDec3
-117+  A518 3E 07            ld a, 7
-117+  A51A 06 07          ld b, 7
-117+  A51C 0E 1A          ld c, 26
-118+  A51E CD 6B 9C         call PREP_PRT
-119+  A521 3A 85 A5         ld a, (NIVEL)
-119+  A524 CD 3F A5       call ImprimirDec3
-120+  A527 C1               pop bc
-120+  A528 DD E1          pop ix
-121+  A52A C9               ret
-122+  A52B
-123+  A52B              ; ImprimirBCD -- imprime los dos digitos del byte BCD en A.
-124+  A52B              ;   El cursor debe estar ya puesto. Destruye AF, B, DE, HL. Preserva C, IX, IY.
-125+  A52B              ImprimirBCD:
-126+  A52B F5               PUSH AF
-127+  A52C 0F               RRCA
-127+  A52D 0F             RRCA
-127+  A52E 0F             RRCA
-127+  A52F 0F             RRCA   ; nibble alto a los bits 0-3
-128+  A530 E6 0F            AND $0F
-128+  A532 C6 30          ADD A, '0'        ; valor del digito -> codigo ASCII
-129+  A534 CD 99 9C         CALL PRINTCHNUM
-129+  A537 F1             POP AF
-130+  A538 E6 0F            AND $0F
-130+  A53A C6 30          ADD A, '0'        ; nibble bajo
-131+  A53C C3 99 9C         JP PRINTCHNUM               ; salto final: imprime, avanza cursor y vuelve
-132+  A53F
-133+  A53F              ; ImprimirDec3 -- imprime A (0-255) como tres digitos decimales con ceros a la
-134+  A53F              ;   izquierda, para que el campo no encoja y no queden digitos viejos.
-135+  A53F              ;   El Z80 no divide, asi que restamos. Destruye AF, B, DE, HL. Preserva C.
-136+  A53F              ImprimirDec3:
-137+  A53F 06 00            ld b, 0
-138+  A541              id_cientos:
-139+  A541 FE 64            cp 100
-140+  A543 38 05            jr c, id_fin_cientos
-141+  A545 D6 64            sub 100
-142+  A547 04               inc b
-143+  A548 18 F7            jr id_cientos
-144+  A54A              id_fin_cientos:
-145+  A54A F5               push af
-146+  A54B 78               ld a, b
-146+  A54C C6 30          add a, '0'
-146+  A54E CD 99 9C       call PRINTCHNUM   ; PRINTCHNUM destruye B: por eso
-147+  A551 F1               pop af                                   ;  se recarga en cada tramo
-148+  A552 06 00            ld b, 0
-149+  A554              id_decenas:
-150+  A554 FE 0A            cp 10
-151+  A556 38 05            jr c, id_fin_decenas
-152+  A558 D6 0A            sub 10
-153+  A55A 04               inc b
-154+  A55B 18 F7            jr id_decenas
-155+  A55D              id_fin_decenas:
-156+  A55D F5               push af
-157+  A55E 78               ld a, b
-157+  A55F C6 30          add a, '0'
-157+  A561 CD 99 9C       call PRINTCHNUM
-158+  A564 F1               pop af
-159+  A565 C6 30            add a, '0'
-160+  A567 C3 99 9C         jp PRINTCHNUM
-161+  A56A
-162+  A56A              ; Solo ASCII: cualquier byte >= 128 indexa fuera del juego de caracteres.
-163+  A56A 53 43 4F 52  MsgPuntos: db "SCORE",0
-163+  A56E 45 00
-164+  A570 4C 49 4E 45  MsgLineas: db "LINES",0
-164+  A574 53 00
-165+  A576 4C 45 56 45  MsgNivel:  db "LEVEL",0
-165+  A57A 4C 00
-166+  A57C 4E 45 58 54  MsgProxima: db "NEXT",0
-166+  A580 00
-167+  A581
+  1+  A428              ; puntuacion.asm -- puntos, lineas, nivel y su marcador en pantalla
+  2+  A428              ;
+  3+  A428              ; Las VARIABLES (PUNTOS, LINEAS, NIVEL, PROX_NIVEL, FRAMES_POR_FILA) se
+  4+  A428              ; declaran en variables.asm y SOLO alli: declararlas tambien aqui es un error
+  5+  A428              ; de etiqueta duplicada. Este fichero aporta el codigo y sus tablas de solo
+  6+  A428              ; lectura.
+  7+  A428              ;
+  8+  A428              ; El marcador se pinta en las columnas 26-31, FUERA del pozo. Es una
+  9+  A428              ; restriccion de correccion, no de gusto: "ocupado" significa "byte de
+ 10+  A428              ; atributo distinto de cero", asi que cualquier texto dentro de las columnas
+ 11+  A428              ; 7-24 se convertiria en un muro invisible para comprobar.
+ 12+  A428
+ 13+  A428              NIVEL_MAX EQU 10
+ 14+  A428
+ 15+  A428 00 01 00 03  PUNTOS_POR_LINEA: DW $0100, $0300, $0500, $0800  ; BCD, indice (filas-1)*2
+ 15+  A42C 00 05 00 08
+ 16+  A430 30 28 21 1B  FRAMES_POR_NIVEL: DB 48,40,33,27,22,18,15,12,10,8,6  ; niveles 0..10, a 50 fps
+ 16+  A434 16 12 0F 0C
+ 16+  A438 0A 08 06
+ 17+  A43B
+ 18+  A43B              ; anotar_lineas -- contabiliza un borrado de lineas.
+ 19+  A43B              ;   Entrada: A = filas eliminadas (0..4). Si es 0 no hace nada.
+ 20+  A43B              ;   Actualiza puntos, lineas, nivel y velocidad, y refresca el marcador.
+ 21+  A43B              ;   Preserva BC, DE, HL, IX, IY. Destruye AF.
+ 22+  A43B              anotar_lineas:
+ 23+  A43B B7               or a
+ 24+  A43C C8               ret z                        ; no se elimino ninguna fila
+ 25+  A43D C5               push bc
+ 25+  A43E D5             push de
+ 25+  A43F E5             push hl
+ 25+  A440 DD E5          push ix
+ 26+  A442 F5               push af                      ; nos guardamos la cuenta
+ 27+  A443
+ 28+  A443 3D               dec a                        ; --- puntos: indice (filas-1)*2
+ 29+  A444 87               add a, a
+ 30+  A445 5F               ld e, a
+ 30+  A446 16 00          ld d, 0
+ 31+  A448 21 28 A4         ld hl, PUNTOS_POR_LINEA
+ 32+  A44B 19               add hl, de
+ 33+  A44C 5E               ld e, (hl)
+ 33+  A44D 23             inc hl
+ 33+  A44E 56             ld d, (hl)   ; DE = premio en BCD
+ 34+  A44F CD 82 A4         call SumarPuntos
+ 35+  A452
+ 36+  A452 F1               pop af                       ; --- lineas y nivel, una vuelta por fila
+ 37+  A453 47               ld b, a
+ 38+  A454              al_bucle:
+ 39+  A454 3A AF A5         ld a, (LINEAS)
+ 39+  A457 3C             inc a
+ 39+  A458 32 AF A5       ld (LINEAS), a
+ 40+  A45B 3A B1 A5         ld a, (PROX_NIVEL)
+ 40+  A45E 3D             dec a
+ 40+  A45F 32 B1 A5       ld (PROX_NIVEL), a
+ 41+  A462 20 10            jr nz, al_siguiente
+ 42+  A464 3E 0A            ld a, 10
+ 42+  A466 32 B1 A5       ld (PROX_NIVEL), a      ; otras 10 filas hasta el proximo nivel
+ 43+  A469 3A B0 A5         ld a, (NIVEL)
+ 44+  A46C FE 0A            cp NIVEL_MAX
+ 45+  A46E 30 04            jr nc, al_siguiente                ; ya estamos en el tope
+ 46+  A470 3C               inc a
+ 46+  A471 32 B0 A5       ld (NIVEL), a
+ 47+  A474              al_siguiente:
+ 48+  A474 10 DE            djnz al_bucle
+ 49+  A476
+ 50+  A476 CD 95 A4         call ActualizarVelocidad
+ 51+  A479 CD 16 A5         call ImprimirMarcador
+ 52+  A47C DD E1            pop ix
+ 52+  A47E E1             pop hl
+ 52+  A47F D1             pop de
+ 52+  A480 C1             pop bc
+ 53+  A481 C9               ret
+ 54+  A482
+ 55+  A482              ; SumarPuntos -- suma DE (BCD de 4 digitos) al marcador de 6 digitos.
+ 56+  A482              ;   Destruye AF y HL.
+ 57+  A482              SumarPuntos:
+ 58+  A482 21 AC A5         LD HL, PUNTOS
+ 59+  A485 7E               LD A, (HL)
+ 59+  A486 83             ADD A, E
+ 59+  A487 27             DAA
+ 59+  A488 77             LD (HL), A          ; DAA vuelve decimal la
+ 60+  A489 23               INC HL
+ 60+  A48A 7E             LD A, (HL)
+ 60+  A48B 8A             ADC A, D
+ 60+  A48C 27             DAA
+ 60+  A48D 77             LD (HL), A ;  suma binaria. LD no
+ 61+  A48E 23               INC HL
+ 61+  A48F 7E             LD A, (HL)
+ 61+  A490 CE 00          ADC A, 0
+ 61+  A492 27             DAA
+ 61+  A493 77             LD (HL), A ;  toca flags: el
+ 62+  A494 C9               RET                                               ;  acarreo sobrevive.
+ 63+  A495
+ 64+  A495              ; ActualizarVelocidad -- copia la velocidad del nivel actual a la gravedad.
+ 65+  A495              ;   Destruye AF, DE y HL.
+ 66+  A495              ActualizarVelocidad:
+ 67+  A495 3A B0 A5         LD A, (NIVEL)
+ 68+  A498 FE 0A            CP NIVEL_MAX
+ 68+  A49A 38 02          JR C, NivelOK
+ 69+  A49C 3E 0A            LD A, NIVEL_MAX             ; tope: nunca indexar mas alla de la tabla
+ 70+  A49E              NivelOK:
+ 71+  A49E 5F               LD E, A
+ 71+  A49F 16 00          LD D, 0
+ 72+  A4A1 21 30 A4         LD HL, FRAMES_POR_NIVEL
+ 72+  A4A4 19             ADD HL, DE
+ 73+  A4A5 7E               LD A, (HL)
+ 73+  A4A6 32 B2 A5       LD (FRAMES_POR_FILA), A   ; suelo de 6 frames (~120 ms):
+ 74+  A4A9 C9               RET                                    ;  una tabla no puede dar 0
+ 75+  A4AA
+ 76+  A4AA              ; reiniciar_marcador -- pone el marcador a cero y pinta rotulos y valores.
+ 77+  A4AA              ;   Se llama al empezar una partida, cuando aun no hay ninguna pieza en juego.
+ 78+  A4AA              ;   Preserva AF, BC, DE, HL, IX, IY.
+ 79+  A4AA              reiniciar_marcador:
+ 80+  A4AA F5               push af
+ 80+  A4AB C5             push bc
+ 80+  A4AC D5             push de
+ 80+  A4AD E5             push hl
+ 80+  A4AE DD E5          push ix
+ 81+  A4B0 AF               xor a
+ 82+  A4B1 32 AC A5         ld (PUNTOS), a
+ 82+  A4B4 32 AD A5       ld (PUNTOS+1), a
+ 82+  A4B7 32 AE A5       ld (PUNTOS+2), a
+ 83+  A4BA 32 AF A5         ld (LINEAS), a
+ 84+  A4BD 32 B0 A5         ld (NIVEL), a
+ 85+  A4C0 3E 0A            ld a, 10
+ 85+  A4C2 32 B1 A5       ld (PROX_NIVEL), a
+ 86+  A4C5 CD 95 A4         call ActualizarVelocidad           ; FRAMES_POR_FILA = tabla[0] = 48
+ 87+  A4C8 3A B2 A5         ld a, (FRAMES_POR_FILA)
+ 88+  A4CB 32 B3 A5         ld (contador_frames), a
+ 89+  A4CE CD DB A4         call ImprimirEtiquetas
+ 90+  A4D1 CD 16 A5         call ImprimirMarcador
+ 91+  A4D4 DD E1            pop ix
+ 91+  A4D6 E1             pop hl
+ 91+  A4D7 D1             pop de
+ 91+  A4D8 C1             pop bc
+ 91+  A4D9 F1             pop af
+ 92+  A4DA C9               ret
+ 93+  A4DB
+ 94+  A4DB              ; ImprimirEtiquetas -- rotulos fijos, una sola vez por partida.
+ 95+  A4DB              ImprimirEtiquetas:
+ 96+  A4DB DD E5            push ix
+ 96+  A4DD C5             push bc                  ; IX = pieza, B/C = posicion de la pieza
+ 97+  A4DE 3E 06            ld a, 6
+ 97+  A4E0 06 00          ld b, 0
+ 97+  A4E2 0E 1A          ld c, 26
+ 97+  A4E4 DD 21 95 A5    ld ix, MsgPuntos
+ 97+  A4E8 CD 5C 9C       call PRINTAT
+ 98+  A4EB 3E 06            ld a, 6
+ 98+  A4ED 06 03          ld b, 3
+ 98+  A4EF 0E 1A          ld c, 26
+ 98+  A4F1 DD 21 9B A5    ld ix, MsgLineas
+ 98+  A4F5 CD 5C 9C       call PRINTAT
+ 99+  A4F8 3E 06            ld a, 6
+ 99+  A4FA 06 06          ld b, 6
+ 99+  A4FC 0E 1A          ld c, 26
+ 99+  A4FE DD 21 A1 A5    ld ix, MsgNivel
+ 99+  A502 CD 5C 9C       call PRINTAT
+100+  A505 3E 06            ld a, 6
+100+  A507 06 09          ld b, 9
+100+  A509 0E 1A          ld c, 26
+100+  A50B DD 21 A7 A5    ld ix, MsgProxima
+100+  A50F CD 5C 9C       call PRINTAT
+101+  A512 C1               pop bc
+101+  A513 DD E1          pop ix
+102+  A515 C9               ret
+103+  A516
+104+  A516              ; ImprimirMarcador -- refresca los tres valores. Solo se llama cuando alguno
+105+  A516              ;   ha cambiado: repintar texto en cada frame es puro desperdicio.
+106+  A516              ;   Preserva BC e IX, que son la posicion y el puntero de la pieza en curso.
+107+  A516              ImprimirMarcador:
+108+  A516 DD E5            push ix
+108+  A518 C5             push bc
+109+  A519 3E 07            ld a, 7
+109+  A51B 06 01          ld b, 1
+109+  A51D 0E 1A          ld c, 26
+110+  A51F CD 6B 9C         call PREP_PRT                      ; fija atributo y los dos cursores
+111+  A522 3A AE A5         ld a, (PUNTOS+2)
+111+  A525 CD 56 A5       call ImprimirBCD ; el par mas significativo primero
+112+  A528 3A AD A5         ld a, (PUNTOS+1)
+112+  A52B CD 56 A5       call ImprimirBCD
+113+  A52E 3A AC A5         ld a, (PUNTOS)
+113+  A531 CD 56 A5       call ImprimirBCD
+114+  A534 3E 07            ld a, 7
+114+  A536 06 04          ld b, 4
+114+  A538 0E 1A          ld c, 26
+115+  A53A CD 6B 9C         call PREP_PRT
+116+  A53D 3A AF A5         ld a, (LINEAS)
+116+  A540 CD 6A A5       call ImprimirDec3
+117+  A543 3E 07            ld a, 7
+117+  A545 06 07          ld b, 7
+117+  A547 0E 1A          ld c, 26
+118+  A549 CD 6B 9C         call PREP_PRT
+119+  A54C 3A B0 A5         ld a, (NIVEL)
+119+  A54F CD 6A A5       call ImprimirDec3
+120+  A552 C1               pop bc
+120+  A553 DD E1          pop ix
+121+  A555 C9               ret
+122+  A556
+123+  A556              ; ImprimirBCD -- imprime los dos digitos del byte BCD en A.
+124+  A556              ;   El cursor debe estar ya puesto. Destruye AF, B, DE, HL. Preserva C, IX, IY.
+125+  A556              ImprimirBCD:
+126+  A556 F5               PUSH AF
+127+  A557 0F               RRCA
+127+  A558 0F             RRCA
+127+  A559 0F             RRCA
+127+  A55A 0F             RRCA   ; nibble alto a los bits 0-3
+128+  A55B E6 0F            AND $0F
+128+  A55D C6 30          ADD A, '0'        ; valor del digito -> codigo ASCII
+129+  A55F CD 99 9C         CALL PRINTCHNUM
+129+  A562 F1             POP AF
+130+  A563 E6 0F            AND $0F
+130+  A565 C6 30          ADD A, '0'        ; nibble bajo
+131+  A567 C3 99 9C         JP PRINTCHNUM               ; salto final: imprime, avanza cursor y vuelve
+132+  A56A
+133+  A56A              ; ImprimirDec3 -- imprime A (0-255) como tres digitos decimales con ceros a la
+134+  A56A              ;   izquierda, para que el campo no encoja y no queden digitos viejos.
+135+  A56A              ;   El Z80 no divide, asi que restamos. Destruye AF, B, DE, HL. Preserva C.
+136+  A56A              ImprimirDec3:
+137+  A56A 06 00            ld b, 0
+138+  A56C              id_cientos:
+139+  A56C FE 64            cp 100
+140+  A56E 38 05            jr c, id_fin_cientos
+141+  A570 D6 64            sub 100
+142+  A572 04               inc b
+143+  A573 18 F7            jr id_cientos
+144+  A575              id_fin_cientos:
+145+  A575 F5               push af
+146+  A576 78               ld a, b
+146+  A577 C6 30          add a, '0'
+146+  A579 CD 99 9C       call PRINTCHNUM   ; PRINTCHNUM destruye B: por eso
+147+  A57C F1               pop af                                   ;  se recarga en cada tramo
+148+  A57D 06 00            ld b, 0
+149+  A57F              id_decenas:
+150+  A57F FE 0A            cp 10
+151+  A581 38 05            jr c, id_fin_decenas
+152+  A583 D6 0A            sub 10
+153+  A585 04               inc b
+154+  A586 18 F7            jr id_decenas
+155+  A588              id_fin_decenas:
+156+  A588 F5               push af
+157+  A589 78               ld a, b
+157+  A58A C6 30          add a, '0'
+157+  A58C CD 99 9C       call PRINTCHNUM
+158+  A58F F1               pop af
+159+  A590 C6 30            add a, '0'
+160+  A592 C3 99 9C         jp PRINTCHNUM
+161+  A595
+162+  A595              ; Solo ASCII: cualquier byte >= 128 indexa fuera del juego de caracteres.
+163+  A595 53 43 4F 52  MsgPuntos: db "SCORE",0
+163+  A599 45 00
+164+  A59B 4C 49 4E 45  MsgLineas: db "LINES",0
+164+  A59F 53 00
+165+  A5A1 4C 45 56 45  MsgNivel:  db "LEVEL",0
+165+  A5A5 4C 00
+166+  A5A7 4E 45 58 54  MsgProxima: db "NEXT",0
+166+  A5AB 00
+167+  A5AC
 # file closed: puntuacion.asm
- 45   A581                  INCLUDE "variables.asm"   ; SIEMPRE el ultimo: el estado mutable va al final
+ 45   A5AC                  INCLUDE "variables.asm"   ; SIEMPRE el ultimo: el estado mutable va al final
 # file opened: variables.asm
-  1+  A581              ; variables.asm -- TODO el estado mutable nuevo del juego, en un solo sitio.
-  2+  A581              ;
-  3+  A581              ; Se INCLUDE el ULTIMO en main.asm, asi que aterriza en $A2C7, el primer byte
-  4+  A581              ; libre despues de la imagen del programa: memoria no contendida, separada del
-  5+  A581              ; codigo y de la tabla de piezas, y referenciada siempre por etiqueta.
-  6+  A581              ;
-  7+  A581              ; NO declarar ninguna de estas variables en otro fichero: una segunda
-  8+  A581              ; declaracion es un error de etiqueta duplicada.
-  9+  A581              ; NO copiar el patron de "Medio" (piezas.asm:31), que vive incrustado en la
- 10+  A581              ; imagen de codigo justo detras del ultimo registro de pieza y sin margen.
- 11+  A581
- 12+  A581              ; --- puntuacion ------------------------------------------------------------
- 13+  A581 00 00 00     PUNTOS:          DB 0, 0, 0 ; BCD empaquetado, 6 digitos: pares 1-2, 3-4, 5-6
- 14+  A584 00           LINEAS:          DB 0       ; total de filas eliminadas (binario de 8 bits)
- 15+  A585 00           NIVEL:           DB 0       ; nivel actual (binario de 8 bits)
- 16+  A586 0A           PROX_NIVEL:      DB 10      ; filas que faltan para subir de nivel
- 17+  A587
- 18+  A587              ; --- gravedad --------------------------------------------------------------
- 19+  A587 30           FRAMES_POR_FILA: DB 48      ; frames entre dos caidas de una fila (nivel 0)
- 20+  A588 30           contador_frames: DB 48      ; frames que faltan para la proxima caida
- 21+  A589
- 22+  A589              ; --- entrada ---------------------------------------------------------------
- 23+  A589 00           teclas_ant:      DB 0       ; mascara de la lectura anterior de leer_teclas.
- 24+  A58A                                          ; Convenio de leer_teclas: bit a 1 = tecla PULSADA
- 25+  A58A                                          ; (ya invertida), por eso el valor inicial es 0.
- 26+  A58A
- 27+  A58A              ; --- seleccion y posicion de pieza -----------------------------------------
- 28+  A58A A5           semilla:         DB $A5     ; estado del LFSR. DEBE ser distinto de cero: un
- 29+  A58B                                          ; LFSR que llega a cero se queda en cero para siempre
- 30+  A58B 54 A1        siguiente_pieza: DW T_0     ; puntero al registro de la proxima pieza (preview).
- 31+  A58D                                          ; Arranca en un registro VALIDO, no en 0: iniciar
- 32+  A58D                                          ; siempre llama antes a iniciar_secuencia, pero con
- 33+  A58D                                          ; un 0 aqui cualquier camino que se saltara ese paso
- 34+  A58D                                          ; dejaria IX=$0000 y pintar_tetromino leeria las
- 35+  A58D                                          ; filas/columnas de la ROM.
- 36+  A58D 0F           Medio:           DB 15      ; copia en memoria de la columna en curso (C).
- 37+  A58E                                          ; El valor inicial es indiferente: juego.asm lo
- 38+  A58E                                          ; escribe desde C en cuanto aparece la primera
- 39+  A58E                                          ; pieza. Antes vivia en piezas.asm, dentro de la
- 40+  A58E                                          ; imagen de codigo, pegado al ultimo registro.
- 41+  A58E
+  1+  A5AC              ; variables.asm -- TODO el estado mutable nuevo del juego, en un solo sitio.
+  2+  A5AC              ;
+  3+  A5AC              ; Se INCLUDE el ULTIMO en main.asm, asi que aterriza en $A2C7, el primer byte
+  4+  A5AC              ; libre despues de la imagen del programa: memoria no contendida, separada del
+  5+  A5AC              ; codigo y de la tabla de piezas, y referenciada siempre por etiqueta.
+  6+  A5AC              ;
+  7+  A5AC              ; NO declarar ninguna de estas variables en otro fichero: una segunda
+  8+  A5AC              ; declaracion es un error de etiqueta duplicada.
+  9+  A5AC              ; NO copiar el patron de "Medio" (piezas.asm:31), que vive incrustado en la
+ 10+  A5AC              ; imagen de codigo justo detras del ultimo registro de pieza y sin margen.
+ 11+  A5AC
+ 12+  A5AC              ; --- puntuacion ------------------------------------------------------------
+ 13+  A5AC 00 00 00     PUNTOS:          DB 0, 0, 0 ; BCD empaquetado, 6 digitos: pares 1-2, 3-4, 5-6
+ 14+  A5AF 00           LINEAS:          DB 0       ; total de filas eliminadas (binario de 8 bits)
+ 15+  A5B0 00           NIVEL:           DB 0       ; nivel actual (binario de 8 bits)
+ 16+  A5B1 0A           PROX_NIVEL:      DB 10      ; filas que faltan para subir de nivel
+ 17+  A5B2
+ 18+  A5B2              ; --- gravedad --------------------------------------------------------------
+ 19+  A5B2 30           FRAMES_POR_FILA: DB 48      ; frames entre dos caidas de una fila (nivel 0)
+ 20+  A5B3 30           contador_frames: DB 48      ; frames que faltan para la proxima caida
+ 21+  A5B4 04           contador_rapido: DB 4       ; frames que faltan para la proxima caida RAPIDA
+ 22+  A5B5                                          ; (soft drop, SPACE mantenida). Solo se decuenta
+ 23+  A5B5                                          ; mientras SPACE esta pulsada -- juego.asm; no
+ 24+  A5B5                                          ; toca ni reemplaza a contador_frames, que sigue
+ 25+  A5B5                                          ; su cuenta normal por debajo sin interrupcion
+ 26+  A5B5
+ 27+  A5B5              ; --- entrada ---------------------------------------------------------------
+ 28+  A5B5 00           teclas_ant:      DB 0       ; mascara de la lectura anterior de leer_teclas.
+ 29+  A5B6                                          ; Convenio de leer_teclas: bit a 1 = tecla PULSADA
+ 30+  A5B6                                          ; (ya invertida), por eso el valor inicial es 0.
+ 31+  A5B6
+ 32+  A5B6              ; --- seleccion y posicion de pieza -----------------------------------------
+ 33+  A5B6 A5           semilla:         DB $A5     ; estado del LFSR. DEBE ser distinto de cero: un
+ 34+  A5B7                                          ; LFSR que llega a cero se queda en cero para siempre
+ 35+  A5B7 6A A1        siguiente_pieza: DW T_0     ; puntero al registro de la proxima pieza (preview).
+ 36+  A5B9                                          ; Arranca en un registro VALIDO, no en 0: iniciar
+ 37+  A5B9                                          ; siempre llama antes a iniciar_secuencia, pero con
+ 38+  A5B9                                          ; un 0 aqui cualquier camino que se saltara ese paso
+ 39+  A5B9                                          ; dejaria IX=$0000 y pintar_tetromino leeria las
+ 40+  A5B9                                          ; filas/columnas de la ROM.
+ 41+  A5B9 0F           Medio:           DB 15      ; copia en memoria de la columna en curso (C).
+ 42+  A5BA                                          ; El valor inicial es indiferente: juego.asm lo
+ 43+  A5BA                                          ; escribe desde C en cuanto aparece la primera
+ 44+  A5BA                                          ; pieza. Antes vivia en piezas.asm, dentro de la
+ 45+  A5BA                                          ; imagen de codigo, pegado al ultimo registro.
+ 46+  A5BA
 # file closed: variables.asm
- 46   A58E
+ 46   A5BA
 # file closed: main.asm

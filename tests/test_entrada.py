@@ -75,6 +75,30 @@ check("H,L,ENTER,E,R,T ignored", press(["H", "L", "ENTER", "E", "R", "T"]), 0)
 u.poke(TA, [0])
 check("K held, then J added -> only bit1 is new", (press(["K"]), press(["K", "J"]))[1], 0b0010)
 
+# ---------------------------------------------- leer_teclas: SPACE (bit4)
+# SPACE is LEVEL triggered (soft drop), unlike K/J/Q/W: it must read 1 on
+# EVERY call while held, not just the first, and drop to 0 the instant it is
+# released -- gravity in juego.asm relies on this to speed up while held and
+# return to normal immediately on release.
+print("\nleer_teclas  (SPACE / bit4: level state, not edge -- soft drop)")
+u.poke(TA, [0])
+check("SPACE first read -> bit4", press(["SPACE"]), 0b10000)
+check("SPACE still held -> bit4 AGAIN (no repeat suppression)", press(["SPACE"]), 0b10000)
+check("SPACE still held -> bit4 a third time", press(["SPACE"]), 0b10000)
+check("SPACE released -> 0 immediately", press([]), 0)
+check("SPACE pressed again -> bit4", press(["SPACE"]), 0b10000)
+u.poke(TA, [0])
+# SPACE must not disturb, or be disturbed by, the edge-triggered bits
+check("K+SPACE together -> bit0 (new) and bit4 (held)", press(["K", "SPACE"]), 0b10001)
+check("K held, SPACE held -> only bit4 (K is not new any more)",
+      press(["K", "SPACE"]), 0b10000)
+check("K released, SPACE still held -> only bit4", press(["SPACE"]), 0b10000)
+check("K pressed again while SPACE held -> bit0 and bit4", press(["K", "SPACE"]), 0b10001)
+u.poke(TA, [0])
+check("Q+SPACE together -> bit2 (new) and bit4 (held)", press(["Q", "SPACE"]), 0b10100)
+u.poke(TA, [0])
+check("all four plus SPACE -> bits0-4", press(["K", "J", "Q", "W", "SPACE"]), 0b11111)
+
 # register preservation
 u.poke(TA, [0])
 r = u.call("leer_teclas", keys=[], regs={"BC": 0x0A0F, "DE": 0x1234, "HL": 0x5678, "IX": L["T_L1"]})
