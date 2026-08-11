@@ -14,6 +14,14 @@ PUNTOS:          DB 0, 0, 0 ; BCD empaquetado, 6 digitos: pares 1-2, 3-4, 5-6
 LINEAS:          DB 0       ; total de filas eliminadas (binario de 8 bits)
 NIVEL:           DB 0       ; nivel actual (binario de 8 bits)
 PROX_NIVEL:      DB 10      ; filas que faltan para subir de nivel
+MEJOR:           DB 0, 0, 0 ; mejor puntuacion de la SESION, mismo formato que
+                            ; PUNTOS (BCD empaquetado, 6 digitos) para poder
+                            ; reutilizar ImprimirBCD. Se escribe en un solo
+                            ; sitio -- ActualizarMejor, al entrar en
+                            ; Pantalla_Final -- y se lee en dos, la pantalla de
+                            ; inicio y la de fin de partida. Sobrevive a
+                            ; inicializar: nadie lo pone a cero, y por eso es de
+                            ; la sesion y no de la partida
 
 ; --- gravedad --------------------------------------------------------------
 FRAMES_POR_FILA: DB 48      ; frames entre dos caidas de una fila (nivel 0)

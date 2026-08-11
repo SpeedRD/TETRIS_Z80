@@ -223,6 +223,60 @@ reads **`$BF`**, not `$FF`, so every one of those waits looped forever and the g
 title screen. The surviving waits (`titulo.asm`, `pantallas.asm`) now do `AND $1F` / `CP $1F`.
 **Never compare a raw keyboard port byte against `$FF`.**
 
+## 7. After the game loop ends — what still applies, and what does not
+
+`fin_partida` calls `relleno_pozo` (`relleno.asm`), the fill-up animation, before jumping to the
+game-over screen. It is the only code in the tree that runs *after* the loop has stopped, so it is
+worth being precise about which of the rules above still bind it. **Check this rather than
+assuming it either way** — post-game code is neither "under the same real-time pressure as the
+loop" nor "free of timing rules".
+
+**What no longer applies: the §2 frame budget.** The loop has ended. There is no input to read, no
+gravity to count, no piece to erase and repaint, and nothing after this that a slow frame could
+delay. Nothing competes for the frame, so the ~8,600 T-state worst case in §2 is simply not a
+constraint here.
+
+**What still applies, unchanged:**
+
+1. **The border window.** `$5800` is contended (§3) and the ULA draws whether the game is running
+   or not, so writing the attribute file during the visible display still tears. Each of the 22
+   rows is therefore painted immediately after a `HALT`: 18 attribute writes, ~400 T-states, far
+   inside the ~14,000 T window. Same discipline as the erase/redraw pair in §5, same reason.
+2. **The interrupt state.** `HALT` only returns if interrupts are enabled. They are, and this is
+   the part actually worth verifying rather than assuming: `main.asm:7-10` enables them once at
+   startup, and **every** `di`/`ei` bracket in the tree (`piezas.asm`, `clear.asm`, `test_col.asm`,
+   `tableroJuego.asm`) re-enables before returning — §1 is what guarantees that. Nothing in the
+   game-over path leaves them off. `relleno_pozo` does not touch `IY`, so it needs no bracket of
+   its own.
+3. **No busy-waits** (§4). The pacing is `HALT` and a counter, exactly like gravity. A delay loop
+   would make the animation a different length on every emulator.
+
+**Pacing, and why frame-by-frame rather than one fast pass.** 22 rows × `RELL_FRAMES_FILA` (3)
+frames, then a `RELL_PAUSA` (25) frame hold so the full well is actually visible before the screen
+cuts: **91 frames, ~1.8 s**, measured. A single blind fill pass would be *faster*, not *safer* —
+it saves nothing, since there is no budget to protect, and it gives up the raster sync that keeps
+the fill from tearing. Frame counting was the right tool for gravity and it is the right tool
+here.
+
+`tests/test_relleno.py` asserts the animation completes, that it takes 91 frames ± 6, and that it
+stays under a 150-frame (3 s) ceiling — the ceiling being the constraint that actually matters
+post-game: a duration the player sits through on every single loss.
+
+### Testing HALT-paced code — `run N` cannot host it
+
+ZEsarUX's `run N` executes N opcodes with **no 50 Hz tick**, so a `HALT` never returns under it.
+Two consequences, both learned the hard way:
+
+- A `HALT`-paced routine looks like an infinite loop to `Unit.call`, and an opcode limit large
+  enough to "wait it out" **wedges the emulator** — it detects the halted-with-interrupts-off CPU,
+  opens a menu, and needs restarting (the same failure mode `tests/unit.py`'s header describes
+  for breakpoints). Use `Unit.call_free`, which releases the CPU at real speed and watches for it
+  to park on the trap.
+- `Unit.__init__`'s `run 5` stops **one opcode short** of `main.asm`'s `EI`, so unit-tested
+  routines actually run with interrupts *disabled*. No other suite notices — nothing else
+  `HALT`s, and the `ei` inside `comprobar` / `pintar_tetromino` / `borrar_tetromino` re-enables
+  them in passing. `call_free` re-runs the prologue through the `EI` before releasing.
+
 ## Common mistakes
 
 - **Adding `HALT` while `IY` is garbage and interrupts are on.** The ROM handler then writes
@@ -242,3 +296,7 @@ title screen. The surviving waits (`titulo.asm`, `pantallas.asm`) now do `AND $1
   single clear is ~9,700 T-states, ~14% of a frame. Do it in one frame (§2).
 - **Assuming `ld iy,ix` is cheap.** It is `PUSH IX`/`POP IY`, 29 T-states. See
   `assembler-conventions` for sjasmplus fake instructions.
+- **Assuming post-game code is unconstrained, or assuming it is as constrained as the loop.**
+  Neither. The frame budget is gone; the border window and the interrupt state are not (§7).
+- **Testing a `HALT`-paced routine with `Unit.call` / a big `run N` limit.** It cannot return, and
+  a large enough limit wedges the emulator. `Unit.call_free` exists for this (§7).

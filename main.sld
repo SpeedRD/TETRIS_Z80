@@ -44,1121 +44,1311 @@ titulo.asm|29||0|2|32830|T|
 titulo.asm|30||0|2|32832|T|
 titulo.asm|32||0|2|32833|F|datosPantalla
 titulo.asm|32||0|2|32833|L|,datosPantalla,,+used
-pantallas.asm|3||0|2|39745|F|Pantalla_Ini
-pantallas.asm|3||0|2|39745|L|,Pantalla_Ini,,+used
-pantallas.asm|4||0|2|39745|T|
-pantallas.asm|6||0|2|39748|T|
-pantallas.asm|7||0|2|39750|T|
-pantallas.asm|8||0|2|39752|T|
-pantallas.asm|9||0|2|39754|T|
-pantallas.asm|10||0|2|39758|T|
-pantallas.asm|12||0|2|39761|T|
-pantallas.asm|13||0|2|39763|T|
-pantallas.asm|14||0|2|39765|T|
-pantallas.asm|15||0|2|39767|T|
-pantallas.asm|16||0|2|39771|T|
-pantallas.asm|18||0|2|39774|T|
-pantallas.asm|19||0|2|39776|T|
-pantallas.asm|20||0|2|39778|T|
-pantallas.asm|21||0|2|39781|T|
-pantallas.asm|22||0|2|39783|T|
-pantallas.asm|24||0|2|39784|T|
-pantallas.asm|25||0|2|39787|T|
-pantallas.asm|27||0|2|39788|F|Pantalla_Final
-pantallas.asm|27||0|2|39788|L|,Pantalla_Final,,+used
-pantallas.asm|28||0|2|39788|T|
-pantallas.asm|31||0|2|39791|T|
-pantallas.asm|32||0|2|39793|T|
-pantallas.asm|33||0|2|39795|T|
-pantallas.asm|34||0|2|39797|T|
-pantallas.asm|35||0|2|39801|T|
-pantallas.asm|38||0|2|39804|T|
-pantallas.asm|39||0|2|39806|T|
-pantallas.asm|40||0|2|39808|T|
-pantallas.asm|41||0|2|39810|T|
-pantallas.asm|42||0|2|39814|T|
-pantallas.asm|45||0|2|39817|T|
-pantallas.asm|46||0|2|39819|T|
-pantallas.asm|47||0|2|39821|T|
-pantallas.asm|48||0|2|39824|T|
-pantallas.asm|49||0|2|39826|T|
-pantallas.asm|51||0|2|39827|T|
-pantallas.asm|53||0|2|39830|T|
-pantallas.asm|58||0|2|39833|F|FinDelJuego
-pantallas.asm|58||0|2|39833|L|,FinDelJuego,,+used
-pantallas.asm|59||0|2|39833|T|
-pantallas.asm|61||0|2|39836|T|
-pantallas.asm|62||0|2|39838|T|
-pantallas.asm|63||0|2|39840|T|
-pantallas.asm|64||0|2|39842|T|
-pantallas.asm|65||0|2|39846|T|
-pantallas.asm|67||0|2|39849|F|fin
-pantallas.asm|67||0|2|39849|L|,fin,,+used
-pantallas.asm|67||0|2|39849|T|
-pantallas.asm|69||0|2|39851|F|CalcularAtributo
-pantallas.asm|69||0|2|39851|L|,CalcularAtributo,,+used
-pantallas.asm|72||0|2|39851|T|
-pantallas.asm|73||0|2|39852|T|
-pantallas.asm|74:1:12||0|2|39853|T|
-pantallas.asm|74:12:20||0|2|39855|T|
-pantallas.asm|74:20||0|2|39857|T|
-pantallas.asm|75||0|2|39859|T|
-pantallas.asm|76:1:12||0|2|39860|T|
-pantallas.asm|76:12:20||0|2|39862|T|
-pantallas.asm|76:20:28||0|2|39864|T|
-pantallas.asm|76:28:36||0|2|39866|T|
-pantallas.asm|76:36||0|2|39868|T|
-pantallas.asm|77||0|2|39870|T|
-pantallas.asm|78||0|2|39871|T|
-pantallas.asm|79||0|2|39872|T|
-pantallas.asm|80||0|2|39875|T|
-pantallas.asm|81||0|2|39876|T|
-pantallas.asm|82||0|2|39877|T|
-pantallas.asm|85||0|2|39878|F|EsperarTecla
-pantallas.asm|85||0|2|39878|L|,EsperarTecla,,+used
-pantallas.asm|86||0|2|39878|T|
-pantallas.asm|87||0|2|39881|T|
-pantallas.asm|88||0|2|39883|T|
-pantallas.asm|89||0|2|39885|T|
-pantallas.asm|91||0|2|39886|F|LeerTecla
-pantallas.asm|91||0|2|39886|L|,LeerTecla,,+used
-pantallas.asm|92||0|2|39886|T|
-pantallas.asm|93||0|2|39889|T|
-pantallas.asm|94||0|2|39891|T|
-pantallas.asm|95||0|2|39893|T|
-pantallas.asm|96||0|2|39895|T|
-pantallas.asm|97||0|2|39898|T|
-pantallas.asm|98||0|2|39900|T|
-pantallas.asm|99||0|2|39902|T|
-pantallas.asm|100||0|2|39904|T|
-pantallas.asm|102||0|2|39906|F|SoltarTecla
-pantallas.asm|102||0|2|39906|L|,SoltarTecla,,+used
-pantallas.asm|103||0|2|39906|T|
-pantallas.asm|104||0|2|39908|T|
-pantallas.asm|105||0|2|39910|T|
-pantallas.asm|106||0|2|39912|T|
-pantallas.asm|107||0|2|39914|T|
-pantallas.asm|113||0|2|39915|F|MensajeFinal
-pantallas.asm|113||0|2|39915|L|,MensajeFinal,,+used
-pantallas.asm|114||0|2|39933|F|MensajeIniciar
-pantallas.asm|114||0|2|39933|L|,MensajeIniciar,,+used
-pantallas.asm|115||0|2|39963|F|MensajeJuego
-pantallas.asm|115||0|2|39963|L|,MensajeJuego,,+used
-pantallas.asm|120||0|2|39985|F|MensajeReiniciar
-pantallas.asm|120||0|2|39985|L|,MensajeReiniciar,,+used
-pantallas.asm|121||0|2|40011|F|MensajeGameOver
-pantallas.asm|121||0|2|40011|L|,MensajeGameOver,,+used
-L30.3 - printat.asm|14||0|2|40028|F|PRINTAT
-L30.3 - printat.asm|14||0|2|40028|L|,PRINTAT,,+used
-L30.3 - printat.asm|14||0|2|40028|T|
-L30.3 - printat.asm|20||0|2|40031|F|PRINTSTR
-L30.3 - printat.asm|20||0|2|40031|L|,PRINTSTR,,+used
-L30.3 - printat.asm|20||0|2|40031|T|
-L30.3 - printat.asm|21||0|2|40034|T|
-L30.3 - printat.asm|22||0|2|40035|T|
-L30.3 - printat.asm|23||0|2|40036|T|
-L30.3 - printat.asm|24||0|2|40039|T|
-L30.3 - printat.asm|25||0|2|40041|T|
-L30.3 - printat.asm|32||0|2|40043|F|PREP_PRT
-L30.3 - printat.asm|32||0|2|40043|L|,PREP_PRT,,+used
-L30.3 - printat.asm|32||0|2|40043|T|
-L30.3 - printat.asm|33||0|2|40046|F|PREP_PRT_2
-L30.3 - printat.asm|33||0|2|40046|L|,PREP_PRT_2,
-L30.3 - printat.asm|33||0|2|40046|T|
-L30.3 - printat.asm|34||0|2|40049|T|
-L30.3 - printat.asm|45||0|2|40052|F|CRtoSCREEN
-L30.3 - printat.asm|45||0|2|40052|L|,CRtoSCREEN,,+used
-L30.3 - printat.asm|46||0|2|40052|T|
-L30.3 - printat.asm|47||0|2|40053|T|
-L30.3 - printat.asm|48||0|2|40055|T|
-L30.3 - printat.asm|49||0|2|40057|T|
-L30.3 - printat.asm|51||0|2|40058|T|
-L30.3 - printat.asm|52||0|2|40059|T|
-L30.3 - printat.asm|53||0|2|40061|T|
-L30.3 - printat.asm|54||0|2|40062|T|
-L30.3 - printat.asm|55||0|2|40063|T|
-L30.3 - printat.asm|56||0|2|40064|T|
-L30.3 - printat.asm|57||0|2|40065|T|
-L30.3 - printat.asm|58||0|2|40066|T|
-L30.3 - printat.asm|59||0|2|40069|T|
-L30.3 - printat.asm|72||0|2|40070|F|CRtoATTR
-L30.3 - printat.asm|72||0|2|40070|L|,CRtoATTR,,+used
-L30.3 - printat.asm|73||0|2|40070|T|
-L30.3 - printat.asm|74||0|2|40071|T|
-L30.3 - printat.asm|75||0|2|40072|T|
-L30.3 - printat.asm|76||0|2|40073|T|
-L30.3 - printat.asm|77||0|2|40074|T|
-L30.3 - printat.asm|78||0|2|40075|T|
-L30.3 - printat.asm|79||0|2|40077|T|
-L30.3 - printat.asm|80||0|2|40079|T|
-L30.3 - printat.asm|82||0|2|40080|T|
-L30.3 - printat.asm|83||0|2|40081|T|
-L30.3 - printat.asm|84||0|2|40083|T|
-L30.3 - printat.asm|85||0|2|40084|T|
-L30.3 - printat.asm|87||0|2|40085|T|
-L30.3 - printat.asm|88||0|2|40088|T|
-L30.3 - printat.asm|96||0|2|40089|F|PRINTCHNUM
-L30.3 - printat.asm|96||0|2|40089|L|,PRINTCHNUM,,+used
-L30.3 - printat.asm|97||0|2|40089|T|
-L30.3 - printat.asm|98||0|2|40091|T|
-L30.3 - printat.asm|99||0|2|40092|T|
-L30.3 - printat.asm|100||0|2|40093|T|
-L30.3 - printat.asm|101||0|2|40094|T|
-L30.3 - printat.asm|102||0|2|40095|T|
-L30.3 - printat.asm|103||0|2|40098|T|
-L30.3 - printat.asm|104||0|2|40099|T|
-L30.3 - printat.asm|112||0|2|40100|F|PRINTCHAR
-L30.3 - printat.asm|112||0|2|40100|L|,PRINTCHAR,
-L30.3 - printat.asm|113||0|2|40100|T|
-L30.3 - printat.asm|114||0|2|40102|T|
-L30.3 - printat.asm|116||0|2|40105|F|BYTEPCHAR
-L30.3 - printat.asm|116||0|2|40105|L|,BYTEPCHAR,,+used
-L30.3 - printat.asm|116||0|2|40105|T|
-L30.3 - printat.asm|117||0|2|40106|T|
-L30.3 - printat.asm|118||0|2|40107|T|
-L30.3 - printat.asm|119||0|2|40108|T|
-L30.3 - printat.asm|120||0|2|40109|T|
-L30.3 - printat.asm|121||0|2|40111|T|
-L30.3 - printat.asm|122||0|2|40114|T|
-L30.3 - printat.asm|123||0|2|40117|T|
-L30.3 - printat.asm|124||0|2|40118|T|
-L30.3 - printat.asm|125||0|2|40121|T|
-L30.3 - printat.asm|126||0|2|40122|T|
-L30.3 - printat.asm|127||0|2|40125|T|
-L30.3 - printat.asm|128||0|2|40126|T|
-L30.3 - printat.asm|137||0|2|40127|F|INK2PAPER
-L30.3 - printat.asm|137||0|2|40127|L|,INK2PAPER,
-L30.3 - printat.asm|137||0|2|40127|T|
-L30.3 - printat.asm|138||0|2|40130|T|
-L30.3 - printat.asm|139||0|2|40132|T|
-L30.3 - printat.asm|140||0|2|40133|T|
-L30.3 - printat.asm|141||0|2|40134|T|
-L30.3 - printat.asm|142||0|2|40135|T|
-L30.3 - printat.asm|143||0|2|40137|T|
-L30.3 - printat.asm|144||0|2|40140|T|
-L30.3 - printat.asm|150||0|2|40141|F|CLEARSCR
-L30.3 - printat.asm|150||0|2|40141|L|,CLEARSCR,,+used
-L30.3 - printat.asm|150||0|2|40141|T|
-L30.3 - printat.asm|151||0|2|40144|T|
-L30.3 - printat.asm|152||0|2|40147|T|
-L30.3 - printat.asm|153||0|2|40150|T|
-L30.3 - printat.asm|154||0|2|40152|T|
-L30.3 - printat.asm|155||0|2|40154|T|
-L30.3 - printat.asm|158:1:14||0|2|40155|F|SCR_CUR_PTR
-L30.3 - printat.asm|158:1:14||0|2|40155|L|,SCR_CUR_PTR,,+used
-L30.3 - printat.asm|159||0|2|40157|F|SCR_ATTR_PTR
-L30.3 - printat.asm|159||0|2|40157|L|,SCR_ATTR_PTR,,+used
-L30.3 - printat.asm|160||0|2|40159|F|PRINT_ATTR
-L30.3 - printat.asm|160||0|2|40159|L|,PRINT_ATTR,,+used
-L30.3 - printat.asm|162||0|2|40160|F|CHARSET
-L30.3 - printat.asm|162||0|2|40160|L|,CHARSET,,+used
-L35 - Tetris_3D.asm|1||0|2|40928|F|Tetro_3D
-L35 - Tetris_3D.asm|1||0|2|40928|L|,Tetro_3D,,+used
-L35 - Tetris_3D.asm|3||0|2|40936|F|Tetris_3D
-L35 - Tetris_3D.asm|3||0|2|40936|L|,Tetris_3D,,+used
-L35 - Tetris_3D.asm|4||0|2|40936|T|
-L35 - Tetris_3D.asm|5||0|2|40938|T|
-L35 - Tetris_3D.asm|7||0|2|40942|F|T3D3
-L35 - Tetris_3D.asm|7||0|2|40942|L|,T3D3,,+used
-L35 - Tetris_3D.asm|9||0|2|40942|T|
-L35 - Tetris_3D.asm|11||0|2|40946|T|
-L35 - Tetris_3D.asm|12||0|2|40948|F|T3D2
-L35 - Tetris_3D.asm|12||0|2|40948|L|,T3D2,,+used
-L35 - Tetris_3D.asm|13||0|2|40948|T|
-L35 - Tetris_3D.asm|14||0|2|40950|T|
-L35 - Tetris_3D.asm|15||0|2|40953|F|T3D1
-L35 - Tetris_3D.asm|15||0|2|40953|L|,T3D1,,+used
-L35 - Tetris_3D.asm|16||0|2|40953|T|
-L35 - Tetris_3D.asm|17||0|2|40956|T|
-L35 - Tetris_3D.asm|18||0|2|40958|T|
-L35 - Tetris_3D.asm|20||0|2|40960|T|
-L35 - Tetris_3D.asm|21||0|2|40961|T|
-L35 - Tetris_3D.asm|22||0|2|40963|T|
-L35 - Tetris_3D.asm|24||0|2|40965|T|
-L35 - Tetris_3D.asm|25||0|2|40966|T|
-L35 - Tetris_3D.asm|27||0|2|40968|T|
-tableroJuego.asm|4||0|2|40969|F|dibujar_tablero
-tableroJuego.asm|4||0|2|40969|L|,dibujar_tablero,,+used
-tableroJuego.asm|5||0|2|40969|T|
-tableroJuego.asm|8||0|2|40972|T|
-tableroJuego.asm|9||0|2|40975|T|
-tableroJuego.asm|10||0|2|40978|T|
-tableroJuego.asm|11||0|2|40980|T|
-tableroJuego.asm|13||0|2|40982|F|borde_izquierdo
-tableroJuego.asm|13||0|2|40982|L|,borde_izquierdo,,+used
-tableroJuego.asm|14||0|2|40982|T|
-tableroJuego.asm|15||0|2|40983|T|
-tableroJuego.asm|16||0|2|40984|T|
-tableroJuego.asm|19||0|2|40986|T|
-tableroJuego.asm|20||0|2|40989|T|
-tableroJuego.asm|21||0|2|40992|T|
-tableroJuego.asm|22||0|2|40994|T|
-tableroJuego.asm|24||0|2|40996|F|borde_derecho
-tableroJuego.asm|24||0|2|40996|L|,borde_derecho,,+used
-tableroJuego.asm|25||0|2|40996|T|
-tableroJuego.asm|26||0|2|40997|T|
-tableroJuego.asm|27||0|2|40998|T|
-tableroJuego.asm|30||0|2|41000|T|
-tableroJuego.asm|31||0|2|41003|T|
-tableroJuego.asm|32||0|2|41005|T|
-tableroJuego.asm|34||0|2|41007|F|base
-tableroJuego.asm|34||0|2|41007|L|,base,,+used
-tableroJuego.asm|35||0|2|41007|T|
-tableroJuego.asm|36||0|2|41008|T|
-tableroJuego.asm|37||0|2|41009|T|
-tableroJuego.asm|39||0|2|41011|T|
-tableroJuego.asm|40||0|2|41012|T|
-tableroJuego.asm|41||0|2|41015|T|
-tableroJuego.asm|42||0|2|41019|T|
-tableroJuego.asm|45||0|2|41020|T|
+pantallas.asm|22||0|-1|5|D|PANEL_ALTO
+pantallas.asm|22||0|-1|5|L|,PANEL_ALTO,,+equ,+used
+pantallas.asm|23||0|-1|55|D|ATRIB_MARCO
+pantallas.asm|23||0|-1|55|L|,ATRIB_MARCO,,+equ,+used
+pantallas.asm|24||0|-1|6|D|TINTA_ROTULO
+pantallas.asm|24||0|-1|6|L|,TINTA_ROTULO,,+equ,+used
+pantallas.asm|25||0|-1|7|D|TINTA_TEXTO
+pantallas.asm|25||0|-1|7|L|,TINTA_TEXTO,,+equ,+used
+pantallas.asm|26||0|-1|134|D|TINTA_CURSOR
+pantallas.asm|26||0|-1|134|L|,TINTA_CURSOR,,+equ,+used
+pantallas.asm|30||0|-1|4|D|MEJOR_COL_ROTULO
+pantallas.asm|30||0|-1|4|L|,MEJOR_COL_ROTULO,,+equ,+used
+pantallas.asm|31||0|-1|22|D|MEJOR_COL_VALOR
+pantallas.asm|31||0|-1|22|L|,MEJOR_COL_VALOR,,+equ,+used
+pantallas.asm|33||0|2|39745|F|Pantalla_Ini
+pantallas.asm|33||0|2|39745|L|,Pantalla_Ini,,+used
+pantallas.asm|34||0|2|39745|T|
+pantallas.asm|35||0|2|39748|T|
+pantallas.asm|36||0|2|39751|T|
+pantallas.asm|38||0|2|39752|F|Pantalla_Final
+pantallas.asm|38||0|2|39752|L|,Pantalla_Final,,+used
+pantallas.asm|39||0|2|39752|T|
+pantallas.asm|42||0|2|39755|T|
+pantallas.asm|43||0|2|39758|T|
+pantallas.asm|45||0|2|39761|T|
+pantallas.asm|50||0|2|39764|F|FinDelJuego
+pantallas.asm|50||0|2|39764|L|,FinDelJuego,,+used
+pantallas.asm|51||0|2|39764|T|
+pantallas.asm|53||0|2|39767|F|fin
+pantallas.asm|53||0|2|39767|L|,fin,,+used
+pantallas.asm|53||0|2|39767|T|
+pantallas.asm|56||0|2|39769|F|EsperarTecla
+pantallas.asm|56||0|2|39769|L|,EsperarTecla,,+used
+pantallas.asm|57||0|2|39769|T|
+pantallas.asm|58||0|2|39772|T|
+pantallas.asm|59||0|2|39774|T|
+pantallas.asm|60||0|2|39776|T|
+pantallas.asm|62||0|2|39777|F|LeerTecla
+pantallas.asm|62||0|2|39777|L|,LeerTecla,,+used
+pantallas.asm|63||0|2|39777|T|
+pantallas.asm|64||0|2|39780|T|
+pantallas.asm|65||0|2|39782|T|
+pantallas.asm|66||0|2|39784|T|
+pantallas.asm|67||0|2|39786|T|
+pantallas.asm|68||0|2|39789|T|
+pantallas.asm|69||0|2|39791|T|
+pantallas.asm|70||0|2|39793|T|
+pantallas.asm|71||0|2|39795|T|
+pantallas.asm|73||0|2|39797|F|SoltarTecla
+pantallas.asm|73||0|2|39797|L|,SoltarTecla,,+used
+pantallas.asm|74||0|2|39797|T|
+pantallas.asm|75||0|2|39799|T|
+pantallas.asm|76||0|2|39801|T|
+pantallas.asm|77||0|2|39803|T|
+pantallas.asm|78||0|2|39805|T|
+pantallas.asm|93||0|2|39806|F|pintar_ini
+pantallas.asm|93||0|2|39806|L|,pintar_ini,,+used
+pantallas.asm|94||0|2|39806|T|
+pantallas.asm|96||0|2|39809|T|
+pantallas.asm|97||0|2|39811|T|
+pantallas.asm|98||0|2|39814|T|
+pantallas.asm|99||0|2|39816|T|
+pantallas.asm|100||0|2|39818|T|
+pantallas.asm|101||0|2|39820|T|
+pantallas.asm|102||0|2|39824|T|
+pantallas.asm|104||0|2|39827|T|
+pantallas.asm|105||0|2|39829|T|
+pantallas.asm|107||0|2|39832|T|
+pantallas.asm|108||0|2|39834|T|
+pantallas.asm|109||0|2|39837|T|
+pantallas.asm|110||0|2|39839|T|
+pantallas.asm|111||0|2|39841|T|
+pantallas.asm|112||0|2|39843|T|
+pantallas.asm|113||0|2|39847|T|
+pantallas.asm|115||0|2|39850|T|
+pantallas.asm|116||0|2|39852|T|
+pantallas.asm|117||0|2|39854|T|
+pantallas.asm|118||0|2|39857|T|
+pantallas.asm|119||0|2|39859|T|
+pantallas.asm|124||0|2|39860|F|pintar_final
+pantallas.asm|124||0|2|39860|L|,pintar_final,,+used
+pantallas.asm|125||0|2|39860|T|
+pantallas.asm|127||0|2|39863|T|
+pantallas.asm|128||0|2|39865|T|
+pantallas.asm|129||0|2|39868|T|
+pantallas.asm|130||0|2|39870|T|
+pantallas.asm|131||0|2|39872|T|
+pantallas.asm|132||0|2|39874|T|
+pantallas.asm|133||0|2|39878|T|
+pantallas.asm|135||0|2|39881|T|
+pantallas.asm|136||0|2|39883|T|
+pantallas.asm|138||0|2|39886|T|
+pantallas.asm|139||0|2|39888|T|
+pantallas.asm|140||0|2|39891|T|
+pantallas.asm|141||0|2|39893|T|
+pantallas.asm|142||0|2|39895|T|
+pantallas.asm|143||0|2|39897|T|
+pantallas.asm|144||0|2|39901|T|
+pantallas.asm|147||0|2|39904|T|
+pantallas.asm|148||0|2|39906|T|
+pantallas.asm|149||0|2|39908|T|
+pantallas.asm|150||0|2|39911|T|
+pantallas.asm|151||0|2|39913|T|
+pantallas.asm|155||0|2|39914|F|pintar_gracias
+pantallas.asm|155||0|2|39914|L|,pintar_gracias,,+used
+pantallas.asm|156||0|2|39914|T|
+pantallas.asm|158||0|2|39917|T|
+pantallas.asm|159||0|2|39919|T|
+pantallas.asm|160||0|2|39922|T|
+pantallas.asm|161||0|2|39924|T|
+pantallas.asm|162||0|2|39926|T|
+pantallas.asm|163||0|2|39928|T|
+pantallas.asm|164||0|2|39932|T|
+pantallas.asm|165||0|2|39935|T|
+pantallas.asm|177||0|2|39936|F|pintar_marco
+pantallas.asm|177||0|2|39936|L|,pintar_marco,,+used
+pantallas.asm|178:1:14||0|2|39936|T|
+pantallas.asm|178:14:24||0|2|39937|T|
+pantallas.asm|178:24:34||0|2|39938|T|
+pantallas.asm|178:34||0|2|39939|T|
+pantallas.asm|179||0|2|39940|T|
+pantallas.asm|180||0|2|39942|T|
+pantallas.asm|181||0|2|39945|T|
+pantallas.asm|182||0|2|39947|T|
+pantallas.asm|183||0|2|39950|T|
+pantallas.asm|184||0|2|39952|F|pm_arriba
+pantallas.asm|184||0|2|39952|L|,pm_arriba,,+used
+pantallas.asm|185||0|2|39952|T|
+pantallas.asm|186||0|2|39953|T|
+pantallas.asm|187||0|2|39954|T|
+pantallas.asm|188||0|2|39956|T|
+pantallas.asm|189||0|2|39958|F|pm_lados
+pantallas.asm|189||0|2|39958|L|,pm_lados,,+used
+pantallas.asm|190||0|2|39958|T|
+pantallas.asm|191||0|2|39959|T|
+pantallas.asm|192||0|2|39960|T|
+pantallas.asm|193||0|2|39961|T|
+pantallas.asm|194||0|2|39962|T|
+pantallas.asm|195||0|2|39964|T|
+pantallas.asm|196||0|2|39966|F|pm_abajo
+pantallas.asm|196||0|2|39966|L|,pm_abajo,,+used
+pantallas.asm|197||0|2|39966|T|
+pantallas.asm|198||0|2|39967|T|
+pantallas.asm|199||0|2|39968|T|
+pantallas.asm|200:1:13||0|2|39970|T|
+pantallas.asm|200:13:22||0|2|39971|T|
+pantallas.asm|200:22:31||0|2|39972|T|
+pantallas.asm|200:31||0|2|39973|T|
+pantallas.asm|201||0|2|39974|T|
+pantallas.asm|218||0|2|39975|F|pintar_mejor
+pantallas.asm|218||0|2|39975|L|,pintar_mejor,,+used
+pantallas.asm|219||0|2|39975|T|
+pantallas.asm|220||0|2|39978|T|
+pantallas.asm|221||0|2|39979|T|
+pantallas.asm|222:1:12||0|2|39981|T|
+pantallas.asm|222:12||0|2|39982|T|
+pantallas.asm|223||0|2|39983|T|
+pantallas.asm|224||0|2|39985|T|
+pantallas.asm|225||0|2|39989|T|
+pantallas.asm|226||0|2|39992|T|
+pantallas.asm|227:1:12||0|2|39993|T|
+pantallas.asm|227:12||0|2|39994|T|
+pantallas.asm|228||0|2|39995|T|
+pantallas.asm|229||0|2|39997|T|
+pantallas.asm|230||0|2|40000|T|
+pantallas.asm|235||0|2|40001|F|ImprimirMejor
+pantallas.asm|235||0|2|40001|L|,ImprimirMejor,,+used
+pantallas.asm|236||0|2|40001|T|
+pantallas.asm|237||0|2|40003|T|
+pantallas.asm|238:1:22||0|2|40006|T|
+pantallas.asm|238:22||0|2|40009|T|
+pantallas.asm|239:1:22||0|2|40012|T|
+pantallas.asm|239:22||0|2|40015|T|
+pantallas.asm|240:1:22||0|2|40018|T|
+pantallas.asm|240:22||0|2|40021|T|
+pantallas.asm|249||0|2|40024|F|ActualizarMejor
+pantallas.asm|249||0|2|40024|L|,ActualizarMejor,,+used
+pantallas.asm|250||0|2|40024|T|
+pantallas.asm|251||0|2|40027|T|
+pantallas.asm|252||0|2|40030|T|
+pantallas.asm|253||0|2|40032|F|am_comparar
+pantallas.asm|253||0|2|40032|L|,am_comparar,,+used
+pantallas.asm|254||0|2|40032|T|
+pantallas.asm|255||0|2|40033|T|
+pantallas.asm|256||0|2|40034|T|
+pantallas.asm|257||0|2|40036|T|
+pantallas.asm|258:1:13||0|2|40037|T|
+pantallas.asm|258:13||0|2|40038|T|
+pantallas.asm|259||0|2|40039|T|
+pantallas.asm|260||0|2|40041|T|
+pantallas.asm|261||0|2|40042|F|am_copiar
+pantallas.asm|261||0|2|40042|L|,am_copiar,,+used
+pantallas.asm|262||0|2|40042|T|
+pantallas.asm|263||0|2|40045|T|
+pantallas.asm|264||0|2|40048|T|
+pantallas.asm|265||0|2|40051|T|
+pantallas.asm|266||0|2|40053|T|
+pantallas.asm|269||0|2|40054|F|CalcularAtributo
+pantallas.asm|269||0|2|40054|L|,CalcularAtributo,,+used
+pantallas.asm|272||0|2|40054|T|
+pantallas.asm|273||0|2|40055|T|
+pantallas.asm|274:1:12||0|2|40056|T|
+pantallas.asm|274:12:20||0|2|40058|T|
+pantallas.asm|274:20||0|2|40060|T|
+pantallas.asm|275||0|2|40062|T|
+pantallas.asm|276:1:12||0|2|40063|T|
+pantallas.asm|276:12:20||0|2|40065|T|
+pantallas.asm|276:20:28||0|2|40067|T|
+pantallas.asm|276:28:36||0|2|40069|T|
+pantallas.asm|276:36||0|2|40071|T|
+pantallas.asm|277||0|2|40073|T|
+pantallas.asm|278||0|2|40074|T|
+pantallas.asm|279||0|2|40075|T|
+pantallas.asm|280||0|2|40078|T|
+pantallas.asm|281||0|2|40079|T|
+pantallas.asm|282||0|2|40080|T|
+pantallas.asm|287||0|2|40081|F|MensajeFinal
+pantallas.asm|287||0|2|40081|L|,MensajeFinal,,+used
+pantallas.asm|288||0|2|40099|F|MensajeIniciar
+pantallas.asm|288||0|2|40099|L|,MensajeIniciar,,+used
+pantallas.asm|289||0|2|40129|F|MensajeJuego
+pantallas.asm|289||0|2|40129|L|,MensajeJuego,,+used
+pantallas.asm|294||0|2|40151|F|MensajeReiniciar
+pantallas.asm|294||0|2|40151|L|,MensajeReiniciar,,+used
+pantallas.asm|295||0|2|40177|F|MensajeGameOver
+pantallas.asm|295||0|2|40177|L|,MensajeGameOver,,+used
+pantallas.asm|296||0|2|40194|F|MsgMejor
+pantallas.asm|296||0|2|40194|L|,MsgMejor,,+used
+L30.3 - printat.asm|14||0|2|40211|F|PRINTAT
+L30.3 - printat.asm|14||0|2|40211|L|,PRINTAT,,+used
+L30.3 - printat.asm|14||0|2|40211|T|
+L30.3 - printat.asm|20||0|2|40214|F|PRINTSTR
+L30.3 - printat.asm|20||0|2|40214|L|,PRINTSTR,,+used
+L30.3 - printat.asm|20||0|2|40214|T|
+L30.3 - printat.asm|21||0|2|40217|T|
+L30.3 - printat.asm|22||0|2|40218|T|
+L30.3 - printat.asm|23||0|2|40219|T|
+L30.3 - printat.asm|24||0|2|40222|T|
+L30.3 - printat.asm|25||0|2|40224|T|
+L30.3 - printat.asm|32||0|2|40226|F|PREP_PRT
+L30.3 - printat.asm|32||0|2|40226|L|,PREP_PRT,,+used
+L30.3 - printat.asm|32||0|2|40226|T|
+L30.3 - printat.asm|33||0|2|40229|F|PREP_PRT_2
+L30.3 - printat.asm|33||0|2|40229|L|,PREP_PRT_2,
+L30.3 - printat.asm|33||0|2|40229|T|
+L30.3 - printat.asm|34||0|2|40232|T|
+L30.3 - printat.asm|45||0|2|40235|F|CRtoSCREEN
+L30.3 - printat.asm|45||0|2|40235|L|,CRtoSCREEN,,+used
+L30.3 - printat.asm|46||0|2|40235|T|
+L30.3 - printat.asm|47||0|2|40236|T|
+L30.3 - printat.asm|48||0|2|40238|T|
+L30.3 - printat.asm|49||0|2|40240|T|
+L30.3 - printat.asm|51||0|2|40241|T|
+L30.3 - printat.asm|52||0|2|40242|T|
+L30.3 - printat.asm|53||0|2|40244|T|
+L30.3 - printat.asm|54||0|2|40245|T|
+L30.3 - printat.asm|55||0|2|40246|T|
+L30.3 - printat.asm|56||0|2|40247|T|
+L30.3 - printat.asm|57||0|2|40248|T|
+L30.3 - printat.asm|58||0|2|40249|T|
+L30.3 - printat.asm|59||0|2|40252|T|
+L30.3 - printat.asm|72||0|2|40253|F|CRtoATTR
+L30.3 - printat.asm|72||0|2|40253|L|,CRtoATTR,,+used
+L30.3 - printat.asm|73||0|2|40253|T|
+L30.3 - printat.asm|74||0|2|40254|T|
+L30.3 - printat.asm|75||0|2|40255|T|
+L30.3 - printat.asm|76||0|2|40256|T|
+L30.3 - printat.asm|77||0|2|40257|T|
+L30.3 - printat.asm|78||0|2|40258|T|
+L30.3 - printat.asm|79||0|2|40260|T|
+L30.3 - printat.asm|80||0|2|40262|T|
+L30.3 - printat.asm|82||0|2|40263|T|
+L30.3 - printat.asm|83||0|2|40264|T|
+L30.3 - printat.asm|84||0|2|40266|T|
+L30.3 - printat.asm|85||0|2|40267|T|
+L30.3 - printat.asm|87||0|2|40268|T|
+L30.3 - printat.asm|88||0|2|40271|T|
+L30.3 - printat.asm|96||0|2|40272|F|PRINTCHNUM
+L30.3 - printat.asm|96||0|2|40272|L|,PRINTCHNUM,,+used
+L30.3 - printat.asm|97||0|2|40272|T|
+L30.3 - printat.asm|98||0|2|40274|T|
+L30.3 - printat.asm|99||0|2|40275|T|
+L30.3 - printat.asm|100||0|2|40276|T|
+L30.3 - printat.asm|101||0|2|40277|T|
+L30.3 - printat.asm|102||0|2|40278|T|
+L30.3 - printat.asm|103||0|2|40281|T|
+L30.3 - printat.asm|104||0|2|40282|T|
+L30.3 - printat.asm|112||0|2|40283|F|PRINTCHAR
+L30.3 - printat.asm|112||0|2|40283|L|,PRINTCHAR,
+L30.3 - printat.asm|113||0|2|40283|T|
+L30.3 - printat.asm|114||0|2|40285|T|
+L30.3 - printat.asm|116||0|2|40288|F|BYTEPCHAR
+L30.3 - printat.asm|116||0|2|40288|L|,BYTEPCHAR,,+used
+L30.3 - printat.asm|116||0|2|40288|T|
+L30.3 - printat.asm|117||0|2|40289|T|
+L30.3 - printat.asm|118||0|2|40290|T|
+L30.3 - printat.asm|119||0|2|40291|T|
+L30.3 - printat.asm|120||0|2|40292|T|
+L30.3 - printat.asm|121||0|2|40294|T|
+L30.3 - printat.asm|122||0|2|40297|T|
+L30.3 - printat.asm|123||0|2|40300|T|
+L30.3 - printat.asm|124||0|2|40301|T|
+L30.3 - printat.asm|125||0|2|40304|T|
+L30.3 - printat.asm|126||0|2|40305|T|
+L30.3 - printat.asm|127||0|2|40308|T|
+L30.3 - printat.asm|128||0|2|40309|T|
+L30.3 - printat.asm|137||0|2|40310|F|INK2PAPER
+L30.3 - printat.asm|137||0|2|40310|L|,INK2PAPER,
+L30.3 - printat.asm|137||0|2|40310|T|
+L30.3 - printat.asm|138||0|2|40313|T|
+L30.3 - printat.asm|139||0|2|40315|T|
+L30.3 - printat.asm|140||0|2|40316|T|
+L30.3 - printat.asm|141||0|2|40317|T|
+L30.3 - printat.asm|142||0|2|40318|T|
+L30.3 - printat.asm|143||0|2|40320|T|
+L30.3 - printat.asm|144||0|2|40323|T|
+L30.3 - printat.asm|150||0|2|40324|F|CLEARSCR
+L30.3 - printat.asm|150||0|2|40324|L|,CLEARSCR,,+used
+L30.3 - printat.asm|150||0|2|40324|T|
+L30.3 - printat.asm|151||0|2|40327|T|
+L30.3 - printat.asm|152||0|2|40330|T|
+L30.3 - printat.asm|153||0|2|40333|T|
+L30.3 - printat.asm|154||0|2|40335|T|
+L30.3 - printat.asm|155||0|2|40337|T|
+L30.3 - printat.asm|158:1:14||0|2|40338|F|SCR_CUR_PTR
+L30.3 - printat.asm|158:1:14||0|2|40338|L|,SCR_CUR_PTR,,+used
+L30.3 - printat.asm|159||0|2|40340|F|SCR_ATTR_PTR
+L30.3 - printat.asm|159||0|2|40340|L|,SCR_ATTR_PTR,,+used
+L30.3 - printat.asm|160||0|2|40342|F|PRINT_ATTR
+L30.3 - printat.asm|160||0|2|40342|L|,PRINT_ATTR,,+used
+L30.3 - printat.asm|162||0|2|40343|F|CHARSET
+L30.3 - printat.asm|162||0|2|40343|L|,CHARSET,,+used
+L35 - Tetris_3D.asm|1||0|2|41111|F|Tetro_3D
+L35 - Tetris_3D.asm|1||0|2|41111|L|,Tetro_3D,,+used
+L35 - Tetris_3D.asm|3||0|2|41119|F|Tetris_3D
+L35 - Tetris_3D.asm|3||0|2|41119|L|,Tetris_3D,,+used
+L35 - Tetris_3D.asm|4||0|2|41119|T|
+L35 - Tetris_3D.asm|5||0|2|41121|T|
+L35 - Tetris_3D.asm|7||0|2|41125|F|T3D3
+L35 - Tetris_3D.asm|7||0|2|41125|L|,T3D3,,+used
+L35 - Tetris_3D.asm|9||0|2|41125|T|
+L35 - Tetris_3D.asm|11||0|2|41129|T|
+L35 - Tetris_3D.asm|12||0|2|41131|F|T3D2
+L35 - Tetris_3D.asm|12||0|2|41131|L|,T3D2,,+used
+L35 - Tetris_3D.asm|13||0|2|41131|T|
+L35 - Tetris_3D.asm|14||0|2|41133|T|
+L35 - Tetris_3D.asm|15||0|2|41136|F|T3D1
+L35 - Tetris_3D.asm|15||0|2|41136|L|,T3D1,,+used
+L35 - Tetris_3D.asm|16||0|2|41136|T|
+L35 - Tetris_3D.asm|17||0|2|41139|T|
+L35 - Tetris_3D.asm|18||0|2|41141|T|
+L35 - Tetris_3D.asm|20||0|2|41143|T|
+L35 - Tetris_3D.asm|21||0|2|41144|T|
+L35 - Tetris_3D.asm|22||0|2|41146|T|
+L35 - Tetris_3D.asm|24||0|2|41148|T|
+L35 - Tetris_3D.asm|25||0|2|41149|T|
+L35 - Tetris_3D.asm|27||0|2|41151|T|
+tableroJuego.asm|4||0|2|41152|F|dibujar_tablero
+tableroJuego.asm|4||0|2|41152|L|,dibujar_tablero,,+used
+tableroJuego.asm|5||0|2|41152|T|
+tableroJuego.asm|8||0|2|41155|T|
+tableroJuego.asm|9||0|2|41158|T|
+tableroJuego.asm|10||0|2|41161|T|
+tableroJuego.asm|11||0|2|41163|T|
+tableroJuego.asm|13||0|2|41165|F|borde_izquierdo
+tableroJuego.asm|13||0|2|41165|L|,borde_izquierdo,,+used
+tableroJuego.asm|14||0|2|41165|T|
+tableroJuego.asm|15||0|2|41166|T|
+tableroJuego.asm|16||0|2|41167|T|
+tableroJuego.asm|19||0|2|41169|T|
+tableroJuego.asm|20||0|2|41172|T|
+tableroJuego.asm|21||0|2|41175|T|
+tableroJuego.asm|22||0|2|41177|T|
+tableroJuego.asm|24||0|2|41179|F|borde_derecho
+tableroJuego.asm|24||0|2|41179|L|,borde_derecho,,+used
+tableroJuego.asm|25||0|2|41179|T|
+tableroJuego.asm|26||0|2|41180|T|
+tableroJuego.asm|27||0|2|41181|T|
+tableroJuego.asm|30||0|2|41183|T|
+tableroJuego.asm|31||0|2|41186|T|
+tableroJuego.asm|32||0|2|41188|T|
+tableroJuego.asm|34||0|2|41190|F|base
+tableroJuego.asm|34||0|2|41190|L|,base,,+used
+tableroJuego.asm|35||0|2|41190|T|
+tableroJuego.asm|36||0|2|41191|T|
+tableroJuego.asm|37||0|2|41192|T|
+tableroJuego.asm|39||0|2|41194|T|
+tableroJuego.asm|40||0|2|41195|T|
+tableroJuego.asm|41||0|2|41198|T|
+tableroJuego.asm|42||0|2|41202|T|
+tableroJuego.asm|45||0|2|41203|T|
 juego.asm|17||0|-1|4|D|FRAMES_CAIDA_RAPIDA
 juego.asm|17||0|-1|4|L|,FRAMES_CAIDA_RAPIDA,,+equ,+used
-juego.asm|23||0|2|41021|F|iniciar
-juego.asm|23||0|2|41021|L|,iniciar,,+used
-juego.asm|24||0|2|41021|T|
-juego.asm|26||0|2|41024|T|
-juego.asm|30||0|2|41027|T|
-juego.asm|31||0|2|41030|T|
-juego.asm|32||0|2|41033|T|
-juego.asm|33||0|2|41034|T|
-juego.asm|35||0|2|41037|T|
-juego.asm|36||0|2|41040|T|
-juego.asm|37||0|2|41041|T|
-juego.asm|40||0|2|41044|T|
-juego.asm|42||0|2|41047|F|paso
-juego.asm|42||0|2|41047|L|,paso,,+used
-juego.asm|43||0|2|41047|T|
-juego.asm|45||0|2|41048|T|
-juego.asm|47||0|2|41050|T|
-juego.asm|51||0|2|41053|T|
-juego.asm|52||0|2|41054|T|
-juego.asm|54||0|2|41056|T|
-juego.asm|55||0|2|41059|T|
-juego.asm|56||0|2|41060|T|
-juego.asm|57||0|2|41063|T|
-juego.asm|58||0|2|41065|T|
-juego.asm|59||0|2|41068|T|
-juego.asm|60||0|2|41071|T|
-juego.asm|61||0|2|41073|F|comprobar_rapida
-juego.asm|61||0|2|41073|L|,comprobar_rapida,,+used
-juego.asm|62||0|2|41073|T|
-juego.asm|63||0|2|41075|T|
-juego.asm|64||0|2|41077|T|
-juego.asm|65||0|2|41080|T|
-juego.asm|66||0|2|41081|T|
-juego.asm|67||0|2|41084|T|
-juego.asm|68||0|2|41086|T|
-juego.asm|69||0|2|41088|T|
-juego.asm|70||0|2|41091|T|
-juego.asm|71||0|2|41093|F|sin_gravedad
-juego.asm|71||0|2|41093|L|,sin_gravedad,,+used
-juego.asm|72||0|2|41093|T|
-juego.asm|74||0|2|41096|T|
-juego.asm|75||0|2|41098|T|
-juego.asm|76||0|2|41100|T|
-juego.asm|77||0|2|41101|F|no_derecha
-juego.asm|77||0|2|41101|L|,no_derecha,,+used
-juego.asm|78||0|2|41101|T|
-juego.asm|79||0|2|41103|T|
-juego.asm|80||0|2|41105|T|
-juego.asm|82||0|2|41106|F|lateral
-juego.asm|82||0|2|41106|L|,lateral,,+used
-juego.asm|83||0|2|41106|T|
-juego.asm|84||0|2|41107|T|
-juego.asm|85||0|2|41108|T|
-juego.asm|86||0|2|41110|T|
-juego.asm|87||0|2|41111|T|
-juego.asm|88||0|2|41112|T|
-juego.asm|89||0|2|41113|T|
-juego.asm|90||0|2|41116|T|
-juego.asm|91||0|2|41117|T|
-juego.asm|92||0|2|41119|T|
-juego.asm|93||0|2|41122|T|
-juego.asm|94||0|2|41123|T|
-juego.asm|95||0|2|41125|F|lat_no
-juego.asm|95||0|2|41125|L|,lat_no,,+used
-juego.asm|96||0|2|41125|T|
-juego.asm|97||0|2|41126|T|
-juego.asm|98||0|2|41127|T|
-juego.asm|99||0|2|41128|T|
-juego.asm|100||0|2|41130|F|lat_si
-juego.asm|100||0|2|41130|L|,lat_si,,+used
-juego.asm|101||0|2|41130|T|
-juego.asm|102||0|2|41131|T|
-juego.asm|103||0|2|41134|F|sin_lateral
-juego.asm|103||0|2|41134|L|,sin_lateral,,+used
-juego.asm|105||0|2|41134|T|
-juego.asm|106||0|2|41135|T|
-juego.asm|107||0|2|41137|T|
-juego.asm|108||0|2|41139|T|
-juego.asm|109||0|2|41141|T|
-juego.asm|110||0|2|41143|T|
-juego.asm|111||0|2|41145|T|
-juego.asm|112||0|2|41146|F|girar_ya
-juego.asm|112||0|2|41146|L|,girar_ya,,+used
-juego.asm|113||0|2|41146|T|
-juego.asm|114||0|2|41149|F|sin_giro
-juego.asm|114||0|2|41149|L|,sin_giro,,+used
-juego.asm|116||0|2|41149|T|
-juego.asm|117||0|2|41150|T|
-juego.asm|118||0|2|41151|T|
-juego.asm|120||0|2|41153|T|
-juego.asm|121||0|2|41154|T|
-juego.asm|122||0|2|41157|T|
-juego.asm|123||0|2|41158|T|
-juego.asm|125||0|2|41160|T|
-juego.asm|126||0|2|41161|T|
-juego.asm|128||0|2|41164|T|
-juego.asm|129||0|2|41167|T|
-juego.asm|131||0|2|41170|T|
-juego.asm|132||0|2|41173|T|
-juego.asm|133||0|2|41176|T|
-juego.asm|134||0|2|41177|T|
-juego.asm|135||0|2|41180|T|
-juego.asm|136||0|2|41183|T|
-juego.asm|137||0|2|41184|T|
-juego.asm|139||0|2|41186|F|dibujar
-juego.asm|139||0|2|41186|L|,dibujar,,+used
-juego.asm|140||0|2|41186|T|
-juego.asm|141||0|2|41189|T|
-juego.asm|143||0|2|41192|F|fin_partida
-juego.asm|143||0|2|41192|L|,fin_partida,,+used
-juego.asm|144||0|2|41192|T|
-tetromino_next.asm|17||0|2|41195|F|sembrar_azar
-tetromino_next.asm|17||0|2|41195|L|,sembrar_azar,,+used
-tetromino_next.asm|18||0|2|41195|T|
-tetromino_next.asm|19||0|2|41197|T|
-tetromino_next.asm|20||0|2|41198|T|
-tetromino_next.asm|21||0|2|41200|T|
-tetromino_next.asm|22||0|2|41202|F|sembrar_ok
-tetromino_next.asm|22||0|2|41202|L|,sembrar_ok,,+used
-tetromino_next.asm|23||0|2|41202|T|
-tetromino_next.asm|24||0|2|41205|T|
-tetromino_next.asm|28||0|2|41206|F|nueva_pieza
-tetromino_next.asm|28||0|2|41206|L|,nueva_pieza,,+used
-tetromino_next.asm|29||0|2|41206|T|
-tetromino_next.asm|30||0|2|41207|F|np_tirar
-tetromino_next.asm|30||0|2|41207|L|,np_tirar,,+used
-tetromino_next.asm|31||0|2|41207|T|
-tetromino_next.asm|32||0|2|41210|T|
-tetromino_next.asm|33||0|2|41212|T|
-tetromino_next.asm|34||0|2|41214|T|
-tetromino_next.asm|35||0|2|41216|F|np_sin_tap
-tetromino_next.asm|35||0|2|41216|L|,np_sin_tap,,+used
-tetromino_next.asm|36||0|2|41216|T|
-tetromino_next.asm|37||0|2|41219|T|
-tetromino_next.asm|38||0|2|41221|T|
-tetromino_next.asm|39||0|2|41223|T|
-tetromino_next.asm|41||0|2|41225|T|
-tetromino_next.asm|42||0|2|41226|T|
-tetromino_next.asm|43:1:14||0|2|41229|T|
-tetromino_next.asm|43:14||0|2|41231|T|
-tetromino_next.asm|44||0|2|41232|T|
-tetromino_next.asm|45:1:17||0|2|41233|T|
-tetromino_next.asm|45:17:26||0|2|41234|T|
-tetromino_next.asm|45:26||0|2|41235|T|
-tetromino_next.asm|46||0|2|41236|T|
-tetromino_next.asm|47||0|2|41237|T|
-tetromino_next.asm|51||0|2|41238|F|iniciar_secuencia
-tetromino_next.asm|51||0|2|41238|L|,iniciar_secuencia,,+used
-tetromino_next.asm|52||0|2|41238|T|
-tetromino_next.asm|53||0|2|41241|T|
-tetromino_next.asm|54||0|2|41242|T|
-tetromino_next.asm|55||0|2|41245|T|
-tetromino_next.asm|56||0|2|41249|T|
-tetromino_next.asm|57||0|2|41250|T|
-tetromino_next.asm|65||0|2|41251|F|seleccionar_pieza
-tetromino_next.asm|65||0|2|41251|L|,seleccionar_pieza,,+used
-tetromino_next.asm|66||0|2|41251|T|
-tetromino_next.asm|67||0|2|41252|T|
-tetromino_next.asm|68||0|2|41255|T|
-tetromino_next.asm|69||0|2|41256|T|
-tetromino_next.asm|70||0|2|41259|T|
-tetromino_next.asm|71||0|2|41263|T|
-tetromino_next.asm|72||0|2|41264|T|
-tetromino_next.asm|72||0|2|41266|T|
-tetromino_next.asm|73||0|2|41268|T|
-tetromino_next.asm|74||0|2|41269|T|
-tetromino_next.asm|75||0|2|41271|T|
-tetromino_next.asm|76||0|2|41273|T|
+juego.asm|23||0|2|41204|F|iniciar
+juego.asm|23||0|2|41204|L|,iniciar,,+used
+juego.asm|24||0|2|41204|T|
+juego.asm|26||0|2|41207|T|
+juego.asm|30||0|2|41210|T|
+juego.asm|31||0|2|41213|T|
+juego.asm|32||0|2|41216|T|
+juego.asm|33||0|2|41217|T|
+juego.asm|35||0|2|41220|T|
+juego.asm|36||0|2|41223|T|
+juego.asm|37||0|2|41224|T|
+juego.asm|40||0|2|41227|T|
+juego.asm|42||0|2|41230|F|paso
+juego.asm|42||0|2|41230|L|,paso,,+used
+juego.asm|43||0|2|41230|T|
+juego.asm|45||0|2|41231|T|
+juego.asm|47||0|2|41233|T|
+juego.asm|51||0|2|41236|T|
+juego.asm|52||0|2|41237|T|
+juego.asm|54||0|2|41239|T|
+juego.asm|55||0|2|41242|T|
+juego.asm|56||0|2|41243|T|
+juego.asm|57||0|2|41246|T|
+juego.asm|58||0|2|41248|T|
+juego.asm|59||0|2|41251|T|
+juego.asm|60||0|2|41254|T|
+juego.asm|61||0|2|41256|F|comprobar_rapida
+juego.asm|61||0|2|41256|L|,comprobar_rapida,,+used
+juego.asm|62||0|2|41256|T|
+juego.asm|63||0|2|41258|T|
+juego.asm|64||0|2|41260|T|
+juego.asm|65||0|2|41263|T|
+juego.asm|66||0|2|41264|T|
+juego.asm|67||0|2|41267|T|
+juego.asm|68||0|2|41269|T|
+juego.asm|69||0|2|41271|T|
+juego.asm|70||0|2|41274|T|
+juego.asm|71||0|2|41276|F|sin_gravedad
+juego.asm|71||0|2|41276|L|,sin_gravedad,,+used
+juego.asm|72||0|2|41276|T|
+juego.asm|74||0|2|41279|T|
+juego.asm|75||0|2|41281|T|
+juego.asm|76||0|2|41283|T|
+juego.asm|77||0|2|41284|F|no_derecha
+juego.asm|77||0|2|41284|L|,no_derecha,,+used
+juego.asm|78||0|2|41284|T|
+juego.asm|79||0|2|41286|T|
+juego.asm|80||0|2|41288|T|
+juego.asm|82||0|2|41289|F|lateral
+juego.asm|82||0|2|41289|L|,lateral,,+used
+juego.asm|83||0|2|41289|T|
+juego.asm|84||0|2|41290|T|
+juego.asm|85||0|2|41291|T|
+juego.asm|86||0|2|41293|T|
+juego.asm|87||0|2|41294|T|
+juego.asm|88||0|2|41295|T|
+juego.asm|89||0|2|41296|T|
+juego.asm|90||0|2|41299|T|
+juego.asm|91||0|2|41300|T|
+juego.asm|92||0|2|41302|T|
+juego.asm|93||0|2|41305|T|
+juego.asm|94||0|2|41306|T|
+juego.asm|95||0|2|41308|F|lat_no
+juego.asm|95||0|2|41308|L|,lat_no,,+used
+juego.asm|96||0|2|41308|T|
+juego.asm|97||0|2|41309|T|
+juego.asm|98||0|2|41310|T|
+juego.asm|99||0|2|41311|T|
+juego.asm|100||0|2|41313|F|lat_si
+juego.asm|100||0|2|41313|L|,lat_si,,+used
+juego.asm|101||0|2|41313|T|
+juego.asm|102||0|2|41314|T|
+juego.asm|103||0|2|41317|F|sin_lateral
+juego.asm|103||0|2|41317|L|,sin_lateral,,+used
+juego.asm|105||0|2|41317|T|
+juego.asm|106||0|2|41318|T|
+juego.asm|107||0|2|41320|T|
+juego.asm|108||0|2|41322|T|
+juego.asm|109||0|2|41324|T|
+juego.asm|110||0|2|41326|T|
+juego.asm|111||0|2|41328|T|
+juego.asm|112||0|2|41329|F|girar_ya
+juego.asm|112||0|2|41329|L|,girar_ya,,+used
+juego.asm|113||0|2|41329|T|
+juego.asm|114||0|2|41332|F|sin_giro
+juego.asm|114||0|2|41332|L|,sin_giro,,+used
+juego.asm|116||0|2|41332|T|
+juego.asm|117||0|2|41333|T|
+juego.asm|118||0|2|41334|T|
+juego.asm|120||0|2|41336|T|
+juego.asm|121||0|2|41337|T|
+juego.asm|122||0|2|41340|T|
+juego.asm|123||0|2|41341|T|
+juego.asm|125||0|2|41343|T|
+juego.asm|126||0|2|41344|T|
+juego.asm|128||0|2|41347|T|
+juego.asm|129||0|2|41350|T|
+juego.asm|131||0|2|41353|T|
+juego.asm|132||0|2|41356|T|
+juego.asm|133||0|2|41359|T|
+juego.asm|134||0|2|41360|T|
+juego.asm|135||0|2|41363|T|
+juego.asm|136||0|2|41366|T|
+juego.asm|137||0|2|41367|T|
+juego.asm|139||0|2|41369|F|dibujar
+juego.asm|139||0|2|41369|L|,dibujar,,+used
+juego.asm|140||0|2|41369|T|
+juego.asm|141||0|2|41372|T|
+juego.asm|143||0|2|41375|F|fin_partida
+juego.asm|143||0|2|41375|L|,fin_partida,,+used
+juego.asm|144||0|2|41375|T|
+juego.asm|149||0|2|41378|T|
+tetromino_next.asm|17||0|2|41381|F|sembrar_azar
+tetromino_next.asm|17||0|2|41381|L|,sembrar_azar,,+used
+tetromino_next.asm|18||0|2|41381|T|
+tetromino_next.asm|19||0|2|41383|T|
+tetromino_next.asm|20||0|2|41384|T|
+tetromino_next.asm|21||0|2|41386|T|
+tetromino_next.asm|22||0|2|41388|F|sembrar_ok
+tetromino_next.asm|22||0|2|41388|L|,sembrar_ok,,+used
+tetromino_next.asm|23||0|2|41388|T|
+tetromino_next.asm|24||0|2|41391|T|
+tetromino_next.asm|28||0|2|41392|F|nueva_pieza
+tetromino_next.asm|28||0|2|41392|L|,nueva_pieza,,+used
+tetromino_next.asm|29||0|2|41392|T|
+tetromino_next.asm|30||0|2|41393|F|np_tirar
+tetromino_next.asm|30||0|2|41393|L|,np_tirar,,+used
+tetromino_next.asm|31||0|2|41393|T|
+tetromino_next.asm|32||0|2|41396|T|
+tetromino_next.asm|33||0|2|41398|T|
+tetromino_next.asm|34||0|2|41400|T|
+tetromino_next.asm|35||0|2|41402|F|np_sin_tap
+tetromino_next.asm|35||0|2|41402|L|,np_sin_tap,,+used
+tetromino_next.asm|36||0|2|41402|T|
+tetromino_next.asm|37||0|2|41405|T|
+tetromino_next.asm|38||0|2|41407|T|
+tetromino_next.asm|39||0|2|41409|T|
+tetromino_next.asm|41||0|2|41411|T|
+tetromino_next.asm|42||0|2|41412|T|
+tetromino_next.asm|43:1:14||0|2|41415|T|
+tetromino_next.asm|43:14||0|2|41417|T|
+tetromino_next.asm|44||0|2|41418|T|
+tetromino_next.asm|45:1:17||0|2|41419|T|
+tetromino_next.asm|45:17:26||0|2|41420|T|
+tetromino_next.asm|45:26||0|2|41421|T|
+tetromino_next.asm|46||0|2|41422|T|
+tetromino_next.asm|47||0|2|41423|T|
+tetromino_next.asm|51||0|2|41424|F|iniciar_secuencia
+tetromino_next.asm|51||0|2|41424|L|,iniciar_secuencia,,+used
+tetromino_next.asm|52||0|2|41424|T|
+tetromino_next.asm|53||0|2|41427|T|
+tetromino_next.asm|54||0|2|41428|T|
+tetromino_next.asm|55||0|2|41431|T|
+tetromino_next.asm|56||0|2|41435|T|
+tetromino_next.asm|57||0|2|41436|T|
+tetromino_next.asm|65||0|2|41437|F|seleccionar_pieza
+tetromino_next.asm|65||0|2|41437|L|,seleccionar_pieza,,+used
+tetromino_next.asm|66||0|2|41437|T|
+tetromino_next.asm|67||0|2|41438|T|
+tetromino_next.asm|68||0|2|41441|T|
+tetromino_next.asm|69||0|2|41442|T|
+tetromino_next.asm|70||0|2|41445|T|
+tetromino_next.asm|71||0|2|41449|T|
+tetromino_next.asm|72||0|2|41450|T|
+tetromino_next.asm|72||0|2|41452|T|
+tetromino_next.asm|73||0|2|41454|T|
+tetromino_next.asm|74||0|2|41455|T|
+tetromino_next.asm|75||0|2|41457|T|
+tetromino_next.asm|76||0|2|41459|T|
 tetromino_next.asm|85||0|-1|10|D|PREV_FILA
 tetromino_next.asm|85||0|-1|10|L|,PREV_FILA,,+equ,+used
 tetromino_next.asm|86||0|-1|27|D|PREV_COL
 tetromino_next.asm|86||0|-1|27|L|,PREV_COL,,+equ,+used
-tetromino_next.asm|90||0|2|41274|F|pintar_siguiente
-tetromino_next.asm|90||0|2|41274|L|,pintar_siguiente,,+used
-tetromino_next.asm|91:1:14||0|2|41274|T|
-tetromino_next.asm|91:14:24||0|2|41275|T|
-tetromino_next.asm|91:24:34||0|2|41276|T|
-tetromino_next.asm|91:34:44||0|2|41277|T|
-tetromino_next.asm|91:44||0|2|41278|T|
-tetromino_next.asm|92||0|2|41280|T|
-tetromino_next.asm|93||0|2|41282|T|
-tetromino_next.asm|94||0|2|41284|F|ps_fila
-tetromino_next.asm|94||0|2|41284|L|,ps_fila,,+used
-tetromino_next.asm|95||0|2|41284|T|
-tetromino_next.asm|96||0|2|41286|T|
-tetromino_next.asm|97:1:17||0|2|41289|T|
-tetromino_next.asm|97:17||0|2|41291|T|
-tetromino_next.asm|98:1:17||0|2|41292|T|
-tetromino_next.asm|98:17||0|2|41294|T|
-tetromino_next.asm|99:1:17||0|2|41295|T|
-tetromino_next.asm|99:17||0|2|41297|T|
-tetromino_next.asm|100||0|2|41298|T|
-tetromino_next.asm|101||0|2|41300|T|
-tetromino_next.asm|102||0|2|41301|T|
-tetromino_next.asm|103||0|2|41302|T|
-tetromino_next.asm|105||0|2|41304|T|
-tetromino_next.asm|106||0|2|41308|T|
-tetromino_next.asm|107||0|2|41310|T|
-tetromino_next.asm|108||0|2|41312|T|
-tetromino_next.asm|109:1:13||0|2|41315|T|
-tetromino_next.asm|109:13:22||0|2|41317|T|
-tetromino_next.asm|109:22:31||0|2|41318|T|
-tetromino_next.asm|109:31:40||0|2|41319|T|
-tetromino_next.asm|109:40||0|2|41320|T|
-tetromino_next.asm|110||0|2|41321|T|
-piezas.asm|5:1:40||0|2|41322|F|T_0
-piezas.asm|5:1:40||0|2|41322|L|,T_0,,+used
-piezas.asm|7:1:41||0|2|41334|F|T_L1
-piezas.asm|7:1:41||0|2|41334|L|,T_L1,,+used
-piezas.asm|8:1:41||0|2|41346|F|T_L2
-piezas.asm|8:1:41||0|2|41346|L|,T_L2,,+used
-piezas.asm|9:1:41||0|2|41358|F|T_L3
-piezas.asm|9:1:41||0|2|41358|L|,T_L3,,+used
-piezas.asm|10:1:41||0|2|41370|F|T_L4
-piezas.asm|10:1:41||0|2|41370|L|,T_L4,,+used
-piezas.asm|12:1:41||0|2|41382|F|T_J1
-piezas.asm|12:1:41||0|2|41382|L|,T_J1,,+used
-piezas.asm|13:1:41||0|2|41394|F|T_J2
-piezas.asm|13:1:41||0|2|41394|L|,T_J2,,+used
-piezas.asm|14:1:41||0|2|41406|F|T_J3
-piezas.asm|14:1:41||0|2|41406|L|,T_J3,,+used
-piezas.asm|15:1:41||0|2|41418|F|T_J4
-piezas.asm|15:1:41||0|2|41418|L|,T_J4,,+used
-piezas.asm|17:1:42||0|2|41430|F|T_T1
-piezas.asm|17:1:42||0|2|41430|L|,T_T1,,+used
-piezas.asm|18:1:42||0|2|41442|F|T_T2
-piezas.asm|18:1:42||0|2|41442|L|,T_T2,,+used
-piezas.asm|19:1:42||0|2|41454|F|T_T3
-piezas.asm|19:1:42||0|2|41454|L|,T_T3,,+used
-piezas.asm|20:1:42||0|2|41466|F|T_T4
-piezas.asm|20:1:42||0|2|41466|L|,T_T4,,+used
-piezas.asm|22:1:42||0|2|41478|F|T_I1
-piezas.asm|22:1:42||0|2|41478|L|,T_I1,,+used
-piezas.asm|23:1:42||0|2|41490|F|T_I2
-piezas.asm|23:1:42||0|2|41490|L|,T_I2,,+used
-piezas.asm|25:1:42||0|2|41502|F|T_Z1
-piezas.asm|25:1:42||0|2|41502|L|,T_Z1,,+used
-piezas.asm|26:1:42||0|2|41514|F|T_Z2
-piezas.asm|26:1:42||0|2|41514|L|,T_Z2,,+used
-piezas.asm|28:1:42||0|2|41526|F|T_S1
-piezas.asm|28:1:42||0|2|41526|L|,T_S1,,+used
-piezas.asm|29:1:42||0|2|41538|F|T_S2
-piezas.asm|29:1:42||0|2|41538|L|,T_S2,,+used
-piezas.asm|35||0|2|41550|F|spawn_table
-piezas.asm|35||0|2|41550|L|,spawn_table,,+used
-piezas.asm|42||0|2|41564|F|pintar_tetromino
-piezas.asm|42||0|2|41564|L|,pintar_tetromino,,+used
-piezas.asm|43||0|2|41564|T|
-piezas.asm|44||0|2|41565|T|
-piezas.asm|45||0|2|41567|T|
-piezas.asm|46||0|2|41568|T|
-piezas.asm|47||0|2|41569|T|
-piezas.asm|48||0|2|41570|T|
-piezas.asm|50||0|2|41571|T|
-piezas.asm|51||0|2|41574|T|
-piezas.asm|52||0|2|41577|T|
-piezas.asm|53||0|2|41580|T|
-piezas.asm|53||0|2|41582|T|
-piezas.asm|54:1:13||0|2|41584|T|
-piezas.asm|54:13||0|2|41586|T|
-piezas.asm|56||0|2|41588|F|pintar_loop
-piezas.asm|56||0|2|41588|L|,pintar_loop,,+used
-piezas.asm|57||0|2|41588|T|
-piezas.asm|58||0|2|41591|T|
-piezas.asm|59||0|2|41593|T|
-piezas.asm|60||0|2|41595|T|
-piezas.asm|62||0|2|41597|T|
-piezas.asm|63||0|2|41598|F|siguiente_byte
-piezas.asm|63||0|2|41598|L|,siguiente_byte,,+used
-piezas.asm|64||0|2|41598|T|
-piezas.asm|65||0|2|41599|T|
-piezas.asm|66||0|2|41600|T|
-piezas.asm|68||0|2|41602|T|
-piezas.asm|69||0|2|41605|T|
-piezas.asm|70||0|2|41607|T|
-piezas.asm|71||0|2|41608|T|
-piezas.asm|72||0|2|41610|T|
-piezas.asm|73||0|2|41611|T|
-piezas.asm|74||0|2|41612|T|
-piezas.asm|76||0|2|41614|T|
-piezas.asm|77||0|2|41615|T|
-piezas.asm|78||0|2|41616|T|
-piezas.asm|79||0|2|41617|T|
-piezas.asm|80||0|2|41619|T|
-piezas.asm|81||0|2|41620|T|
-piezas.asm|83||0|2|41621|T|
-test_col.asm|3||0|2|41622|F|comprobar
-test_col.asm|3||0|2|41622|L|,comprobar,,+used
-test_col.asm|4||0|2|41622|T|
-test_col.asm|5||0|2|41624|T|
-test_col.asm|6||0|2|41626|T|
-test_col.asm|7||0|2|41627|T|
-test_col.asm|8||0|2|41628|T|
-test_col.asm|9||0|2|41629|T|
-test_col.asm|11||0|2|41630|T|
-test_col.asm|13||0|2|41633|T|
-test_col.asm|14||0|2|41636|T|
-test_col.asm|15||0|2|41639|T|
-test_col.asm|15||0|2|41641|T|
-test_col.asm|16||0|2|41643|T|
-test_col.asm|17||0|2|41645|T|
-test_col.asm|19||0|2|41647|F|validar_fila
-test_col.asm|19||0|2|41647|L|,validar_fila,,+used
-test_col.asm|20||0|2|41647|T|
-test_col.asm|21||0|2|41650|T|
-test_col.asm|22||0|2|41652|T|
-test_col.asm|23||0|2|41653|T|
-test_col.asm|25||0|2|41655|T|
-test_col.asm|26||0|2|41656|T|
-test_col.asm|27||0|2|41657|T|
-test_col.asm|29||0|2|41659|F|siguiente_cuadro
-test_col.asm|29||0|2|41659|L|,siguiente_cuadro,,+used
-test_col.asm|30||0|2|41659|T|
-test_col.asm|31||0|2|41660|T|
-test_col.asm|32||0|2|41661|T|
-test_col.asm|35||0|2|41663|T|
-test_col.asm|36||0|2|41666|T|
-test_col.asm|37||0|2|41668|T|
-test_col.asm|38||0|2|41669|T|
-test_col.asm|39||0|2|41671|T|
-test_col.asm|40||0|2|41672|T|
-test_col.asm|41||0|2|41673|T|
-test_col.asm|43||0|2|41675|T|
-test_col.asm|44||0|2|41677|T|
-test_col.asm|46||0|2|41679|F|colision_detectada
-test_col.asm|46||0|2|41679|L|,colision_detectada,,+used
-test_col.asm|47||0|2|41679|T|
-test_col.asm|49||0|2|41681|F|fin_comprobacion
-test_col.asm|49||0|2|41681|L|,fin_comprobacion,,+used
-test_col.asm|50||0|2|41681|T|
-test_col.asm|51||0|2|41682|T|
-test_col.asm|52||0|2|41683|T|
-test_col.asm|53||0|2|41684|T|
-test_col.asm|54||0|2|41686|T|
-test_col.asm|55||0|2|41687|T|
-test_col.asm|57||0|2|41689|T|
-clear.asm|3||0|2|41690|F|borrar_tetromino
-clear.asm|3||0|2|41690|L|,borrar_tetromino,,+used
-clear.asm|4||0|2|41690|T|
-clear.asm|5||0|2|41691|T|
-clear.asm|6||0|2|41693|T|
-clear.asm|7||0|2|41694|T|
-clear.asm|8||0|2|41695|T|
-clear.asm|9||0|2|41696|T|
-clear.asm|11||0|2|41697|T|
-clear.asm|12||0|2|41700|T|
-clear.asm|13||0|2|41703|T|
-clear.asm|14||0|2|41706|T|
-clear.asm|14||0|2|41708|T|
-clear.asm|15||0|2|41710|T|
-clear.asm|16||0|2|41712|T|
-clear.asm|18||0|2|41714|F|loop_filas
-clear.asm|18||0|2|41714|L|,loop_filas,,+used
-clear.asm|19||0|2|41714|T|
-clear.asm|20||0|2|41717|F|loop_columnas
-clear.asm|20||0|2|41717|L|,loop_columnas,,+used
-clear.asm|21||0|2|41717|T|
-clear.asm|22||0|2|41720|T|
-clear.asm|23||0|2|41722|T|
-clear.asm|24||0|2|41723|T|
-clear.asm|26||0|2|41725|T|
-clear.asm|28||0|2|41727|F|siguiente_columna
-clear.asm|28||0|2|41727|L|,siguiente_columna,,+used
-clear.asm|29||0|2|41727|T|
-clear.asm|30||0|2|41728|T|
-clear.asm|31||0|2|41729|T|
-clear.asm|33||0|2|41731|T|
-clear.asm|34||0|2|41733|T|
-clear.asm|35||0|2|41736|T|
-clear.asm|36||0|2|41738|T|
-clear.asm|37||0|2|41739|T|
-clear.asm|38||0|2|41740|T|
-clear.asm|40||0|2|41742|T|
-clear.asm|41||0|2|41743|T|
-clear.asm|42||0|2|41744|T|
-clear.asm|43||0|2|41745|T|
-clear.asm|44||0|2|41747|T|
-clear.asm|45||0|2|41748|T|
-clear.asm|47||0|2|41749|T|
-giro.asm|1||0|2|41750|F|GIRAR
-giro.asm|1||0|2|41750|L|,GIRAR,,+used
-giro.asm|17||0|2|41750|T|
-giro.asm|18||0|2|41751|T|
-giro.asm|19||0|2|41752|T|
-giro.asm|20||0|2|41754|T|
-giro.asm|21||0|2|41757|T|
-giro.asm|22||0|2|41760|T|
-giro.asm|23||0|2|41762|F|giro_der
-giro.asm|23||0|2|41762|L|,giro_der,,+used
-giro.asm|24||0|2|41762|T|
-giro.asm|25||0|2|41765|T|
-giro.asm|27||0|2|41768|F|giro_probar
-giro.asm|27||0|2|41768|L|,giro_probar,,+used
-giro.asm|28||0|2|41768|T|
-giro.asm|29||0|2|41770|T|
-giro.asm|30||0|2|41773|T|
-giro.asm|30||0|2|41775|T|
-giro.asm|32||0|2|41777|T|
-giro.asm|33||0|2|41780|T|
-giro.asm|34||0|2|41783|T|
-giro.asm|35||0|2|41784|F|giro_media
-giro.asm|35||0|2|41784|L|,giro_media,,+used
-giro.asm|36||0|2|41784|T|
-giro.asm|37||0|2|41786|T|
-giro.asm|38||0|2|41787|T|
-giro.asm|39||0|2|41788|T|
-giro.asm|41||0|2|41791|F|giro_bucle
-giro.asm|41||0|2|41791|L|,giro_bucle,,+used
-giro.asm|42||0|2|41791|T|
-giro.asm|43||0|2|41792|T|
-giro.asm|44||0|2|41793|T|
-giro.asm|45||0|2|41795|T|
-giro.asm|46||0|2|41797|T|
-giro.asm|47||0|2|41798|T|
-giro.asm|48||0|2|41799|T|
-giro.asm|49||0|2|41802|T|
-giro.asm|50||0|2|41803|T|
-giro.asm|51||0|2|41805|T|
-giro.asm|52||0|2|41808|T|
-giro.asm|53||0|2|41809|T|
-giro.asm|54||0|2|41811|T|
-giro.asm|55||0|2|41812|T|
-giro.asm|56||0|2|41815|T|
-giro.asm|57||0|2|41816|T|
-giro.asm|59||0|2|41818|F|giro_deshacer
-giro.asm|59||0|2|41818|L|,giro_deshacer,,+used
-giro.asm|60||0|2|41818|T|
-giro.asm|61||0|2|41820|T|
-giro.asm|62||0|2|41823|T|
-giro.asm|63||0|2|41824|F|giro_fin
-giro.asm|63||0|2|41824|L|,giro_fin,,+used
-giro.asm|64||0|2|41824|T|
-giro.asm|65||0|2|41825|T|
-giro.asm|67||0|2|41826|F|giro_kicks
-giro.asm|67||0|2|41826|L|,giro_kicks,,+used
+tetromino_next.asm|90||0|2|41460|F|pintar_siguiente
+tetromino_next.asm|90||0|2|41460|L|,pintar_siguiente,,+used
+tetromino_next.asm|91:1:14||0|2|41460|T|
+tetromino_next.asm|91:14:24||0|2|41461|T|
+tetromino_next.asm|91:24:34||0|2|41462|T|
+tetromino_next.asm|91:34:44||0|2|41463|T|
+tetromino_next.asm|91:44||0|2|41464|T|
+tetromino_next.asm|92||0|2|41466|T|
+tetromino_next.asm|93||0|2|41468|T|
+tetromino_next.asm|94||0|2|41470|F|ps_fila
+tetromino_next.asm|94||0|2|41470|L|,ps_fila,,+used
+tetromino_next.asm|95||0|2|41470|T|
+tetromino_next.asm|96||0|2|41472|T|
+tetromino_next.asm|97:1:17||0|2|41475|T|
+tetromino_next.asm|97:17||0|2|41477|T|
+tetromino_next.asm|98:1:17||0|2|41478|T|
+tetromino_next.asm|98:17||0|2|41480|T|
+tetromino_next.asm|99:1:17||0|2|41481|T|
+tetromino_next.asm|99:17||0|2|41483|T|
+tetromino_next.asm|100||0|2|41484|T|
+tetromino_next.asm|101||0|2|41486|T|
+tetromino_next.asm|102||0|2|41487|T|
+tetromino_next.asm|103||0|2|41488|T|
+tetromino_next.asm|105||0|2|41490|T|
+tetromino_next.asm|106||0|2|41494|T|
+tetromino_next.asm|107||0|2|41496|T|
+tetromino_next.asm|108||0|2|41498|T|
+tetromino_next.asm|109:1:13||0|2|41501|T|
+tetromino_next.asm|109:13:22||0|2|41503|T|
+tetromino_next.asm|109:22:31||0|2|41504|T|
+tetromino_next.asm|109:31:40||0|2|41505|T|
+tetromino_next.asm|109:40||0|2|41506|T|
+tetromino_next.asm|110||0|2|41507|T|
+piezas.asm|5:1:40||0|2|41508|F|T_0
+piezas.asm|5:1:40||0|2|41508|L|,T_0,,+used
+piezas.asm|7:1:41||0|2|41520|F|T_L1
+piezas.asm|7:1:41||0|2|41520|L|,T_L1,,+used
+piezas.asm|8:1:41||0|2|41532|F|T_L2
+piezas.asm|8:1:41||0|2|41532|L|,T_L2,,+used
+piezas.asm|9:1:41||0|2|41544|F|T_L3
+piezas.asm|9:1:41||0|2|41544|L|,T_L3,,+used
+piezas.asm|10:1:41||0|2|41556|F|T_L4
+piezas.asm|10:1:41||0|2|41556|L|,T_L4,,+used
+piezas.asm|12:1:41||0|2|41568|F|T_J1
+piezas.asm|12:1:41||0|2|41568|L|,T_J1,,+used
+piezas.asm|13:1:41||0|2|41580|F|T_J2
+piezas.asm|13:1:41||0|2|41580|L|,T_J2,,+used
+piezas.asm|14:1:41||0|2|41592|F|T_J3
+piezas.asm|14:1:41||0|2|41592|L|,T_J3,,+used
+piezas.asm|15:1:41||0|2|41604|F|T_J4
+piezas.asm|15:1:41||0|2|41604|L|,T_J4,,+used
+piezas.asm|17:1:42||0|2|41616|F|T_T1
+piezas.asm|17:1:42||0|2|41616|L|,T_T1,,+used
+piezas.asm|18:1:42||0|2|41628|F|T_T2
+piezas.asm|18:1:42||0|2|41628|L|,T_T2,,+used
+piezas.asm|19:1:42||0|2|41640|F|T_T3
+piezas.asm|19:1:42||0|2|41640|L|,T_T3,,+used
+piezas.asm|20:1:42||0|2|41652|F|T_T4
+piezas.asm|20:1:42||0|2|41652|L|,T_T4,,+used
+piezas.asm|22:1:42||0|2|41664|F|T_I1
+piezas.asm|22:1:42||0|2|41664|L|,T_I1,,+used
+piezas.asm|23:1:42||0|2|41676|F|T_I2
+piezas.asm|23:1:42||0|2|41676|L|,T_I2,,+used
+piezas.asm|25:1:42||0|2|41688|F|T_Z1
+piezas.asm|25:1:42||0|2|41688|L|,T_Z1,,+used
+piezas.asm|26:1:42||0|2|41700|F|T_Z2
+piezas.asm|26:1:42||0|2|41700|L|,T_Z2,,+used
+piezas.asm|28:1:42||0|2|41712|F|T_S1
+piezas.asm|28:1:42||0|2|41712|L|,T_S1,,+used
+piezas.asm|29:1:42||0|2|41724|F|T_S2
+piezas.asm|29:1:42||0|2|41724|L|,T_S2,,+used
+piezas.asm|35||0|2|41736|F|spawn_table
+piezas.asm|35||0|2|41736|L|,spawn_table,,+used
+piezas.asm|42||0|2|41750|F|pintar_tetromino
+piezas.asm|42||0|2|41750|L|,pintar_tetromino,,+used
+piezas.asm|43||0|2|41750|T|
+piezas.asm|44||0|2|41751|T|
+piezas.asm|45||0|2|41753|T|
+piezas.asm|46||0|2|41754|T|
+piezas.asm|47||0|2|41755|T|
+piezas.asm|48||0|2|41756|T|
+piezas.asm|50||0|2|41757|T|
+piezas.asm|51||0|2|41760|T|
+piezas.asm|52||0|2|41763|T|
+piezas.asm|53||0|2|41766|T|
+piezas.asm|53||0|2|41768|T|
+piezas.asm|54:1:13||0|2|41770|T|
+piezas.asm|54:13||0|2|41772|T|
+piezas.asm|56||0|2|41774|F|pintar_loop
+piezas.asm|56||0|2|41774|L|,pintar_loop,,+used
+piezas.asm|57||0|2|41774|T|
+piezas.asm|58||0|2|41777|T|
+piezas.asm|59||0|2|41779|T|
+piezas.asm|60||0|2|41781|T|
+piezas.asm|62||0|2|41783|T|
+piezas.asm|63||0|2|41784|F|siguiente_byte
+piezas.asm|63||0|2|41784|L|,siguiente_byte,,+used
+piezas.asm|64||0|2|41784|T|
+piezas.asm|65||0|2|41785|T|
+piezas.asm|66||0|2|41786|T|
+piezas.asm|68||0|2|41788|T|
+piezas.asm|69||0|2|41791|T|
+piezas.asm|70||0|2|41793|T|
+piezas.asm|71||0|2|41794|T|
+piezas.asm|72||0|2|41796|T|
+piezas.asm|73||0|2|41797|T|
+piezas.asm|74||0|2|41798|T|
+piezas.asm|76||0|2|41800|T|
+piezas.asm|77||0|2|41801|T|
+piezas.asm|78||0|2|41802|T|
+piezas.asm|79||0|2|41803|T|
+piezas.asm|80||0|2|41805|T|
+piezas.asm|81||0|2|41806|T|
+piezas.asm|83||0|2|41807|T|
+test_col.asm|3||0|2|41808|F|comprobar
+test_col.asm|3||0|2|41808|L|,comprobar,,+used
+test_col.asm|4||0|2|41808|T|
+test_col.asm|5||0|2|41810|T|
+test_col.asm|6||0|2|41812|T|
+test_col.asm|7||0|2|41813|T|
+test_col.asm|8||0|2|41814|T|
+test_col.asm|9||0|2|41815|T|
+test_col.asm|11||0|2|41816|T|
+test_col.asm|13||0|2|41819|T|
+test_col.asm|14||0|2|41822|T|
+test_col.asm|15||0|2|41825|T|
+test_col.asm|15||0|2|41827|T|
+test_col.asm|16||0|2|41829|T|
+test_col.asm|17||0|2|41831|T|
+test_col.asm|19||0|2|41833|F|validar_fila
+test_col.asm|19||0|2|41833|L|,validar_fila,,+used
+test_col.asm|20||0|2|41833|T|
+test_col.asm|21||0|2|41836|T|
+test_col.asm|22||0|2|41838|T|
+test_col.asm|23||0|2|41839|T|
+test_col.asm|25||0|2|41841|T|
+test_col.asm|26||0|2|41842|T|
+test_col.asm|27||0|2|41843|T|
+test_col.asm|29||0|2|41845|F|siguiente_cuadro
+test_col.asm|29||0|2|41845|L|,siguiente_cuadro,,+used
+test_col.asm|30||0|2|41845|T|
+test_col.asm|31||0|2|41846|T|
+test_col.asm|32||0|2|41847|T|
+test_col.asm|35||0|2|41849|T|
+test_col.asm|36||0|2|41852|T|
+test_col.asm|37||0|2|41854|T|
+test_col.asm|38||0|2|41855|T|
+test_col.asm|39||0|2|41857|T|
+test_col.asm|40||0|2|41858|T|
+test_col.asm|41||0|2|41859|T|
+test_col.asm|43||0|2|41861|T|
+test_col.asm|44||0|2|41863|T|
+test_col.asm|46||0|2|41865|F|colision_detectada
+test_col.asm|46||0|2|41865|L|,colision_detectada,,+used
+test_col.asm|47||0|2|41865|T|
+test_col.asm|49||0|2|41867|F|fin_comprobacion
+test_col.asm|49||0|2|41867|L|,fin_comprobacion,,+used
+test_col.asm|50||0|2|41867|T|
+test_col.asm|51||0|2|41868|T|
+test_col.asm|52||0|2|41869|T|
+test_col.asm|53||0|2|41870|T|
+test_col.asm|54||0|2|41872|T|
+test_col.asm|55||0|2|41873|T|
+test_col.asm|57||0|2|41875|T|
+clear.asm|3||0|2|41876|F|borrar_tetromino
+clear.asm|3||0|2|41876|L|,borrar_tetromino,,+used
+clear.asm|4||0|2|41876|T|
+clear.asm|5||0|2|41877|T|
+clear.asm|6||0|2|41879|T|
+clear.asm|7||0|2|41880|T|
+clear.asm|8||0|2|41881|T|
+clear.asm|9||0|2|41882|T|
+clear.asm|11||0|2|41883|T|
+clear.asm|12||0|2|41886|T|
+clear.asm|13||0|2|41889|T|
+clear.asm|14||0|2|41892|T|
+clear.asm|14||0|2|41894|T|
+clear.asm|15||0|2|41896|T|
+clear.asm|16||0|2|41898|T|
+clear.asm|18||0|2|41900|F|loop_filas
+clear.asm|18||0|2|41900|L|,loop_filas,,+used
+clear.asm|19||0|2|41900|T|
+clear.asm|20||0|2|41903|F|loop_columnas
+clear.asm|20||0|2|41903|L|,loop_columnas,,+used
+clear.asm|21||0|2|41903|T|
+clear.asm|22||0|2|41906|T|
+clear.asm|23||0|2|41908|T|
+clear.asm|24||0|2|41909|T|
+clear.asm|26||0|2|41911|T|
+clear.asm|28||0|2|41913|F|siguiente_columna
+clear.asm|28||0|2|41913|L|,siguiente_columna,,+used
+clear.asm|29||0|2|41913|T|
+clear.asm|30||0|2|41914|T|
+clear.asm|31||0|2|41915|T|
+clear.asm|33||0|2|41917|T|
+clear.asm|34||0|2|41919|T|
+clear.asm|35||0|2|41922|T|
+clear.asm|36||0|2|41924|T|
+clear.asm|37||0|2|41925|T|
+clear.asm|38||0|2|41926|T|
+clear.asm|40||0|2|41928|T|
+clear.asm|41||0|2|41929|T|
+clear.asm|42||0|2|41930|T|
+clear.asm|43||0|2|41931|T|
+clear.asm|44||0|2|41933|T|
+clear.asm|45||0|2|41934|T|
+clear.asm|47||0|2|41935|T|
+giro.asm|1||0|2|41936|F|GIRAR
+giro.asm|1||0|2|41936|L|,GIRAR,,+used
+giro.asm|17||0|2|41936|T|
+giro.asm|18||0|2|41937|T|
+giro.asm|19||0|2|41938|T|
+giro.asm|20||0|2|41940|T|
+giro.asm|21||0|2|41943|T|
+giro.asm|22||0|2|41946|T|
+giro.asm|23||0|2|41948|F|giro_der
+giro.asm|23||0|2|41948|L|,giro_der,,+used
+giro.asm|24||0|2|41948|T|
+giro.asm|25||0|2|41951|T|
+giro.asm|27||0|2|41954|F|giro_probar
+giro.asm|27||0|2|41954|L|,giro_probar,,+used
+giro.asm|28||0|2|41954|T|
+giro.asm|29||0|2|41956|T|
+giro.asm|30||0|2|41959|T|
+giro.asm|30||0|2|41961|T|
+giro.asm|32||0|2|41963|T|
+giro.asm|33||0|2|41966|T|
+giro.asm|34||0|2|41969|T|
+giro.asm|35||0|2|41970|F|giro_media
+giro.asm|35||0|2|41970|L|,giro_media,,+used
+giro.asm|36||0|2|41970|T|
+giro.asm|37||0|2|41972|T|
+giro.asm|38||0|2|41973|T|
+giro.asm|39||0|2|41974|T|
+giro.asm|41||0|2|41977|F|giro_bucle
+giro.asm|41||0|2|41977|L|,giro_bucle,,+used
+giro.asm|42||0|2|41977|T|
+giro.asm|43||0|2|41978|T|
+giro.asm|44||0|2|41979|T|
+giro.asm|45||0|2|41981|T|
+giro.asm|46||0|2|41983|T|
+giro.asm|47||0|2|41984|T|
+giro.asm|48||0|2|41985|T|
+giro.asm|49||0|2|41988|T|
+giro.asm|50||0|2|41989|T|
+giro.asm|51||0|2|41991|T|
+giro.asm|52||0|2|41994|T|
+giro.asm|53||0|2|41995|T|
+giro.asm|54||0|2|41997|T|
+giro.asm|55||0|2|41998|T|
+giro.asm|56||0|2|42001|T|
+giro.asm|57||0|2|42002|T|
+giro.asm|59||0|2|42004|F|giro_deshacer
+giro.asm|59||0|2|42004|L|,giro_deshacer,,+used
+giro.asm|60||0|2|42004|T|
+giro.asm|61||0|2|42006|T|
+giro.asm|62||0|2|42009|T|
+giro.asm|63||0|2|42010|F|giro_fin
+giro.asm|63||0|2|42010|L|,giro_fin,,+used
+giro.asm|64||0|2|42010|T|
+giro.asm|65||0|2|42011|T|
+giro.asm|67||0|2|42012|F|giro_kicks
+giro.asm|67||0|2|42012|L|,giro_kicks,,+used
 entrada.asm|6||0|-1|7|D|COL_IZQ_POZO
 entrada.asm|6||0|-1|7|L|,COL_IZQ_POZO,,+equ,+used
 entrada.asm|7||0|-1|24|D|COL_DER_POZO
 entrada.asm|7||0|-1|24|L|,COL_DER_POZO,,+equ,+used
-entrada.asm|24||0|2|41832|F|leer_teclas
-entrada.asm|24||0|2|41832|L|,leer_teclas,,+used
-entrada.asm|25:1:14||0|2|41832|T|
-entrada.asm|25:14:24||0|2|41833|T|
-entrada.asm|25:24||0|2|41834|T|
-entrada.asm|26:1:19||0|2|41835|T|
-entrada.asm|26:19||0|2|41838|T|
-entrada.asm|27||0|2|41840|T|
-entrada.asm|28:1:11||0|2|41841|T|
-entrada.asm|28:11||0|2|41842|T|
-entrada.asm|29||0|2|41843|T|
-entrada.asm|30||0|2|41845|T|
-entrada.asm|31:1:19||0|2|41846|T|
-entrada.asm|31:19||0|2|41849|T|
-entrada.asm|32||0|2|41851|T|
-entrada.asm|33:1:11||0|2|41852|T|
-entrada.asm|33:11||0|2|41853|T|
-entrada.asm|34||0|2|41854|T|
-entrada.asm|35:1:11||0|2|41856|T|
-entrada.asm|35:11||0|2|41857|T|
-entrada.asm|36:1:19||0|2|41858|T|
-entrada.asm|36:19||0|2|41861|T|
-entrada.asm|37||0|2|41863|T|
-entrada.asm|38||0|2|41864|T|
-entrada.asm|39:1:11||0|2|41866|T|
-entrada.asm|39:11:18||0|2|41867|T|
-entrada.asm|39:18:25||0|2|41868|T|
-entrada.asm|39:25||0|2|41869|T|
-entrada.asm|40:1:11||0|2|41870|T|
-entrada.asm|40:11||0|2|41871|T|
-entrada.asm|43||0|2|41872|T|
-entrada.asm|44:1:16||0|2|41875|T|
-entrada.asm|44:16||0|2|41876|T|
-entrada.asm|45:1:10||0|2|41877|T|
-entrada.asm|45:10||0|2|41878|T|
-entrada.asm|48||0|2|41879|T|
-entrada.asm|49||0|2|41881|T|
-entrada.asm|50||0|2|41882|T|
-entrada.asm|51||0|2|41883|T|
-entrada.asm|52||0|2|41885|T|
-entrada.asm|53:1:13||0|2|41886|T|
-entrada.asm|53:13:22||0|2|41887|T|
-entrada.asm|53:22||0|2|41888|T|
-entrada.asm|54||0|2|41889|T|
-entrada.asm|63||0|2|41890|F|en_rango
-entrada.asm|63||0|2|41890|L|,en_rango,,+used
-entrada.asm|64||0|2|41890|T|
-entrada.asm|65||0|2|41891|T|
-entrada.asm|66||0|2|41893|T|
-entrada.asm|67||0|2|41895|T|
-entrada.asm|68||0|2|41898|T|
-entrada.asm|69||0|2|41900|T|
-entrada.asm|70||0|2|41902|T|
-entrada.asm|71||0|2|41904|T|
-entrada.asm|72||0|2|41905|T|
-entrada.asm|73||0|2|41906|F|er_fuera
-entrada.asm|73||0|2|41906|L|,er_fuera,,+used
-entrada.asm|74||0|2|41906|T|
-entrada.asm|75||0|2|41908|T|
+entrada.asm|24||0|2|42018|F|leer_teclas
+entrada.asm|24||0|2|42018|L|,leer_teclas,,+used
+entrada.asm|25:1:14||0|2|42018|T|
+entrada.asm|25:14:24||0|2|42019|T|
+entrada.asm|25:24||0|2|42020|T|
+entrada.asm|26:1:19||0|2|42021|T|
+entrada.asm|26:19||0|2|42024|T|
+entrada.asm|27||0|2|42026|T|
+entrada.asm|28:1:11||0|2|42027|T|
+entrada.asm|28:11||0|2|42028|T|
+entrada.asm|29||0|2|42029|T|
+entrada.asm|30||0|2|42031|T|
+entrada.asm|31:1:19||0|2|42032|T|
+entrada.asm|31:19||0|2|42035|T|
+entrada.asm|32||0|2|42037|T|
+entrada.asm|33:1:11||0|2|42038|T|
+entrada.asm|33:11||0|2|42039|T|
+entrada.asm|34||0|2|42040|T|
+entrada.asm|35:1:11||0|2|42042|T|
+entrada.asm|35:11||0|2|42043|T|
+entrada.asm|36:1:19||0|2|42044|T|
+entrada.asm|36:19||0|2|42047|T|
+entrada.asm|37||0|2|42049|T|
+entrada.asm|38||0|2|42050|T|
+entrada.asm|39:1:11||0|2|42052|T|
+entrada.asm|39:11:18||0|2|42053|T|
+entrada.asm|39:18:25||0|2|42054|T|
+entrada.asm|39:25||0|2|42055|T|
+entrada.asm|40:1:11||0|2|42056|T|
+entrada.asm|40:11||0|2|42057|T|
+entrada.asm|43||0|2|42058|T|
+entrada.asm|44:1:16||0|2|42061|T|
+entrada.asm|44:16||0|2|42062|T|
+entrada.asm|45:1:10||0|2|42063|T|
+entrada.asm|45:10||0|2|42064|T|
+entrada.asm|48||0|2|42065|T|
+entrada.asm|49||0|2|42067|T|
+entrada.asm|50||0|2|42068|T|
+entrada.asm|51||0|2|42069|T|
+entrada.asm|52||0|2|42071|T|
+entrada.asm|53:1:13||0|2|42072|T|
+entrada.asm|53:13:22||0|2|42073|T|
+entrada.asm|53:22||0|2|42074|T|
+entrada.asm|54||0|2|42075|T|
+entrada.asm|63||0|2|42076|F|en_rango
+entrada.asm|63||0|2|42076|L|,en_rango,,+used
+entrada.asm|64||0|2|42076|T|
+entrada.asm|65||0|2|42077|T|
+entrada.asm|66||0|2|42079|T|
+entrada.asm|67||0|2|42081|T|
+entrada.asm|68||0|2|42084|T|
+entrada.asm|69||0|2|42086|T|
+entrada.asm|70||0|2|42088|T|
+entrada.asm|71||0|2|42090|T|
+entrada.asm|72||0|2|42091|T|
+entrada.asm|73||0|2|42092|F|er_fuera
+entrada.asm|73||0|2|42092|L|,er_fuera,,+used
+entrada.asm|74||0|2|42092|T|
+entrada.asm|75||0|2|42094|T|
 lineas.asm|9||0|-1|7|D|COL_IZQ
 lineas.asm|9||0|-1|7|L|,COL_IZQ,,+equ,+used
 lineas.asm|10||0|-1|18|D|ANCHO_POZO
 lineas.asm|10||0|-1|18|L|,ANCHO_POZO,,+equ,+used
 lineas.asm|11||0|-1|21|D|FILA_BAJA
 lineas.asm|11||0|-1|21|L|,FILA_BAJA,,+equ,+used
-lineas.asm|16||0|2|41909|F|limpiar_lineas
-lineas.asm|16||0|2|41909|L|,limpiar_lineas,,+used
-lineas.asm|17:1:14||0|2|41909|T|
-lineas.asm|17:14:24||0|2|41910|T|
-lineas.asm|17:24:34||0|2|41911|T|
-lineas.asm|17:34||0|2|41912|T|
-lineas.asm|18||0|2|41914|T|
-lineas.asm|19||0|2|41916|T|
-lineas.asm|20||0|2|41918|F|ll_probar
-lineas.asm|20||0|2|41918|L|,ll_probar,,+used
-lineas.asm|21:1:22||0|2|41918|T|
-lineas.asm|21:22||0|2|41921|T|
-lineas.asm|22||0|2|41922|T|
-lineas.asm|23||0|2|41924|T|
-lineas.asm|24||0|2|41925|T|
-lineas.asm|25||0|2|41928|T|
-lineas.asm|29||0|2|41930|F|ll_arriba
-lineas.asm|29||0|2|41930|L|,ll_arriba,,+used
-lineas.asm|30:1:14||0|2|41930|T|
-lineas.asm|30:14||0|2|41931|T|
-lineas.asm|31||0|2|41932|T|
-lineas.asm|32:1:12||0|2|41934|T|
-lineas.asm|32:12||0|2|41935|T|
-lineas.asm|33||0|2|41937|F|ll_fin
-lineas.asm|33||0|2|41937|L|,ll_fin,,+used
-lineas.asm|34||0|2|41937|T|
-lineas.asm|35:1:13||0|2|41938|T|
-lineas.asm|35:13:22||0|2|41940|T|
-lineas.asm|35:22:31||0|2|41941|T|
-lineas.asm|35:31||0|2|41942|T|
-lineas.asm|36||0|2|41943|T|
-lineas.asm|40||0|2|41944|F|fila_llena
-lineas.asm|40||0|2|41944|L|,fila_llena,,+used
-lineas.asm|41:1:14||0|2|41944|T|
-lineas.asm|41:14:24||0|2|41945|T|
-lineas.asm|41:24||0|2|41946|T|
-lineas.asm|42||0|2|41947|T|
-lineas.asm|43||0|2|41949|T|
-lineas.asm|46||0|2|41952|T|
-lineas.asm|47||0|2|41954|F|fl_celda
-lineas.asm|47||0|2|41954|L|,fl_celda,,+used
-lineas.asm|48:1:17||0|2|41954|T|
-lineas.asm|48:17||0|2|41955|T|
-lineas.asm|49||0|2|41956|T|
-lineas.asm|50:1:13||0|2|41958|T|
-lineas.asm|50:13||0|2|41959|T|
-lineas.asm|51||0|2|41960|T|
-lineas.asm|52:1:14||0|2|41962|T|
-lineas.asm|52:14||0|2|41964|T|
-lineas.asm|53||0|2|41966|F|fl_hueco
-lineas.asm|53||0|2|41966|L|,fl_hueco,,+used
-lineas.asm|54||0|2|41966|T|
-lineas.asm|55||0|2|41968|F|fl_fin
-lineas.asm|55||0|2|41968|L|,fl_fin,,+used
-lineas.asm|56:1:13||0|2|41968|T|
-lineas.asm|56:13:22||0|2|41969|T|
-lineas.asm|56:22||0|2|41970|T|
-lineas.asm|57||0|2|41971|T|
-lineas.asm|62||0|2|41972|F|bajar_filas
-lineas.asm|62||0|2|41972|L|,bajar_filas,,+used
-lineas.asm|63:1:14||0|2|41972|T|
-lineas.asm|63:14:24||0|2|41973|T|
-lineas.asm|63:24:34||0|2|41974|T|
-lineas.asm|63:34||0|2|41975|T|
-lineas.asm|64:1:14||0|2|41976|T|
-lineas.asm|64:14||0|2|41977|T|
-lineas.asm|65||0|2|41978|T|
-lineas.asm|66||0|2|41980|T|
-lineas.asm|67||0|2|41982|T|
-lineas.asm|68||0|2|41985|T|
-lineas.asm|69:1:17||0|2|41986|T|
-lineas.asm|69:17||0|2|41989|T|
-lineas.asm|70||0|2|41990|F|bf_copiar
-lineas.asm|70||0|2|41990|L|,bf_copiar,,+used
-lineas.asm|71||0|2|41990|T|
-lineas.asm|72||0|2|41993|T|
-lineas.asm|73||0|2|41995|T|
-lineas.asm|74||0|2|41998|T|
-lineas.asm|75:1:16||0|2|41999|T|
-lineas.asm|75:16:29||0|2|42000|T|
-lineas.asm|75:29||0|2|42001|T|
-lineas.asm|76||0|2|42002|T|
-lineas.asm|77||0|2|42003|T|
-lineas.asm|78||0|2|42005|F|bf_fila0
-lineas.asm|78||0|2|42005|L|,bf_fila0,,+used
-lineas.asm|79:1:14||0|2|42005|T|
-lineas.asm|79:14||0|2|42007|T|
-lineas.asm|80||0|2|42009|T|
-lineas.asm|81||0|2|42012|T|
-lineas.asm|82||0|2|42014|F|bf_cero
-lineas.asm|82||0|2|42014|L|,bf_cero,,+used
-lineas.asm|83:1:17||0|2|42014|T|
-lineas.asm|83:17||0|2|42016|T|
-lineas.asm|84||0|2|42017|T|
-lineas.asm|85:1:13||0|2|42019|T|
-lineas.asm|85:13:22||0|2|42020|T|
-lineas.asm|85:22:31||0|2|42021|T|
-lineas.asm|85:31||0|2|42022|T|
-lineas.asm|86||0|2|42023|T|
+lineas.asm|16||0|2|42095|F|limpiar_lineas
+lineas.asm|16||0|2|42095|L|,limpiar_lineas,,+used
+lineas.asm|17:1:14||0|2|42095|T|
+lineas.asm|17:14:24||0|2|42096|T|
+lineas.asm|17:24:34||0|2|42097|T|
+lineas.asm|17:34||0|2|42098|T|
+lineas.asm|18||0|2|42100|T|
+lineas.asm|19||0|2|42102|T|
+lineas.asm|20||0|2|42104|F|ll_probar
+lineas.asm|20||0|2|42104|L|,ll_probar,,+used
+lineas.asm|21:1:22||0|2|42104|T|
+lineas.asm|21:22||0|2|42107|T|
+lineas.asm|22||0|2|42108|T|
+lineas.asm|23||0|2|42110|T|
+lineas.asm|24||0|2|42111|T|
+lineas.asm|25||0|2|42114|T|
+lineas.asm|29||0|2|42116|F|ll_arriba
+lineas.asm|29||0|2|42116|L|,ll_arriba,,+used
+lineas.asm|30:1:14||0|2|42116|T|
+lineas.asm|30:14||0|2|42117|T|
+lineas.asm|31||0|2|42118|T|
+lineas.asm|32:1:12||0|2|42120|T|
+lineas.asm|32:12||0|2|42121|T|
+lineas.asm|33||0|2|42123|F|ll_fin
+lineas.asm|33||0|2|42123|L|,ll_fin,,+used
+lineas.asm|34||0|2|42123|T|
+lineas.asm|35:1:13||0|2|42124|T|
+lineas.asm|35:13:22||0|2|42126|T|
+lineas.asm|35:22:31||0|2|42127|T|
+lineas.asm|35:31||0|2|42128|T|
+lineas.asm|36||0|2|42129|T|
+lineas.asm|40||0|2|42130|F|fila_llena
+lineas.asm|40||0|2|42130|L|,fila_llena,,+used
+lineas.asm|41:1:14||0|2|42130|T|
+lineas.asm|41:14:24||0|2|42131|T|
+lineas.asm|41:24||0|2|42132|T|
+lineas.asm|42||0|2|42133|T|
+lineas.asm|43||0|2|42135|T|
+lineas.asm|46||0|2|42138|T|
+lineas.asm|47||0|2|42140|F|fl_celda
+lineas.asm|47||0|2|42140|L|,fl_celda,,+used
+lineas.asm|48:1:17||0|2|42140|T|
+lineas.asm|48:17||0|2|42141|T|
+lineas.asm|49||0|2|42142|T|
+lineas.asm|50:1:13||0|2|42144|T|
+lineas.asm|50:13||0|2|42145|T|
+lineas.asm|51||0|2|42146|T|
+lineas.asm|52:1:14||0|2|42148|T|
+lineas.asm|52:14||0|2|42150|T|
+lineas.asm|53||0|2|42152|F|fl_hueco
+lineas.asm|53||0|2|42152|L|,fl_hueco,,+used
+lineas.asm|54||0|2|42152|T|
+lineas.asm|55||0|2|42154|F|fl_fin
+lineas.asm|55||0|2|42154|L|,fl_fin,,+used
+lineas.asm|56:1:13||0|2|42154|T|
+lineas.asm|56:13:22||0|2|42155|T|
+lineas.asm|56:22||0|2|42156|T|
+lineas.asm|57||0|2|42157|T|
+lineas.asm|62||0|2|42158|F|bajar_filas
+lineas.asm|62||0|2|42158|L|,bajar_filas,,+used
+lineas.asm|63:1:14||0|2|42158|T|
+lineas.asm|63:14:24||0|2|42159|T|
+lineas.asm|63:24:34||0|2|42160|T|
+lineas.asm|63:34||0|2|42161|T|
+lineas.asm|64:1:14||0|2|42162|T|
+lineas.asm|64:14||0|2|42163|T|
+lineas.asm|65||0|2|42164|T|
+lineas.asm|66||0|2|42166|T|
+lineas.asm|67||0|2|42168|T|
+lineas.asm|68||0|2|42171|T|
+lineas.asm|69:1:17||0|2|42172|T|
+lineas.asm|69:17||0|2|42175|T|
+lineas.asm|70||0|2|42176|F|bf_copiar
+lineas.asm|70||0|2|42176|L|,bf_copiar,,+used
+lineas.asm|71||0|2|42176|T|
+lineas.asm|72||0|2|42179|T|
+lineas.asm|73||0|2|42181|T|
+lineas.asm|74||0|2|42184|T|
+lineas.asm|75:1:16||0|2|42185|T|
+lineas.asm|75:16:29||0|2|42186|T|
+lineas.asm|75:29||0|2|42187|T|
+lineas.asm|76||0|2|42188|T|
+lineas.asm|77||0|2|42189|T|
+lineas.asm|78||0|2|42191|F|bf_fila0
+lineas.asm|78||0|2|42191|L|,bf_fila0,,+used
+lineas.asm|79:1:14||0|2|42191|T|
+lineas.asm|79:14||0|2|42193|T|
+lineas.asm|80||0|2|42195|T|
+lineas.asm|81||0|2|42198|T|
+lineas.asm|82||0|2|42200|F|bf_cero
+lineas.asm|82||0|2|42200|L|,bf_cero,,+used
+lineas.asm|83:1:17||0|2|42200|T|
+lineas.asm|83:17||0|2|42202|T|
+lineas.asm|84||0|2|42203|T|
+lineas.asm|85:1:13||0|2|42205|T|
+lineas.asm|85:13:22||0|2|42206|T|
+lineas.asm|85:22:31||0|2|42207|T|
+lineas.asm|85:31||0|2|42208|T|
+lineas.asm|86||0|2|42209|T|
 puntuacion.asm|13||0|-1|10|D|NIVEL_MAX
 puntuacion.asm|13||0|-1|10|L|,NIVEL_MAX,,+equ,+used
-puntuacion.asm|15||0|2|42024|F|PUNTOS_POR_LINEA
-puntuacion.asm|15||0|2|42024|L|,PUNTOS_POR_LINEA,,+used
-puntuacion.asm|16||0|2|42032|F|FRAMES_POR_NIVEL
-puntuacion.asm|16||0|2|42032|L|,FRAMES_POR_NIVEL,,+used
-puntuacion.asm|22||0|2|42043|F|anotar_lineas
-puntuacion.asm|22||0|2|42043|L|,anotar_lineas,,+used
-puntuacion.asm|23||0|2|42043|T|
-puntuacion.asm|24||0|2|42044|T|
-puntuacion.asm|25:1:14||0|2|42045|T|
-puntuacion.asm|25:14:24||0|2|42046|T|
-puntuacion.asm|25:24:34||0|2|42047|T|
-puntuacion.asm|25:34||0|2|42048|T|
-puntuacion.asm|26||0|2|42050|T|
-puntuacion.asm|28||0|2|42051|T|
-puntuacion.asm|29||0|2|42052|T|
-puntuacion.asm|30:1:14||0|2|42053|T|
-puntuacion.asm|30:14||0|2|42054|T|
-puntuacion.asm|31||0|2|42056|T|
-puntuacion.asm|32||0|2|42059|T|
-puntuacion.asm|33:1:17||0|2|42060|T|
-puntuacion.asm|33:17:26||0|2|42061|T|
-puntuacion.asm|33:26||0|2|42062|T|
-puntuacion.asm|34||0|2|42063|T|
-puntuacion.asm|36||0|2|42066|T|
-puntuacion.asm|37||0|2|42067|T|
-puntuacion.asm|38||0|2|42068|F|al_bucle
-puntuacion.asm|38||0|2|42068|L|,al_bucle,,+used
-puntuacion.asm|39:1:21||0|2|42068|T|
-puntuacion.asm|39:21:29||0|2|42071|T|
-puntuacion.asm|39:29||0|2|42072|T|
-puntuacion.asm|40:1:25||0|2|42075|T|
-puntuacion.asm|40:25:33||0|2|42078|T|
-puntuacion.asm|40:33||0|2|42079|T|
-puntuacion.asm|41||0|2|42082|T|
-puntuacion.asm|42:1:15||0|2|42084|T|
-puntuacion.asm|42:15||0|2|42086|T|
-puntuacion.asm|43||0|2|42089|T|
-puntuacion.asm|44||0|2|42092|T|
-puntuacion.asm|45||0|2|42094|T|
-puntuacion.asm|46:1:12||0|2|42096|T|
-puntuacion.asm|46:12||0|2|42097|T|
-puntuacion.asm|47||0|2|42100|F|al_siguiente
-puntuacion.asm|47||0|2|42100|L|,al_siguiente,,+used
-puntuacion.asm|48||0|2|42100|T|
-puntuacion.asm|50||0|2|42102|T|
-puntuacion.asm|51||0|2|42105|T|
-puntuacion.asm|52:1:13||0|2|42108|T|
-puntuacion.asm|52:13:22||0|2|42110|T|
-puntuacion.asm|52:22:31||0|2|42111|T|
-puntuacion.asm|52:31||0|2|42112|T|
-puntuacion.asm|53||0|2|42113|T|
-puntuacion.asm|57||0|2|42114|F|SumarPuntos
-puntuacion.asm|57||0|2|42114|L|,SumarPuntos,,+used
-puntuacion.asm|58||0|2|42114|T|
-puntuacion.asm|59:1:17||0|2|42117|T|
-puntuacion.asm|59:17:28||0|2|42118|T|
-puntuacion.asm|59:28:34||0|2|42119|T|
-puntuacion.asm|59:34||0|2|42120|T|
-puntuacion.asm|60:1:13||0|2|42121|T|
-puntuacion.asm|60:13:26||0|2|42122|T|
-puntuacion.asm|60:26:37||0|2|42123|T|
-puntuacion.asm|60:37:43||0|2|42124|T|
-puntuacion.asm|60:43||0|2|42125|T|
-puntuacion.asm|61:1:13||0|2|42126|T|
-puntuacion.asm|61:13:26||0|2|42127|T|
-puntuacion.asm|61:26:37||0|2|42128|T|
-puntuacion.asm|61:37:43||0|2|42130|T|
-puntuacion.asm|61:43||0|2|42131|T|
-puntuacion.asm|62||0|2|42132|T|
-puntuacion.asm|66||0|2|42133|F|ActualizarVelocidad
-puntuacion.asm|66||0|2|42133|L|,ActualizarVelocidad,,+used
-puntuacion.asm|67||0|2|42133|T|
-puntuacion.asm|68:1:19||0|2|42136|T|
-puntuacion.asm|68:19||0|2|42138|T|
-puntuacion.asm|69||0|2|42140|T|
-puntuacion.asm|70||0|2|42142|F|NivelOK
-puntuacion.asm|70||0|2|42142|L|,NivelOK,,+used
-puntuacion.asm|71:1:14||0|2|42142|T|
-puntuacion.asm|71:14||0|2|42143|T|
-puntuacion.asm|72:1:30||0|2|42145|T|
-puntuacion.asm|72:30||0|2|42148|T|
-puntuacion.asm|73:1:17||0|2|42149|T|
-puntuacion.asm|73:17||0|2|42150|T|
-puntuacion.asm|74||0|2|42153|T|
-puntuacion.asm|79||0|2|42154|F|reiniciar_marcador
-puntuacion.asm|79||0|2|42154|L|,reiniciar_marcador,,+used
-puntuacion.asm|80:1:14||0|2|42154|T|
-puntuacion.asm|80:14:24||0|2|42155|T|
-puntuacion.asm|80:24:34||0|2|42156|T|
-puntuacion.asm|80:34:44||0|2|42157|T|
-puntuacion.asm|80:44||0|2|42158|T|
-puntuacion.asm|81||0|2|42160|T|
-puntuacion.asm|82:1:21||0|2|42161|T|
-puntuacion.asm|82:21:40||0|2|42164|T|
-puntuacion.asm|82:40||0|2|42167|T|
-puntuacion.asm|83||0|2|42170|T|
-puntuacion.asm|84||0|2|42173|T|
-puntuacion.asm|85:1:15||0|2|42176|T|
-puntuacion.asm|85:15||0|2|42178|T|
-puntuacion.asm|86||0|2|42181|T|
-puntuacion.asm|87||0|2|42184|T|
-puntuacion.asm|88||0|2|42187|T|
-puntuacion.asm|89||0|2|42190|T|
-puntuacion.asm|90||0|2|42193|T|
-puntuacion.asm|91:1:13||0|2|42196|T|
-puntuacion.asm|91:13:22||0|2|42198|T|
-puntuacion.asm|91:22:31||0|2|42199|T|
-puntuacion.asm|91:31:40||0|2|42200|T|
-puntuacion.asm|91:40||0|2|42201|T|
-puntuacion.asm|92||0|2|42202|T|
-puntuacion.asm|95||0|2|42203|F|ImprimirEtiquetas
-puntuacion.asm|95||0|2|42203|L|,ImprimirEtiquetas,,+used
-puntuacion.asm|96:1:14||0|2|42203|T|
-puntuacion.asm|96:14||0|2|42205|T|
-puntuacion.asm|97:1:14||0|2|42206|T|
-puntuacion.asm|97:14:24||0|2|42208|T|
-puntuacion.asm|97:24:35||0|2|42210|T|
-puntuacion.asm|97:35:54||0|2|42212|T|
-puntuacion.asm|97:54||0|2|42216|T|
-puntuacion.asm|98:1:14||0|2|42219|T|
-puntuacion.asm|98:14:24||0|2|42221|T|
-puntuacion.asm|98:24:35||0|2|42223|T|
-puntuacion.asm|98:35:54||0|2|42225|T|
-puntuacion.asm|98:54||0|2|42229|T|
-puntuacion.asm|99:1:14||0|2|42232|T|
-puntuacion.asm|99:14:24||0|2|42234|T|
-puntuacion.asm|99:24:35||0|2|42236|T|
-puntuacion.asm|99:35:54||0|2|42238|T|
-puntuacion.asm|99:54||0|2|42242|T|
-puntuacion.asm|100:1:14||0|2|42245|T|
-puntuacion.asm|100:14:24||0|2|42247|T|
-puntuacion.asm|100:24:35||0|2|42249|T|
-puntuacion.asm|100:35:55||0|2|42251|T|
-puntuacion.asm|100:55||0|2|42255|T|
-puntuacion.asm|101:1:13||0|2|42258|T|
-puntuacion.asm|101:13||0|2|42259|T|
-puntuacion.asm|102||0|2|42261|T|
-puntuacion.asm|107||0|2|42262|F|ImprimirMarcador
-puntuacion.asm|107||0|2|42262|L|,ImprimirMarcador,,+used
-puntuacion.asm|108:1:14||0|2|42262|T|
-puntuacion.asm|108:14||0|2|42264|T|
-puntuacion.asm|109:1:14||0|2|42265|T|
-puntuacion.asm|109:14:24||0|2|42267|T|
-puntuacion.asm|109:24||0|2|42269|T|
-puntuacion.asm|110||0|2|42271|T|
-puntuacion.asm|111:1:23||0|2|42274|T|
-puntuacion.asm|111:23||0|2|42277|T|
-puntuacion.asm|112:1:23||0|2|42280|T|
-puntuacion.asm|112:23||0|2|42283|T|
-puntuacion.asm|113:1:23||0|2|42286|T|
-puntuacion.asm|113:23||0|2|42289|T|
-puntuacion.asm|114:1:14||0|2|42292|T|
-puntuacion.asm|114:14:24||0|2|42294|T|
-puntuacion.asm|114:24||0|2|42296|T|
-puntuacion.asm|115||0|2|42298|T|
-puntuacion.asm|116:1:21||0|2|42301|T|
-puntuacion.asm|116:21||0|2|42304|T|
-puntuacion.asm|117:1:14||0|2|42307|T|
-puntuacion.asm|117:14:24||0|2|42309|T|
-puntuacion.asm|117:24||0|2|42311|T|
-puntuacion.asm|118||0|2|42313|T|
-puntuacion.asm|119:1:20||0|2|42316|T|
-puntuacion.asm|119:20||0|2|42319|T|
-puntuacion.asm|120:1:13||0|2|42322|T|
-puntuacion.asm|120:13||0|2|42323|T|
-puntuacion.asm|121||0|2|42325|T|
-puntuacion.asm|125||0|2|42326|F|ImprimirBCD
-puntuacion.asm|125||0|2|42326|L|,ImprimirBCD,,+used
-puntuacion.asm|126||0|2|42326|T|
-puntuacion.asm|127:1:11||0|2|42327|T|
-puntuacion.asm|127:11:18||0|2|42328|T|
-puntuacion.asm|127:18:25||0|2|42329|T|
-puntuacion.asm|127:25||0|2|42330|T|
-puntuacion.asm|128:1:14||0|2|42331|T|
-puntuacion.asm|128:14||0|2|42333|T|
-puntuacion.asm|129:1:22||0|2|42335|T|
-puntuacion.asm|129:22||0|2|42338|T|
-puntuacion.asm|130:1:14||0|2|42339|T|
-puntuacion.asm|130:14||0|2|42341|T|
-puntuacion.asm|131||0|2|42343|T|
-puntuacion.asm|136||0|2|42346|F|ImprimirDec3
-puntuacion.asm|136||0|2|42346|L|,ImprimirDec3,,+used
-puntuacion.asm|137||0|2|42346|T|
-puntuacion.asm|138||0|2|42348|F|id_cientos
-puntuacion.asm|138||0|2|42348|L|,id_cientos,,+used
-puntuacion.asm|139||0|2|42348|T|
-puntuacion.asm|140||0|2|42350|T|
-puntuacion.asm|141||0|2|42352|T|
-puntuacion.asm|142||0|2|42354|T|
-puntuacion.asm|143||0|2|42355|T|
-puntuacion.asm|144||0|2|42357|F|id_fin_cientos
-puntuacion.asm|144||0|2|42357|L|,id_fin_cientos,,+used
-puntuacion.asm|145||0|2|42357|T|
-puntuacion.asm|146:1:14||0|2|42358|T|
-puntuacion.asm|146:14:27||0|2|42359|T|
-puntuacion.asm|146:27||0|2|42361|T|
-puntuacion.asm|147||0|2|42364|T|
-puntuacion.asm|148||0|2|42365|T|
-puntuacion.asm|149||0|2|42367|F|id_decenas
-puntuacion.asm|149||0|2|42367|L|,id_decenas,,+used
-puntuacion.asm|150||0|2|42367|T|
-puntuacion.asm|151||0|2|42369|T|
-puntuacion.asm|152||0|2|42371|T|
-puntuacion.asm|153||0|2|42373|T|
-puntuacion.asm|154||0|2|42374|T|
-puntuacion.asm|155||0|2|42376|F|id_fin_decenas
-puntuacion.asm|155||0|2|42376|L|,id_fin_decenas,,+used
-puntuacion.asm|156||0|2|42376|T|
-puntuacion.asm|157:1:14||0|2|42377|T|
-puntuacion.asm|157:14:27||0|2|42378|T|
-puntuacion.asm|157:27||0|2|42380|T|
-puntuacion.asm|158||0|2|42383|T|
-puntuacion.asm|159||0|2|42384|T|
-puntuacion.asm|160||0|2|42386|T|
-puntuacion.asm|163||0|2|42389|F|MsgPuntos
-puntuacion.asm|163||0|2|42389|L|,MsgPuntos,,+used
-puntuacion.asm|164||0|2|42395|F|MsgLineas
-puntuacion.asm|164||0|2|42395|L|,MsgLineas,,+used
-puntuacion.asm|165||0|2|42401|F|MsgNivel
-puntuacion.asm|165||0|2|42401|L|,MsgNivel,,+used
-puntuacion.asm|166||0|2|42407|F|MsgProxima
-puntuacion.asm|166||0|2|42407|L|,MsgProxima,,+used
-variables.asm|13||0|2|42412|F|PUNTOS
-variables.asm|13||0|2|42412|L|,PUNTOS,,+used
-variables.asm|14||0|2|42415|F|LINEAS
-variables.asm|14||0|2|42415|L|,LINEAS,,+used
-variables.asm|15||0|2|42416|F|NIVEL
-variables.asm|15||0|2|42416|L|,NIVEL,,+used
-variables.asm|16||0|2|42417|F|PROX_NIVEL
-variables.asm|16||0|2|42417|L|,PROX_NIVEL,,+used
-variables.asm|19||0|2|42418|F|FRAMES_POR_FILA
-variables.asm|19||0|2|42418|L|,FRAMES_POR_FILA,,+used
-variables.asm|20||0|2|42419|F|contador_frames
-variables.asm|20||0|2|42419|L|,contador_frames,,+used
-variables.asm|21||0|2|42420|F|contador_rapido
-variables.asm|21||0|2|42420|L|,contador_rapido,,+used
-variables.asm|28||0|2|42421|F|teclas_ant
-variables.asm|28||0|2|42421|L|,teclas_ant,,+used
-variables.asm|33||0|2|42422|F|semilla
-variables.asm|33||0|2|42422|L|,semilla,,+used
-variables.asm|35||0|2|42423|F|siguiente_pieza
-variables.asm|35||0|2|42423|L|,siguiente_pieza,,+used
-variables.asm|41||0|2|42425|F|Medio
-variables.asm|41||0|2|42425|L|,Medio,,+used
+puntuacion.asm|15||0|2|42210|F|PUNTOS_POR_LINEA
+puntuacion.asm|15||0|2|42210|L|,PUNTOS_POR_LINEA,,+used
+puntuacion.asm|16||0|2|42218|F|FRAMES_POR_NIVEL
+puntuacion.asm|16||0|2|42218|L|,FRAMES_POR_NIVEL,,+used
+puntuacion.asm|22||0|2|42229|F|anotar_lineas
+puntuacion.asm|22||0|2|42229|L|,anotar_lineas,,+used
+puntuacion.asm|23||0|2|42229|T|
+puntuacion.asm|24||0|2|42230|T|
+puntuacion.asm|25:1:14||0|2|42231|T|
+puntuacion.asm|25:14:24||0|2|42232|T|
+puntuacion.asm|25:24:34||0|2|42233|T|
+puntuacion.asm|25:34||0|2|42234|T|
+puntuacion.asm|26||0|2|42236|T|
+puntuacion.asm|28||0|2|42237|T|
+puntuacion.asm|29||0|2|42238|T|
+puntuacion.asm|30:1:14||0|2|42239|T|
+puntuacion.asm|30:14||0|2|42240|T|
+puntuacion.asm|31||0|2|42242|T|
+puntuacion.asm|32||0|2|42245|T|
+puntuacion.asm|33:1:17||0|2|42246|T|
+puntuacion.asm|33:17:26||0|2|42247|T|
+puntuacion.asm|33:26||0|2|42248|T|
+puntuacion.asm|34||0|2|42249|T|
+puntuacion.asm|36||0|2|42252|T|
+puntuacion.asm|37||0|2|42253|T|
+puntuacion.asm|38||0|2|42254|F|al_bucle
+puntuacion.asm|38||0|2|42254|L|,al_bucle,,+used
+puntuacion.asm|39:1:21||0|2|42254|T|
+puntuacion.asm|39:21:29||0|2|42257|T|
+puntuacion.asm|39:29||0|2|42258|T|
+puntuacion.asm|40:1:25||0|2|42261|T|
+puntuacion.asm|40:25:33||0|2|42264|T|
+puntuacion.asm|40:33||0|2|42265|T|
+puntuacion.asm|41||0|2|42268|T|
+puntuacion.asm|42:1:15||0|2|42270|T|
+puntuacion.asm|42:15||0|2|42272|T|
+puntuacion.asm|43||0|2|42275|T|
+puntuacion.asm|44||0|2|42278|T|
+puntuacion.asm|45||0|2|42280|T|
+puntuacion.asm|46:1:12||0|2|42282|T|
+puntuacion.asm|46:12||0|2|42283|T|
+puntuacion.asm|47||0|2|42286|F|al_siguiente
+puntuacion.asm|47||0|2|42286|L|,al_siguiente,,+used
+puntuacion.asm|48||0|2|42286|T|
+puntuacion.asm|50||0|2|42288|T|
+puntuacion.asm|51||0|2|42291|T|
+puntuacion.asm|52:1:13||0|2|42294|T|
+puntuacion.asm|52:13:22||0|2|42296|T|
+puntuacion.asm|52:22:31||0|2|42297|T|
+puntuacion.asm|52:31||0|2|42298|T|
+puntuacion.asm|53||0|2|42299|T|
+puntuacion.asm|57||0|2|42300|F|SumarPuntos
+puntuacion.asm|57||0|2|42300|L|,SumarPuntos,,+used
+puntuacion.asm|58||0|2|42300|T|
+puntuacion.asm|59:1:17||0|2|42303|T|
+puntuacion.asm|59:17:28||0|2|42304|T|
+puntuacion.asm|59:28:34||0|2|42305|T|
+puntuacion.asm|59:34||0|2|42306|T|
+puntuacion.asm|60:1:13||0|2|42307|T|
+puntuacion.asm|60:13:26||0|2|42308|T|
+puntuacion.asm|60:26:37||0|2|42309|T|
+puntuacion.asm|60:37:43||0|2|42310|T|
+puntuacion.asm|60:43||0|2|42311|T|
+puntuacion.asm|61:1:13||0|2|42312|T|
+puntuacion.asm|61:13:26||0|2|42313|T|
+puntuacion.asm|61:26:37||0|2|42314|T|
+puntuacion.asm|61:37:43||0|2|42316|T|
+puntuacion.asm|61:43||0|2|42317|T|
+puntuacion.asm|62||0|2|42318|T|
+puntuacion.asm|66||0|2|42319|F|ActualizarVelocidad
+puntuacion.asm|66||0|2|42319|L|,ActualizarVelocidad,,+used
+puntuacion.asm|67||0|2|42319|T|
+puntuacion.asm|68:1:19||0|2|42322|T|
+puntuacion.asm|68:19||0|2|42324|T|
+puntuacion.asm|69||0|2|42326|T|
+puntuacion.asm|70||0|2|42328|F|NivelOK
+puntuacion.asm|70||0|2|42328|L|,NivelOK,,+used
+puntuacion.asm|71:1:14||0|2|42328|T|
+puntuacion.asm|71:14||0|2|42329|T|
+puntuacion.asm|72:1:30||0|2|42331|T|
+puntuacion.asm|72:30||0|2|42334|T|
+puntuacion.asm|73:1:17||0|2|42335|T|
+puntuacion.asm|73:17||0|2|42336|T|
+puntuacion.asm|74||0|2|42339|T|
+puntuacion.asm|79||0|2|42340|F|reiniciar_marcador
+puntuacion.asm|79||0|2|42340|L|,reiniciar_marcador,,+used
+puntuacion.asm|80:1:14||0|2|42340|T|
+puntuacion.asm|80:14:24||0|2|42341|T|
+puntuacion.asm|80:24:34||0|2|42342|T|
+puntuacion.asm|80:34:44||0|2|42343|T|
+puntuacion.asm|80:44||0|2|42344|T|
+puntuacion.asm|81||0|2|42346|T|
+puntuacion.asm|82:1:21||0|2|42347|T|
+puntuacion.asm|82:21:40||0|2|42350|T|
+puntuacion.asm|82:40||0|2|42353|T|
+puntuacion.asm|83||0|2|42356|T|
+puntuacion.asm|84||0|2|42359|T|
+puntuacion.asm|85:1:15||0|2|42362|T|
+puntuacion.asm|85:15||0|2|42364|T|
+puntuacion.asm|86||0|2|42367|T|
+puntuacion.asm|87||0|2|42370|T|
+puntuacion.asm|88||0|2|42373|T|
+puntuacion.asm|89||0|2|42376|T|
+puntuacion.asm|90||0|2|42379|T|
+puntuacion.asm|91:1:13||0|2|42382|T|
+puntuacion.asm|91:13:22||0|2|42384|T|
+puntuacion.asm|91:22:31||0|2|42385|T|
+puntuacion.asm|91:31:40||0|2|42386|T|
+puntuacion.asm|91:40||0|2|42387|T|
+puntuacion.asm|92||0|2|42388|T|
+puntuacion.asm|95||0|2|42389|F|ImprimirEtiquetas
+puntuacion.asm|95||0|2|42389|L|,ImprimirEtiquetas,,+used
+puntuacion.asm|96:1:14||0|2|42389|T|
+puntuacion.asm|96:14||0|2|42391|T|
+puntuacion.asm|97:1:14||0|2|42392|T|
+puntuacion.asm|97:14:24||0|2|42394|T|
+puntuacion.asm|97:24:35||0|2|42396|T|
+puntuacion.asm|97:35:54||0|2|42398|T|
+puntuacion.asm|97:54||0|2|42402|T|
+puntuacion.asm|98:1:14||0|2|42405|T|
+puntuacion.asm|98:14:24||0|2|42407|T|
+puntuacion.asm|98:24:35||0|2|42409|T|
+puntuacion.asm|98:35:54||0|2|42411|T|
+puntuacion.asm|98:54||0|2|42415|T|
+puntuacion.asm|99:1:14||0|2|42418|T|
+puntuacion.asm|99:14:24||0|2|42420|T|
+puntuacion.asm|99:24:35||0|2|42422|T|
+puntuacion.asm|99:35:54||0|2|42424|T|
+puntuacion.asm|99:54||0|2|42428|T|
+puntuacion.asm|100:1:14||0|2|42431|T|
+puntuacion.asm|100:14:24||0|2|42433|T|
+puntuacion.asm|100:24:35||0|2|42435|T|
+puntuacion.asm|100:35:55||0|2|42437|T|
+puntuacion.asm|100:55||0|2|42441|T|
+puntuacion.asm|101:1:13||0|2|42444|T|
+puntuacion.asm|101:13||0|2|42445|T|
+puntuacion.asm|102||0|2|42447|T|
+puntuacion.asm|107||0|2|42448|F|ImprimirMarcador
+puntuacion.asm|107||0|2|42448|L|,ImprimirMarcador,,+used
+puntuacion.asm|108:1:14||0|2|42448|T|
+puntuacion.asm|108:14||0|2|42450|T|
+puntuacion.asm|109:1:14||0|2|42451|T|
+puntuacion.asm|109:14:24||0|2|42453|T|
+puntuacion.asm|109:24||0|2|42455|T|
+puntuacion.asm|110||0|2|42457|T|
+puntuacion.asm|111:1:23||0|2|42460|T|
+puntuacion.asm|111:23||0|2|42463|T|
+puntuacion.asm|112:1:23||0|2|42466|T|
+puntuacion.asm|112:23||0|2|42469|T|
+puntuacion.asm|113:1:23||0|2|42472|T|
+puntuacion.asm|113:23||0|2|42475|T|
+puntuacion.asm|114:1:14||0|2|42478|T|
+puntuacion.asm|114:14:24||0|2|42480|T|
+puntuacion.asm|114:24||0|2|42482|T|
+puntuacion.asm|115||0|2|42484|T|
+puntuacion.asm|116:1:21||0|2|42487|T|
+puntuacion.asm|116:21||0|2|42490|T|
+puntuacion.asm|117:1:14||0|2|42493|T|
+puntuacion.asm|117:14:24||0|2|42495|T|
+puntuacion.asm|117:24||0|2|42497|T|
+puntuacion.asm|118||0|2|42499|T|
+puntuacion.asm|119:1:20||0|2|42502|T|
+puntuacion.asm|119:20||0|2|42505|T|
+puntuacion.asm|120:1:13||0|2|42508|T|
+puntuacion.asm|120:13||0|2|42509|T|
+puntuacion.asm|121||0|2|42511|T|
+puntuacion.asm|125||0|2|42512|F|ImprimirBCD
+puntuacion.asm|125||0|2|42512|L|,ImprimirBCD,,+used
+puntuacion.asm|126||0|2|42512|T|
+puntuacion.asm|127:1:11||0|2|42513|T|
+puntuacion.asm|127:11:18||0|2|42514|T|
+puntuacion.asm|127:18:25||0|2|42515|T|
+puntuacion.asm|127:25||0|2|42516|T|
+puntuacion.asm|128:1:14||0|2|42517|T|
+puntuacion.asm|128:14||0|2|42519|T|
+puntuacion.asm|129:1:22||0|2|42521|T|
+puntuacion.asm|129:22||0|2|42524|T|
+puntuacion.asm|130:1:14||0|2|42525|T|
+puntuacion.asm|130:14||0|2|42527|T|
+puntuacion.asm|131||0|2|42529|T|
+puntuacion.asm|136||0|2|42532|F|ImprimirDec3
+puntuacion.asm|136||0|2|42532|L|,ImprimirDec3,,+used
+puntuacion.asm|137||0|2|42532|T|
+puntuacion.asm|138||0|2|42534|F|id_cientos
+puntuacion.asm|138||0|2|42534|L|,id_cientos,,+used
+puntuacion.asm|139||0|2|42534|T|
+puntuacion.asm|140||0|2|42536|T|
+puntuacion.asm|141||0|2|42538|T|
+puntuacion.asm|142||0|2|42540|T|
+puntuacion.asm|143||0|2|42541|T|
+puntuacion.asm|144||0|2|42543|F|id_fin_cientos
+puntuacion.asm|144||0|2|42543|L|,id_fin_cientos,,+used
+puntuacion.asm|145||0|2|42543|T|
+puntuacion.asm|146:1:14||0|2|42544|T|
+puntuacion.asm|146:14:27||0|2|42545|T|
+puntuacion.asm|146:27||0|2|42547|T|
+puntuacion.asm|147||0|2|42550|T|
+puntuacion.asm|148||0|2|42551|T|
+puntuacion.asm|149||0|2|42553|F|id_decenas
+puntuacion.asm|149||0|2|42553|L|,id_decenas,,+used
+puntuacion.asm|150||0|2|42553|T|
+puntuacion.asm|151||0|2|42555|T|
+puntuacion.asm|152||0|2|42557|T|
+puntuacion.asm|153||0|2|42559|T|
+puntuacion.asm|154||0|2|42560|T|
+puntuacion.asm|155||0|2|42562|F|id_fin_decenas
+puntuacion.asm|155||0|2|42562|L|,id_fin_decenas,,+used
+puntuacion.asm|156||0|2|42562|T|
+puntuacion.asm|157:1:14||0|2|42563|T|
+puntuacion.asm|157:14:27||0|2|42564|T|
+puntuacion.asm|157:27||0|2|42566|T|
+puntuacion.asm|158||0|2|42569|T|
+puntuacion.asm|159||0|2|42570|T|
+puntuacion.asm|160||0|2|42572|T|
+puntuacion.asm|163||0|2|42575|F|MsgPuntos
+puntuacion.asm|163||0|2|42575|L|,MsgPuntos,,+used
+puntuacion.asm|164||0|2|42581|F|MsgLineas
+puntuacion.asm|164||0|2|42581|L|,MsgLineas,,+used
+puntuacion.asm|165||0|2|42587|F|MsgNivel
+puntuacion.asm|165||0|2|42587|L|,MsgNivel,,+used
+puntuacion.asm|166||0|2|42593|F|MsgProxima
+puntuacion.asm|166||0|2|42593|L|,MsgProxima,,+used
+relleno.asm|32||0|-1|21|D|RELL_FILA_BAJA
+relleno.asm|32||0|-1|21|L|,RELL_FILA_BAJA,,+equ,+used
+relleno.asm|33||0|-1|7|D|RELL_COL_IZQ
+relleno.asm|33||0|-1|7|L|,RELL_COL_IZQ,,+equ,+used
+relleno.asm|34||0|-1|18|D|RELL_ANCHO
+relleno.asm|34||0|-1|18|L|,RELL_ANCHO,,+equ,+used
+relleno.asm|35||0|-1|3|D|RELL_FRAMES_FILA
+relleno.asm|35||0|-1|3|L|,RELL_FRAMES_FILA,,+equ,+used
+relleno.asm|36||0|-1|25|D|RELL_PAUSA
+relleno.asm|36||0|-1|25|L|,RELL_PAUSA,,+equ,+used
+relleno.asm|42||0|2|42598|F|relleno_pozo
+relleno.asm|42||0|2|42598|L|,relleno_pozo,,+used
+relleno.asm|43:1:14||0|2|42598|T|
+relleno.asm|43:14:24||0|2|42599|T|
+relleno.asm|43:24:34||0|2|42600|T|
+relleno.asm|43:34||0|2|42601|T|
+relleno.asm|44||0|2|42602|T|
+relleno.asm|45||0|2|42604|T|
+relleno.asm|46||0|2|42606|T|
+relleno.asm|47||0|2|42608|F|rp_fila
+relleno.asm|47||0|2|42608|L|,rp_fila,,+used
+relleno.asm|48||0|2|42608|T|
+relleno.asm|49||0|2|42610|F|rp_esperar
+relleno.asm|49||0|2|42610|L|,rp_esperar,,+used
+relleno.asm|50||0|2|42610|T|
+relleno.asm|51||0|2|42611|T|
+relleno.asm|52||0|2|42612|T|
+relleno.asm|54||0|2|42614|T|
+relleno.asm|55||0|2|42617|T|
+relleno.asm|56:1:15||0|2|42618|T|
+relleno.asm|56:15:26||0|2|42619|T|
+relleno.asm|56:26||0|2|42620|T|
+relleno.asm|58||0|2|42621|T|
+relleno.asm|59||0|2|42623|F|rp_celda
+relleno.asm|59||0|2|42623|L|,rp_celda,,+used
+relleno.asm|60||0|2|42623|T|
+relleno.asm|61||0|2|42624|T|
+relleno.asm|62||0|2|42625|T|
+relleno.asm|63||0|2|42626|T|
+relleno.asm|65||0|2|42628|T|
+relleno.asm|66||0|2|42629|T|
+relleno.asm|67||0|2|42630|T|
+relleno.asm|68||0|2|42632|T|
+relleno.asm|69||0|2|42634|T|
+relleno.asm|70||0|2|42636|F|rp_fila_hecha
+relleno.asm|70||0|2|42636|L|,rp_fila_hecha,,+used
+relleno.asm|71||0|2|42636|T|
+relleno.asm|72||0|2|42637|T|
+relleno.asm|73||0|2|42638|T|
+relleno.asm|74||0|2|42640|T|
+relleno.asm|75||0|2|42641|T|
+relleno.asm|77||0|2|42643|F|rp_pausa
+relleno.asm|77||0|2|42643|L|,rp_pausa,,+used
+relleno.asm|78||0|2|42643|T|
+relleno.asm|79||0|2|42645|F|rp_pausa_bucle
+relleno.asm|79||0|2|42645|L|,rp_pausa_bucle,,+used
+relleno.asm|80||0|2|42645|T|
+relleno.asm|81||0|2|42646|T|
+relleno.asm|82:1:13||0|2|42648|T|
+relleno.asm|82:13:22||0|2|42649|T|
+relleno.asm|82:22:31||0|2|42650|T|
+relleno.asm|82:31||0|2|42651|T|
+relleno.asm|83||0|2|42652|T|
+variables.asm|13||0|2|42653|F|PUNTOS
+variables.asm|13||0|2|42653|L|,PUNTOS,,+used
+variables.asm|14||0|2|42656|F|LINEAS
+variables.asm|14||0|2|42656|L|,LINEAS,,+used
+variables.asm|15||0|2|42657|F|NIVEL
+variables.asm|15||0|2|42657|L|,NIVEL,,+used
+variables.asm|16||0|2|42658|F|PROX_NIVEL
+variables.asm|16||0|2|42658|L|,PROX_NIVEL,,+used
+variables.asm|17||0|2|42659|F|MEJOR
+variables.asm|17||0|2|42659|L|,MEJOR,,+used
+variables.asm|27||0|2|42662|F|FRAMES_POR_FILA
+variables.asm|27||0|2|42662|L|,FRAMES_POR_FILA,,+used
+variables.asm|28||0|2|42663|F|contador_frames
+variables.asm|28||0|2|42663|L|,contador_frames,,+used
+variables.asm|29||0|2|42664|F|contador_rapido
+variables.asm|29||0|2|42664|L|,contador_rapido,,+used
+variables.asm|36||0|2|42665|F|teclas_ant
+variables.asm|36||0|2|42665|L|,teclas_ant,,+used
+variables.asm|41||0|2|42666|F|semilla
+variables.asm|41||0|2|42666|L|,semilla,,+used
+variables.asm|43||0|2|42667|F|siguiente_pieza
+variables.asm|43||0|2|42667|L|,siguiente_pieza,,+used
+variables.asm|49||0|2|42669|F|Medio
+variables.asm|49||0|2|42669|L|,Medio,,+used

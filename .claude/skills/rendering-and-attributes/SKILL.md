@@ -152,6 +152,72 @@ black gaps grow in the yellow wall, then pieces slide out sideways or fall throu
   one, which is why it was not added; `tests/test_lineas.py` and `checklist6.py` assert border
   integrity instead.
 
+## 5b. The static screens — bordered panels, drawn with attributes only
+
+The three non-title screens (`pantallas.asm`) share the in-game scoreboard's visual language.
+**The title screen is not part of this and is not to be touched.** `titulo.asm` and `TETRIS.scr`
+are unchanged, and because `titulo.asm` is included *before* `pantallas.asm` (`main.asm:31-32`),
+its assembled bytes did not move either: the `$801C-$9B40` span of `main.bin` is identical
+before and after the redesign. If you ever need to prove that again, diff that byte range —
+anything inserted ahead of it in the `INCLUDE` list would shift it.
+
+| Element | Value | Matches |
+|---|---|---|
+| Panel frame cell | `ATRIB_MARCO` = `6*8+7` = 55 | the **same byte** as the well border (`tableroJuego.asm:10`) |
+| Heading / label ink | `TINTA_ROTULO` = 6 (yellow) | `ImprimirEtiquetas`'s `ld a, 6` (`puntuacion.asm:97-100`) |
+| Body / value ink | `TINTA_TEXTO` = 7 (white) | `ImprimirMarcador`'s `ld a, 7` (`puntuacion.asm:109`) |
+| Prompt cursor cell | `TINTA_CURSOR` = `6+$80` (flashing yellow) | the pre-existing flash idiom, recoloured |
+
+Before this, each screen had its own scheme — green, magenta, blue, cyan — and none of them
+resembled the scoreboard. The **text is unchanged**; only presentation moved.
+
+**A frame is attribute cells, not glyphs, and that is not a shortcut.** `charset.bin` covers ASCII
+32-127 only, so there are no box-drawing characters to reach for (§7). Drawing the border as
+attribute cells is what the well and the preview box already do: `CLEARSCR` zeroes the pixel file,
+so a cell with PAPER 6 renders as a solid block with no pixel data at all.
+
+`pintar_marco` (`pantallas.asm`) is the one routine that draws a panel: `B` = top row, fixed at 32
+columns × `PANEL_ALTO` (5) rows — border, blank, text, blank, border. It uses **`CRtoATTR`, not
+`CalcularAtributo`**, because `B` is the panel row and must survive the call (§2). It preserves
+everything.
+
+Layout, all three screens (interior = columns 1-30, text always on the panel's middle row):
+
+| Screen | Routine | Panel top rows | Contents |
+|---|---|---|---|
+| Pre-game | `pintar_ini` | 1, 8, 15 | `MensajeJuego` · best score · `MensajeIniciar` + cursor |
+| Game over | `pintar_final` | 3, 10, 17 | `MensajeGameOver` · best score · `MensajeReiniciar` + cursor |
+| Thank-you | `pintar_gracias` | 9 | `MensajeFinal` |
+
+**Drawing is split from the keyboard wait.** `Pantalla_Ini` / `Pantalla_Final` / `FinDelJuego` are
+still the entry points and still block; `pintar_ini` / `pintar_final` / `pintar_gracias` only paint
+and return, which is what makes the screens testable without a keyboard
+(`tests/test_pantallas.py` renders each one and reads the text back out of the pixel file).
+
+**The best-score panel is one routine with two callers.** `pintar_mejor` draws frame, label and
+value; `pintar_ini` and `pintar_final` both call it. `MEJOR` is read-only in both — the single
+writer is `ActualizarMejor`, and `game-loop-and-collision` §3 owns that. `ImprimirMejor` reuses
+`ImprimirBCD` (`puntuacion.asm:125`) rather than reimplementing digit output, which is why `MEJOR`
+is stored in the same packed-BCD format as `PUNTOS`.
+
+These screens print into columns 0-31 across rows 0-21, which would be fatal during play (§5,
+`memory-map` §2) and is fine here: no piece exists, and `CLEARSCR` runs first. `dibujar_tablero`
+repaints the well from scratch on restart.
+
+## 5c. The game-over fill animation
+
+`relleno_pozo` (`relleno.asm`) fills the well interior — columns 7-24, rows 21 up to 0 — before
+the game-over screen appears. It writes nothing but attribute bytes in `$5800-$5AFF`, and only
+inside the interior, so the border, the floor and everything outside the well survive it.
+
+Colours are the seven tetromino PAPER values (`1*8` … `7*8`) cycled one per row, encoded exactly
+as `piezas.asm` encodes them: `colour*8`, INK 0, no FLASH/BRIGHT. **No new colour is introduced**
+— §8 already records that all seven are spoken for.
+
+Each row is painted immediately after a `HALT`, the same border-window discipline as the erase and
+redraw in §4, so the fill does not tear. `interrupts-and-timing` §7 owns the pacing and explains
+why the frame budget in §4 no longer applies once the loop has ended.
+
 ## 6. Text output library (`L30.3 - printat.asm`) — third-party, treat as stable
 
 | Entry | Line | Does |
@@ -222,6 +288,13 @@ one deliberately, or extending past PAPER-only encoding into BRIGHT (bit 6). `pi
 - Printing text into columns 7-24. It becomes collidable geometry inside the well.
 - Accented characters or `¡` / `¿` in a new message string (§7).
 - Assuming the border repairs itself. It is drawn once and never again.
+- Reaching for a box-drawing glyph for a panel border. `charset.bin` is ASCII 32-127 only; frames
+  are attribute cells (§5b).
+- Using `CalcularAtributo` inside a panel or fill loop. It eats `BC`, which is the row you are
+  looping over — `CRtoATTR` is the one to use (§2, §5b).
+- Giving the fill animation a colour of its own, or filling outside columns 7-24 (§5c).
+- Adding a second best-score display without going through `pintar_mejor`, or writing `MEJOR`
+  from a display routine. Both read sites are read-only (§5b).
 - Leaving a blocking key-release wait or a delay loop between the erase and the redraw.
 - Redrawing the scoreboard every frame. It costs T-states in the border window for nothing; refresh
   only when a value changed (`scoring-and-level`).

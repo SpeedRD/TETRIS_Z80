@@ -42,4 +42,5 @@ fin_del_programa:         ;iniciar no deberia volver (el fin de partida salta a
     INCLUDE "entrada.asm"
     INCLUDE "lineas.asm"
     INCLUDE "puntuacion.asm"
+    INCLUDE "relleno.asm"
     INCLUDE "variables.asm"   ; SIEMPRE el ultimo: el estado mutable va al final

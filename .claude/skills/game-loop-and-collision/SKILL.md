@@ -101,14 +101,37 @@ easiest way to undo this file.
 
 ## 3. Game over and the exits
 
-`fin_partida:` (`juego.asm:143`) is `JP Pantalla_Final` — **`JP`, not `CALL`**, because it never
-returns. It is reached from two places, both of which test the newly spawned piece at its real
-spawn position, row 0: `:35-37` for the first piece of a game and `:135-137` after every lock.
+`fin_partida:` (`juego.asm:143`) is now `CALL relleno_pozo` followed by `JP Pantalla_Final` — still
+**`JP`, not `CALL`** for the screen, because it never returns. It is reached from two places, both of
+which test the newly spawned piece at its real spawn position, row 0: `:35-37` for the first piece of
+a game and `:135-137` after every lock.
 
-The path back: `Pantalla_Final` (`pantallas.asm:27`) prints, waits for a key, and does
-`jp inicializar` (`:53`). `inicializar` (`main.asm:14`) re-sets `SP` before anything else, which is
+`relleno_pozo` (`relleno.asm`) is the fill-up animation: the well fills with blocks from the bottom
+up before the screen changes, instead of the old instant cut. It is a `CALL` and it does return. It
+touches nothing but the attribute file, so `PUNTOS`, `LINEAS`, `NIVEL` and `MEJOR` reach the
+game-over screen intact — `tests/test_relleno.py` asserts exactly that, over the whole
+`variables.asm` block. `interrupts-and-timing` §7 owns its timing.
+
+The path back: `Pantalla_Final` (`pantallas.asm`) captures the session best, prints, waits for a key,
+and does `jp inicializar`. `inicializar` (`main.asm:14`) re-sets `SP` before anything else, which is
 what keeps a long session from leaking the stack — nothing pops the frames a `CALL`-based restart
 would leave, and `LD SP, 0` means there is no BASIC frame to return to anyway.
+
+### The session best is captured here, and only here
+
+`Pantalla_Final` opens with `call ActualizarMejor`. That placement is the whole design:
+
+- `PUNTOS` still holds the score of the game that just ended. It is not zeroed until the *next*
+  game reaches `reiniciar_marcador` (`juego.asm:26`), so this is the last moment the finished
+  score exists.
+- `MEJOR` (`variables.asm`, three packed-BCD bytes, same format as `PUNTOS`) is written **only**
+  by `ActualizarMejor`, once per game over. Nothing zeroes it, which is what makes it a
+  *session* best that survives `inicializar` rather than a per-game value.
+- It is **read** from two places, both through `pintar_mejor`: the game-over screen and the
+  pre-game screen. Both are read-only. If you add a third display site, call `pintar_mejor` —
+  do not add a second writer.
+
+The fill animation runs *before* the capture and cannot disturb it: it writes only `$5800-$5AFF`.
 
 `main.asm:27` has `fin_del_programa: jr fin_del_programa` after `CALL iniciar`. `iniciar` should
 never return; that terminator is there because without it a return fell straight into
@@ -233,6 +256,8 @@ dibujar:
     call pintar_tetromino   ; draw the committed (B, C, IX)
     jp paso                 ; jp, not jr: paso is out of an 8-bit relative jump's range
 fin_partida:
+    call relleno_pozo       ; el pozo se llena de bloques antes de cortar (§3).
+                            ;   CALL y vuelve: el bucle ya ha terminado aqui
     jp Pantalla_Final       ; jp, NOT call — it never returns (§3)
 ```
 
@@ -340,7 +365,8 @@ instant it releases, without disturbing the edge bits), and `en_rango`'s boundar
 6. Forgetting `ld (Medio), a` when `C` changes: erase and draw then use different columns → ghosts.
 7. "Balancing" `comprobar`'s pushes with `push af`, which destroys its return value.
 8. Turning `JP Pantalla_Final` into a `CALL`, or `jp inicializar` into a `call`. Neither returns;
-   both would leak stack on every game (§3).
+   both would leak stack on every game (§3). The `call relleno_pozo` in front of it is the
+   opposite case and is correct: it does return.
 9. Doing work between `HALT` and the erase/redraw pair. That window is the only place a write is
    invisible (`interrupts-and-timing` §2).
 10. Reading a keyboard port inside the loop instead of using `E` from the single `leer_teclas` call —
@@ -355,6 +381,9 @@ instant it releases, without disturbing the edge bits), and `en_rango`'s boundar
 13. Making `contador_rapido` reset to `FRAMES_CAIDA_RAPIDA` when SPACE is *released*, or decrement
     it while SPACE is *not* held. Either breaks "releasing returns to normal speed immediately" or
     "holding resumes where the last hold left off" (§6).
+14. Adding a second writer of `MEJOR`, or capturing the session best anywhere other than the top of
+    `Pantalla_Final`. After `reiniciar_marcador` runs, `PUNTOS` is already zero and the finished
+    score is gone (§3).
 
 Related: `register-protocol` (clobbers), `memory-map` (geometry, `variables.asm`), `piece-rotation`
 (`GIRAR`), `line-clear` and `scoring-and-level` (the lock-path hooks), `interrupts-and-timing` (frame

@@ -141,4 +141,9 @@ dibujar:
     JP paso                 ; JP, no JR: paso ha quedado fuera de rango
 
 fin_partida:
+    CALL relleno_pozo       ; el pozo se llena de bloques antes de cortar a la
+                            ;  pantalla final (relleno.asm). Aqui el bucle ya
+                            ;  ha terminado: no hay presupuesto de frame que
+                            ;  respetar, solo el borde superior para no
+                            ;  desgarrar. No toca PUNTOS ni MEJOR.
     JP Pantalla_Final       ; JP, no CALL: no vuelve nunca

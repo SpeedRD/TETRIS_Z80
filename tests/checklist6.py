@@ -84,12 +84,24 @@ txt = sum(1 for v in a if v)
 check("3. start menu is drawn", txt > 40, f"({txt} attribute cells lit)")
 
 # 4 -----------------------------------------------------------------
+# The thank-you screen is now one bordered panel (rows 9-13) in the same
+# visual language as the scoreboard: a frame of attribute-55 cells -- the
+# same byte the well border uses -- around yellow text. It used to be bare
+# cyan text with no frame.
 tap("N", 250); time.sleep(0.8)
 a = attrs()
-lit = [v for v in a if v]
+lit_rows = sorted({i // 32 for i, v in enumerate(a) if v})
+frame_top = [a[9 * 32 + c] for c in range(32)]
+frame_bot = [a[13 * 32 + c] for c in range(32)]
+sides = [a[r * 32 + c] for r in (10, 11, 12) for c in (0, 31)]
+text = [v for i, v in enumerate(a) if v and 1 <= i % 32 <= 30 and i // 32 == 11]
 check("4. N quits to the thank-you screen",
-      0 < len(lit) < 40 and all(v & 7 == 5 for v in lit),
-      f"({len(lit)} cells, cyan ink)")
+      lit_rows == [9, 10, 11, 12, 13]
+      and frame_top == [WALL] * 32 and frame_bot == [WALL] * 32
+      and sides == [WALL] * 6
+      and len(text) == len("Gracias por jugar")
+      and all(v & 7 == 6 for v in text),
+      f"(panel rows {lit_rows}, {len(text)} cells of yellow text)")
 
 # 5 -----------------------------------------------------------------
 boot(); time.sleep(1.0); tap("Q", 250); time.sleep(0.6)

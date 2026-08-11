@@ -20,6 +20,7 @@ Three things here were learned the hard way and are load-bearing:
     enables interrupts while still in IM 0 and the CPU vectors into ROM.
 """
 import re
+import time
 
 from tetris import Z, matrix, BIN, LST
 
@@ -79,6 +80,63 @@ class Unit:
                 f"{name} did not return within {limit} opcodes "
                 f"(PC={r.get('PC'):04X}); raise the limit or it is looping")
         return r
+
+    def frames(self):
+        """The ROM's 50 Hz FRAMES counter at $5C78, bumped by the $0038 handler.
+
+        It only advances while interrupts are enabled and IY = $5C3A, which is
+        exactly the state main.asm's prologue leaves behind -- so it doubles as
+        a check that the state is still intact.
+        """
+        b = self.peek(0x5C78, 3)
+        return b[0] | b[1] << 8 | b[2] << 16
+
+    def call_free(self, name, regs=None, timeout=8.0):
+        """Run a routine that paces ITSELF with HALT, and return (frames, regs).
+
+        `call` cannot be used for these. ZEsarUX's `run N` executes N opcodes
+        with no 50 Hz tick, so a HALT never comes back under it: the routine
+        looks like an infinite loop, and an opcode limit large enough to
+        "wait it out" wedges the emulator and needs it restarted. A HALT-paced
+        routine has to be let go at real speed and watched until it parks on
+        the same DI/JR $ trap the other calls use.
+
+        The frame count comes from the ROM counter rather than the wall clock:
+        the trap's DI stops it dead the instant the routine returns, so the
+        result is the routine's own duration and not the polling jitter.
+        """
+        # The prologue is re-run through its EI first. ZEsarUX's `run N` stops
+        # one opcode short -- after `run 5` from $8000 the PC sits ON the EI,
+        # not past it -- so the constructor leaves interrupts DISABLED. No
+        # other suite notices, because nothing else HALTs and because the `ei`
+        # inside comprobar/pintar_tetromino/borrar_tetromino re-enables them in
+        # passing. Here it is the difference between a 91-frame animation and
+        # a HALT that never wakes up.
+        self.z.cmd("set-register PC=8000H")
+        self.z.cmd("run 6")
+        self.z.cmd(f"write-memory-raw {STACK:04X}H "
+                   f"{self.TRAP & 0xFF:02X}{self.TRAP >> 8:02X}")
+        self.z.cmd(f"set-register SP={STACK:04X}H")
+        for r, v in (regs or {}).items():
+            self.z.cmd(f"set-register {r}={v:04X}H")
+        self.z.cmd(f"set-register PC={self.L[name]:04X}H")
+        start = self.frames()
+        self.z.cmd("exit-cpu-step")
+        deadline = time.time() + timeout
+        parked = False
+        while time.time() < deadline:
+            time.sleep(0.05)
+            if self.regs().get("PC") in (self.TRAP, self.PARKED):
+                parked = True
+                break
+        self.z.cmd("enter-cpu-step")
+        if not parked:
+            raise AssertionError(
+                f"{name} did not return within {timeout}s "
+                f"(PC={self.regs().get('PC'):04X}); it is hanging")
+        r = self.regs()
+        r["_returned"] = parked
+        return self.frames() - start, r
 
     def poke(self, addr, data):
         self.z.cmd(f"write-memory-raw {addr:04X}H "

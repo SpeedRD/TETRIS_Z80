@@ -13,6 +13,8 @@ SUITES = [
     ("test_lineas",     "limpiar_lineas / fila_llena / bajar_filas"),
     ("test_puntuacion", "score, lines, level, speed table"),
     ("test_spawn",      "spawn RNG, preview handoff"),
+    ("test_pantallas",  "redesigned screens, panels, best score"),
+    ("test_relleno",    "game-over fill animation: timing, isolation"),
     ("checklist6",      "build-and-verify section 6, end to end"),
 ]
 
