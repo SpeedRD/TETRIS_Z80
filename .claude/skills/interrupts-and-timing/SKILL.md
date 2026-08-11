@@ -238,7 +238,7 @@ title screen. The surviving waits (`titulo.asm`, `pantallas.asm`) now do `AND $1
   contended (§3); the counts are a floor. Only counts taken inside the border window are firm.
 - **Assuming the ROM 50 Hz tick exists.** It exists only if the launch method left interrupts
   enabled and nobody executed `DI`. Set the state explicitly at startup; never inherit it.
-- **Splitting the line-clear row shift across frames because it "looks expensive".** It is
-  ~8,800 T-states, ~13% of a frame. Do it in one frame.
+- **Splitting the line-clear row shift across frames because it "looks expensive".** The worst
+  single clear is ~9,700 T-states, ~14% of a frame. Do it in one frame (§2).
 - **Assuming `ld iy,ix` is cheap.** It is `PUSH IX`/`POP IY`, 29 T-states. See
   `assembler-conventions` for sjasmplus fake instructions.

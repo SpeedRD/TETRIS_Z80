@@ -11,7 +11,8 @@ format and shape data (`piece-data-and-spawn`), loop ordering (`game-loop-and-co
 
 Spanish: `giro` = turn/rotation · `GIRAR` = to rotate · `comprobar` = to check, the collision
 routine at `test_col.asm:3` · `pintar_tetromino` / `borrar_tetromino` = paint / erase piece ·
-`Soltar_Tecla` = release key · `Medio` = middle, used as "current column" · `filas`/`columnas` = rows/cols.
+`retranqueo` = wall kick · `giro_kicks` = the kick offset table · `giro_deshacer` = undo the
+rotation · `Medio` = middle, the memory copy of the column · `filas`/`columnas` = rows/cols.
 
 ## Background you need
 
@@ -21,10 +22,16 @@ routine at `test_col.asm:3` · `pintar_tetromino` / `borrar_tetromino` = paint /
   32 per screen row. Collision is literally **"attribute byte != 0"** (`test_col.asm:24-26`), so
   anything drawn inside the well *becomes solid geometry*.
 - Well interior = columns **7-24**; borders at columns 6 and 25, floor at row 22
-  (`tableroJuego.asm:8,19,30`). Position is `B` = row, `C` = column, second copy of the column in
-  memory at `Medio` (`register-protocol`).
+  (`tableroJuego.asm:8,19,30`). Position is `B` = row, `C` = column, with the memory copy of the
+  column at `Medio` (`register-protocol`).
 - **Wall kick** (Tetris term): retrying a rotation that will not fit at a small horizontal offset,
   instead of rejecting it outright.
+
+`giro.asm` is **rewritten and working**: it recentres, kicks, validates and commits, all inside
+itself, and reads no keys. `tests/test_giro.py` exercises every shape × every rotation state ×
+columns 5-27 × both directions, and asserts that cycles close, that left and right are exact
+inverses, that no rotation lands outside columns 7-24, that a blocked rotation leaves `IX`, `C` and
+`Medio` untouched, and that `GIRAR` never draws.
 
 ## 1. The model is sound — keep it
 
@@ -34,22 +41,25 @@ is two loads and a pointer assignment: no maths, no shape tables, no per-frame c
 successor, each address low byte first; full format in `piece-data-and-spawn`.
 
 ```asm
-turn_left:                  ; giro.asm:16-19
-    LD D, (IX + 9)          ; high byte of the rotate-left successor's address
-    LD E, (IX + 8)          ; low byte
-    LD IX, DE               ; IX = DE — sjasmplus FAKE instruction, DD 62 DD 6B (main.lst:901)
+                            ; giro.asm:20-21
+    LD  D,(IX + 9)          ; high byte of the rotate-left successor's address
+    LD  E,(IX + 8)          ; low byte
+    ...
+    LD  IX, DE              ; giro.asm:30 — sjasmplus FAKE instruction, DD 62 DD 6B
 ```
-`turn_right` (`giro.asm:24-27`) is identical with `+11`/`+10`; `LD IX, DE` is explained in
-`assembler-conventions`. **Do not replace this model with computed SRS rotation:** the record
-format caps a piece at `rows*cols <= 6`, so a 4x4 SRS box cannot be stored. Fix in place.
+The rotate-right branch (`giro.asm:24-25`) is identical with `+11`/`+10`; `LD IX, DE` is explained
+in `assembler-conventions`. Both branches now converge on `giro_probar`, so the pointer is loaded
+into `DE` first and only becomes `IX` after the old width has been read. **Do not replace this
+model with computed SRS rotation:** the record format caps a piece at `rows*cols <= 6`, so a 4x4
+SRS box cannot be stored. Fix in place.
 
 ## 2. Verified rotation cycles
 
-Traced through the `DW` words in `main.lst:547-607` (e.g. `main.lst:551` assembles `DW T_L2,
-T_L3` as `A3 A0 AF A0` = `$A0A3`, `$A0AF`). **Every cycle is closed and left/right are exact
-inverses, in all seven shapes**; each left step is also a true 90° counter-clockwise rotation of
-the bit pattern, checked cell by cell against `piezas.asm:5-29`. This table is the reference for
-adding or repairing a shape.
+Traced through the `DW` words in `main.lst` (records start at `$A154`, 12 bytes apart). **Every
+cycle is closed and left/right are exact inverses, in all seven shapes**; each left step is also a
+true 90° counter-clockwise rotation of the bit pattern, checked cell by cell against
+`piezas.asm:5-29`, and `tests/test_giro.py` re-checks all of it on every run. This table is the
+reference for adding or repairing a shape.
 
 | Shape | States | Left cycle (`+8/+9`) | Right cycle (`+10/+11`) | Closed | Inverse |
 |---|---|---|---|---|---|
@@ -64,19 +74,22 @@ adding or repairing a shape.
 I, Z and S use one successor for both directions, which is correct — for them a 180° turn is the
 identity, so each direction is its own inverse. **The data is not the bug.**
 
-## 3. What is broken — four defects
+## 3. The four defects this file was rewritten to remove
 
-| # | Defect | Where | Consequence |
+All four are fixed. They are recorded because each has a matching way to reintroduce it, and
+because the symptom in the right-hand column is what you will see if you do.
+
+| # | Defect (in `school-submission`) | How it is prevented now | Symptom if reintroduced |
 |---|---|---|---|
-| 1 | **No collision test on rotation at all.** `GIRAR` writes `IX` unconditionally. The one caller tests *first* and rotates *second*, so `comprobar` ran on the **pre**-rotation shape and the rotated shape is never validated. | `giro.asm:19,27`; `comprobar` `juego.asm:29`, `GIRAR` `juego.asm:41` | `pintar_tetromino` paints the rotated piece over settled blocks and over the border. Collision means "attribute byte != 0", so **those overpainted cells become permanently solid — the board is corrupted, not merely misdrawn.** |
-| 2 | **No wall kick.** No code path retries an offset position after a failed rotation, because there is no failure path at all. | `giro.asm:1-42` | A rotation that cannot fit happens anyway, with the consequence above. |
-| 3 | **No rotation anchor.** Rotating swaps `rows`/`cols` (2x3 ↔ 3x2, 4x1 ↔ 1x4) but the piece is always drawn from the same top-left `(B,C)`. | worst case I, `piezas.asm:22-23` | `T_I1` fills rows `B..B+3` of column `C`; `T_I2` then fills row `B`, columns `C..C+3`. The bar's lower three cells vanish and three appear to the right of the top one — a bar resting on the stack teleports three rows into the air. |
-| 4 | **Widening rotation near the right wall** (3x2 → 2x3) extends the piece one cell right, unchecked. | erase `juego.asm:20`; border `tableroJuego.asm:19` | The *next* frame's erase uses the **new** `(ix+1)` width and blanks that extra cell — the border at column 25. Nothing redraws the border, so the well develops holes and pieces leak out. See `rendering-and-attributes`. |
+| 1 | **No collision test on rotation at all.** `GIRAR` wrote `IX` unconditionally, and the caller tested *before* rotating, so the rotated shape was never validated. | `GIRAR` validates inside itself with `en_rango` + `comprobar` (`giro.asm:48-53`) and only then commits. | The rotated piece is painted over settled blocks and the border. Collision means "attribute byte != 0", so **those cells become permanently solid — the board is corrupted, not merely misdrawn.** |
+| 2 | **No wall kick.** No path retried an offset position, because there was no failure path at all. | `giro_kicks` (`giro.asm:67`): `0, -1, +1, -2, +2`, then a `$80` sentinel → `giro_deshacer`. | A rotation that cannot fit either happens anyway (defect 1) or is silently refused against every wall. |
+| 3 | **No rotation anchor.** Rotating swaps `rows`/`cols` (2x3 ↔ 3x2, 4x1 ↔ 1x4) but the piece was always drawn from the same top-left `(B,C)`. | Recentring by `(old_cols - new_cols)/2` before the kick search (`giro.asm:29-38`), rounding toward zero so rotate-and-rotate-back returns to the same column. | Worst case I: `T_I1` fills rows `B..B+3` of column `C`, `T_I2` fills row `B`, columns `C..C+3`. A bar resting on the stack teleports three rows into the air. |
+| 4 | **Widening rotation near the right wall** (3x2 → 2x3) extended the piece one cell right, unchecked. | `en_rango` rejects any candidate whose rightmost cell passes column 24, *before* `comprobar` runs. | The next frame's erase uses the **new** width and blanks the border at column 25. Nothing redraws the border, so the well develops holes and pieces leak out. See `rendering-and-attributes` §5. |
 
-Minor: dead `POP BC / RET` at `giro.asm:21-22` and `:29-30`, unreachable after the `JR` at `:20`
-and `:28` (`main.lst:903-904`, `:911-912`) — copy-paste residue from `movimiento.asm`, see
-`failure-patterns`. And `Soltar_Tecla` (`giro.asm:33-38`) blocks until the key is released; that
-timing consequence belongs to `interrupts-and-timing`.
+Also gone: the dead `POP BC / RET` pairs (copy-paste residue from `movimiento.asm`, see
+`failure-patterns` §3.9) and `Soltar_Tecla`, the key-release spin that froze gravity and rendering
+while Q or W was held (`interrupts-and-timing` §6). `GIRAR` now takes its direction in `A` and
+touches no port.
 
 ## 4. Ordering rule: erase with the OLD `IX`
 
@@ -91,20 +104,14 @@ every old cell it misses stays on the board as debris, and debris reads as solid
 3. gravity (`inc b` + `call comprobar`) — the loop's own candidate, `game-loop-and-collision` §6.
 4. `call pintar_tetromino` — draw only what was validated.
 
-The current loop gets 1 and 2 right (erase `juego.asm:20`, `GIRAR` `:41`) but validates in the
-wrong place — `comprobar` runs at `:29`, *before* the rotation. **Hoisting input above the collision test is the
-fix, not a hazard.** The older source, recovered from the listing (`juego.lst:36-40`), ran
-`borrar_tetromino` → `inc b` → `MOVER` → `GIRAR` → `comprobar`: `GIRAR` was already **below** the
-erase, which is exactly the order prescribed above. Its only defect was the stale `C`
-(`game-loop-and-collision` §2), not the ordering. See `failure-patterns` rule 3. Restore that
-order and move the validation inside `GIRAR`.
+The shipped loop does exactly this: erase at `juego.asm:46`, `GIRAR` at `:90`, gravity at `:97-99`,
+one draw at `:117`. The submitted version got steps 1 and 2 right but validated in the wrong place,
+running `comprobar` *before* the rotation. See `failure-patterns` §3.5.
 
-## 5. The playbook — a safe rotation
+## 5. `GIRAR` as it stands — a safe rotation
 
-Replaces `giro.asm:1-42` entirely; nothing outside `giro.asm` references `turn_left`,
-`turn_right`, `Soltar_Tecla` or `no_teclaturn` (grep-verified). Assembles clean on sjasmplus
-1.23.1, 0 errors / 0 warnings. **It reads no keys and waits for nothing:** the caller polls the
-keyboard once per frame, edge-detects, and passes the direction in `A`
+This is `giro.asm` as shipped, comments translated. **It reads no keys and waits for nothing:** the
+loop polls the keyboard once per frame, edge-detects, and passes the direction in `A`
 (`game-loop-and-collision` §7). A key read here would spin between the erase and the redraw and
 make the piece invisible while Q or W is held (`rendering-and-attributes` §4).
 
@@ -145,7 +152,7 @@ giro_bucle:
     add a, e                ; candidate column = recentred base + kick offset
     ld  c, a                ; both tests read the row from B and the column from C
     call en_rango           ; TEST 1 geometry: whole piece inside columns 7-24?
-    or  a                   ;   (game-loop-and-collision §5 — comprobar cannot see this)
+    or  a                   ;   (entrada.asm:42 — comprobar cannot see this)
     jr  nz, giro_bucle      ; kicked out of the well — next offset
     call comprobar          ; TEST 2 overlap: A=0 fits, A=1 hits a block or the border.
     or  a                   ;   Preserves BC/DE/HL/IX/IY.
@@ -174,24 +181,27 @@ side wall is out by at most two columns (the I-piece's overhang after recentring
 covers both walls and that overhang, and trying `0` first means a rotation that already fits never
 moves. **Both tests are mandatory, in that order.** `comprobar` knows no geometry: it rejects the
 border only because the border byte is non-zero, so a ±2 kick from column 24 with a 1-wide record
-tests column 26 — empty screen outside the well — and *accepts*. `en_rango`
-(`game-loop-and-collision` §5) rejects any candidate with `C < 7` or `C + cols - 1 > 24` before
-`comprobar` ever runs.
+tests column 26 — empty screen outside the well — and *accepts*. `en_rango` (`entrada.asm:42`)
+rejects any candidate with `C < 7` or `C + cols - 1 > 24` before `comprobar` ever runs. The preview
+box sits at columns 27-30, well outside anything a kick can reach.
 
 ## 6. Anchoring — keep the record format
 
-- **(a) Add per-state offset bytes to the record.** Cost: it changes the record size, and with it
-  `longitud_pieza`, the `cp 19` / `sub 19` spawn clamp and every record address — one coupled unit,
-  see `piece-data-and-spawn` §4.
+- **(a) Add per-state offset bytes to the record.** Cost: it changes the record size and every
+  record address — one coupled unit, see `piece-data-and-spawn` §4.
 - **(b) Recentre at rotation time** by adjusting `C` by `(old_cols - new_cols)/2`, using the
   `rows`/`cols` bytes already in both records. No format change, six instructions.
 
-**Use (b)** for completion-in-place — it is `giro_probar`..`giro_media` above. The ±0.5 cases (2↔3
+**(b) is what shipped** — it is `giro_probar`..`giro_media` above. The ±0.5 cases (2↔3
 wide) round to zero and leave the left edge pinned; only I's ±1.5 shifts, symmetrically in both
 directions, so nothing drifts. **The recentred column is tested, not trusted:** it enters the kick
 loop as offset `0` and is rejected like any other candidate.
 
 ## 7. Verifying a rotation change
+
+**Run `python3 tests/run_all.py test_giro` first** — it covers every shape × state × column ×
+direction automatically, and it is far more thorough than a human at the keyboard can be. It cannot
+see tearing, so do the manual pass too.
 
 Build and emulator setup: `build-and-verify`. Then for **each of the seven shapes**, rotate both
 directions: flush against the left border (column 7); against the right border (column 24);
@@ -206,20 +216,21 @@ the border must still be an unbroken line; a gap means defect 4 is still live.
 | Mistake | What happens |
 |---|---|
 | Rotating before erasing | The erase uses the new shape's dimensions, old cells survive, and the debris becomes permanently solid. |
-| Testing collision before applying the rotation | You validate a shape the piece will never have. This is the current bug (`juego.asm:29` vs `:41`). |
-| Writing `IX` before the test passes | No way back. `push ix` first; discard the copy only after `comprobar` returns 0. |
-| Kicking `C` but not writing `Medio` | The loop reloads `C` from `Medio` (`juego.asm:25-26,40`) and silently undoes the kick. |
+| Testing collision before applying the rotation | You validate a shape the piece will never have. This is the regression `giro.asm` was rewritten to remove (§3, `failure-patterns` §3.5). |
+| Writing `IX` before the test passes | No way back. `push ix` first (`giro.asm:28`); discard the copy only after `comprobar` returns 0. |
+| Kicking `C` but not writing `Medio` | `giro_deshacer` (`giro.asm:59-62`) restores `C` *from* `Medio`, so a kick that skipped the write is undone by the next failed rotation. |
+| Reading the old width after `IX` has moved | `giro.asm:29` loads `(ix+1)` **before** `LD IX, DE` for exactly this reason. Swap those two lines and every recentre is computed from the wrong shape. |
 | Re-testing `GIRAR`'s result in the loop | It already validated, kicked and committed. An outer `comprobar` re-tests an accepted position and its rollback is dead code (`game-loop-and-collision` §6). |
 | Reading the keyboard, or waiting for a release, inside `GIRAR` | It runs between the erase and the redraw, so the piece is invisible for as long as the key is held (`rendering-and-attributes` §4). The caller edge-detects. |
 | Relying on `comprobar` alone for the kick | It cannot see a column that left the well: empty cells outside the border read as free. Call `en_rango` first. |
-| Adding an offset table without updating the spawn clamp | Record size changes; the clamp then indexes past the last record into `Medio`. |
+| Adding an offset table without updating everything that depends on the record size | `piece-data-and-spawn` §4 owns that coupling. |
 | Treating a failed rotation as "then move down" | Rotation must be positionally neutral. Gravity is the loop's job. |
 | Assuming the border is decoration | It is board data. Overwrite it and pieces escape the well; erase it and the hole is never repaired. |
 | Special-casing the O piece | `T_0` already points at itself both ways (`piezas.asm:5`). It needs no special handling. |
 
 ## See also
 
-`piece-data-and-spawn` (record format, the 19 records, spawn clamp) · `register-protocol` (`B`/`C`/
+`piece-data-and-spawn` (record format, the 19 records, `spawn_table`) · `register-protocol` (`B`/`C`/
 `IX` contract, `Medio` duplication, clobber table) · `game-loop-and-collision` (`comprobar`'s
 contract, loop ordering, `en_rango`, the non-blocking key read that feeds `A` to `GIRAR`) ·
 `assembler-conventions` (`LD IX, DE`) · `rendering-and-attributes` (border erosion, the invisible

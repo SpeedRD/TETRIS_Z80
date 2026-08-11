@@ -5,8 +5,14 @@ description: Use when adding, debugging or reviewing line clearing in this ZX Sp
 
 # Line clear — detect full rows and shift the board down
 
-**Nothing exists.** No row scan, no shift, no line counter, no call site. This is new code, not a
-repair, and it is the reason the game has no progression and no way to reduce the stack.
+**Shipped in `lineas.asm`.** `limpiar_lineas` is called from the lock path at `juego.asm:105`, and
+`tests/test_lineas.py` covers single, double and quadruple clears, non-adjacent full rows, a
+top-row clear, a completely full board, and that the well border survives all of it.
+
+Nothing existed before the fix pass — no row scan, no shift, no counter, no call site — so there is
+no older version to compare against and no dead end to avoid. This file is the design rationale for
+what is there now; the reasoning matters because most of the ways to get line clearing wrong are
+silent.
 
 ## Background (no Z80 or Spectrum knowledge assumed)
 
@@ -65,8 +71,8 @@ direction is safe. `LDDR` would work equally well — only the outer row order m
 
 ## The complete routine
 
-Verified: SjASMPlus 1.23.1, `Errors: 0, warnings: 0`, loads at `$A2C7`, the first free byte past
-the program image. `:` separates statements on one line, as in `pantallas.asm:72`.
+This is `lineas.asm` as shipped, with the comments translated. `:` separates statements on one line,
+as in `pantallas.asm:74`. **Edit the file, not this copy.**
 
 ```asm
 ; lineas.asm -- deteccion y borrado de lineas completas (detect and clear full lines)
@@ -152,33 +158,28 @@ Four simultaneous clears need no special case: the re-test finds them one at a t
 
 ## Where it hooks into the game loop
 
-**After the piece locks, before the next spawns.** In `juego.asm` the lock-and-spawn path is the
-fall-through at `:34-37` (`dec b` / `ld c,e` / `call pintar_tetromino` / `jr iniciar`) — the labels
-there are inverted, `cambiar_tetromino` is the keep-falling path. Insert one line:
+**After the piece locks, before the next spawns** — `juego.asm:103-106`:
 
 ```asm
-    call pintar_tetromino    ; juego.asm:36 -- this call IS the lock
-    call limpiar_lineas      ; NEW: A = rows cleared
-    jr iniciar               ; juego.asm:37 -- spawns the next piece
+    call pintar_tetromino    ; :103 this call IS the lock
+    call limpiar_lineas      ; :105 A = rows cleared, 0..4
+    call anotar_lineas       ; :106 scores it, levels up, refreshes the marker
+    call seleccionar_pieza   ; :108 the next piece
 ```
 
-`game-loop-and-collision` owns the loop skeleton and this hook point. Two register notes: `IX`
-still points at the just-locked piece here (`iniciar` -> `seleccionar_pieza` overwrites it anyway,
-but the routine preserves it), and `B`/`C` hold the locked position, which `iniciar` reloads at
-`juego.asm:6-8` — preserve both regardless (`register-protocol`).
+The pairing is fixed: `limpiar_lineas` returns the count in `A` and `anotar_lineas` consumes it
+immediately, so **nothing may sit between those two calls that touches `A`**.
+`game-loop-and-collision` owns the loop; `scoring-and-level` owns what happens to the count.
 
-## Wiring the new file in
+Two register notes: `IX` still points at the just-locked piece here, and `B`/`C` hold the locked
+position — `limpiar_lineas` preserves all of them (`register-protocol`) and must keep doing so.
 
-1. Create `lineas.asm` in the repo root with the code above.
-2. **Add a newline to the end of `main.asm` first.** Its last byte is the closing quote of
-   `INCLUDE "giro.asm"` (`main.asm:31`); there is no trailing newline. A blind append lands on that
-   same line, sjasmplus honours the first `INCLUDE` and **silently drops the second at 0 errors, 0
-   warnings**, and your file is never assembled — a perfect build with no routine in it.
-3. Append `    INCLUDE "lineas.asm"` on its own line and rebuild (`assembler-conventions`,
-   `build-and-verify`). Confirm `limpiar_lineas` appears in `main.lst` at `$A2C7`.
-4. **`lineas.asm` holds code only.** The three `EQU`s are constants, not variables, and the cleared
-   count lives in `C`/`A`, so nothing here needs RAM. Any *variable* you later add goes in
-   `variables.asm` — `memory-map` §6 owns variable placement. Never put one next to `Medio`.
+## The file itself
+
+`lineas.asm` is `INCLUDE`d at `main.asm:43`, before `variables.asm`. It **holds code only**: the
+three `EQU`s are compile-time constants, not storage, and the cleared count lives in `C`/`A`, so
+nothing here needs RAM. Any *variable* you later add goes in `variables.asm` — `memory-map` §6 owns
+placement, and a second declaration of an existing name is a duplicate-label error.
 
 ## Timing — one call, do not split across frames
 
@@ -191,21 +192,22 @@ but the routine preserves it), and `B`/`C` hold the locked position, which `inic
 | Absolute worst: 4 clears at the bottom, every row scan running full length | **~57,000 T** |
 
 One 50 Hz frame is 69,888 T, so even the pathological case fits in a single frame and a normal
-clear costs ~14% of one. For scale, `Tiempo` (`caida.asm:14`) already busy-waits ~123,600 T per
-gravity tick. The attribute file is contended memory so real cost is higher than these figures —
-`interrupts-and-timing` owns contention; do not re-derive it here.
+clear costs ~14% of one. It runs on the locking frame only, which is why a clear can tear slightly
+while normal play does not. The attribute file is contended memory so real cost is higher than these
+figures — `interrupts-and-timing` owns contention; do not re-derive it here.
 
 ## Optional: flash the cleared row — two mandatory rules
 
-Best left until frame sync exists. If you add it anyway:
+Frame sync exists now (`HALT` at `juego.asm:35`), so this is buildable. If you add it:
 
 1. **Restore to `0` before any collision test can run.** Bright white `7*8 + 7 + $40` = `$7F` is
    **non-zero and therefore solid** to `comprobar`. `bajar_filas` overwrites the flashed cells on
    the normal path, but on any path where the row is not actually cleared you must write `0` back
    over all 18 — `rendering-and-attributes`: *no non-zero value is safe*.
-2. **Do not `call Tiempo` for the delay.** It is a ~123,600 T busy-wait `interrupts-and-timing` says
-   to delete, and it would sit inside the erase/redraw window `rendering-and-attributes` §4 requires
-   be kept empty. Delay with `HALT` + a frame counter (`interrupts-and-timing` owns that).
+2. **Do not busy-wait for the delay.** A spin loop's wall-clock length varies per emulator, and it
+   would sit inside the erase/redraw window `rendering-and-attributes` §4 requires be kept empty.
+   Delay with `HALT` + a frame counter, the same mechanism gravity uses (`interrupts-and-timing`
+   §5) — and remember the loop's own `contador_frames` keeps counting while you hold the frame.
 
 ## Common mistakes
 
@@ -219,8 +221,9 @@ Best left until frame sync exists. If you add it anyway:
 | Testing for a specific colour instead of non-zero | Only that colour counts; mixed rows never complete. |
 | Leaving a flash attribute in place | Non-zero = occupied, so the row stays solid to `comprobar`. |
 | Running the clear before the piece is locked | The piece is not in the attribute file yet, so its row never reads as full. |
-| Appending the `INCLUDE` onto `main.asm`'s existing last line | Silently dropped: 0 errors, 0 warnings, routine never assembled. |
-| Using `CalcularAtributo` instead of `CRtoATTR` **here** | It clobbers `BC` (`pantallas.asm:77`), destroying the row counter mid-loop. This is a rule for *these* loops, not everywhere: `CRtoATTR` is only valid for rows 0-23 (`AND 3 : OR #58`), and rows 0-21 is all this file ever passes. For a row outside 0-23, `CalcularAtributo` is the correct routine — see `rendering-and-attributes` §2. |
+| Putting anything that touches `A` between `limpiar_lineas` and `anotar_lineas` | The row count is the return value; the score silently stops matching the clears. |
+| Making `limpiar_lineas` clobber `BC` or `IX` | They still hold the locked piece's position and record when it runs. |
+| Using `CalcularAtributo` instead of `CRtoATTR` **here** | It clobbers `BC` (`pantallas.asm:79`), destroying the row counter mid-loop. This is a rule for *these* loops, not everywhere: `CRtoATTR` is only valid for rows 0-23 (`AND 3 : OR #58`), and rows 0-21 is all this file ever passes. For a row outside 0-23, `CalcularAtributo` is the correct routine — see `rendering-and-attributes` §2. |
 
 ## See also
 

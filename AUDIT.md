@@ -847,3 +847,11 @@ The same caveat applies more broadly: every playbook in `.claude/skills/` was ve
 the source and `main.lst`, and its code blocks were test-assembled, but **none of it has been
 confirmed by running the game.** `build-and-verify` §6 holds the manual checklist for closing
 that gap.
+
+> **Postscript, 2026-08-10 (fix-work stage).** Both caveats above are now closed. `leer_teclas`
+> and `en_rango` ship in `entrada.asm` and are exercised by `tests/test_entrada.py` — 33
+> assertions covering edge detection, held-key suppression, half-row leakage, and `en_rango`'s
+> boundaries for 1-, 2- and 4-wide pieces. The library as a whole has been confirmed by
+> execution: `tests/checklist6.py` drives `build-and-verify` §6 end to end under ZEsarUX, and
+> the run behind this note took 49 in-play samples across 4 games and 3 restart cycles. The
+> findings recorded above the line remain as written — they describe commit `0a2377e`.

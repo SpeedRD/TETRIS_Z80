@@ -1,20 +1,35 @@
 ---
 name: scoring-and-level
-description: Use when adding or changing a score, a cleared-line counter, a level, points awarded per line clear, the level-to-drop-speed mapping, or any on-screen display of those values in this ZX Spectrum Tetris. Also use when reading caida.asm's level arithmetic or NIVEL_ACTUAL, or when text output must coexist with a falling piece.
+description: Use when adding or changing a score, a cleared-line counter, a level, points awarded per line clear, the level-to-drop-speed mapping, or any on-screen display of those values in this ZX Spectrum Tetris. Also use when text output must coexist with a falling piece.
 ---
 
 # Scoring, line count, and level
 
-Spanish here: `caida` = fall, `Tiempo` = time, `TIEMPO_BASE`/`TIEMPO_MINIMO`/`REDUCCION_TIEMPO` =
-base / minimum / reduction time, `NIVEL_ACTUAL` = current level, `InicializarTiempo` = initialise
-time, `Mensaje...` = message, `puntos`/`lineas`/`nivel` = points/lines/level.
+Spanish here: `puntuacion` = scoring, `anotar_lineas` = record the lines, `PUNTOS`/`LINEAS`/`NIVEL`
+= points/lines/level, `PROX_NIVEL` = next level, `FRAMES_POR_FILA`/`FRAMES_POR_NIVEL` = frames per
+row / per level, `ActualizarVelocidad` = update the speed, `reiniciar_marcador` = reset the
+scoreboard, `ImprimirMarcador`/`ImprimirEtiquetas` = print the scoreboard / the labels,
+`Mensaje...` = message.
 
 ## 1. What exists today
 
-- **No score variable, no line counter, no score display, anywhere in the tree** — verified.
-- `NIVEL_ACTUAL` = `EQU 0x7002` (`caida.asm:11`) is **never written by any instruction**; it is read
-  once (`caida.asm:22`) and destroyed on the next line. `InicializarTiempo` (`caida.asm:63-66`) is
-  dead — the label appears only at its own definition.
+All of it is in **`puntuacion.asm`** (code and read-only tables) plus **`variables.asm`** (state):
+
+| Thing | Where | Notes |
+|---|---|---|
+| Score, 6 digits packed BCD | `PUNTOS` `variables.asm:13` | 100/300/500/800 per 1/2/3/4 rows |
+| Lines cleared | `LINEAS` `variables.asm:14` | 8-bit binary |
+| Level and its countdown | `NIVEL`, `PROX_NIVEL` `variables.asm:15-16` | +1 every 10 rows, capped at 10 |
+| Gravity speed | `FRAMES_POR_FILA` `variables.asm:19`, table `puntuacion.asm:16` | 48 frames at level 0 down to 6 at level 10 |
+| The scoreboard | `puntuacion.asm:95-160` | Columns 26-31, refreshed only on change |
+
+`anotar_lineas` (`puntuacion.asm:22`) is the single entry point, called from the lock path at
+`juego.asm:106` with the cleared-row count in `A`. `tests/test_puntuacion.py` covers points per
+clear, BCD carry across digit boundaries, the line counter, level-up at 10 lines, the level cap, and
+the whole frames-per-level table.
+
+The old `NIVEL_ACTUAL` at `$7002` and everything around it went with `caida.asm`. §3 explains why
+it is worth remembering.
 
 ## 2. Z80 facts this file assumes
 
@@ -26,9 +41,13 @@ time, `Mensaje...` = message, `puntos`/`lineas`/`nivel` = points/lines/level.
 | `DAA` fixes up `A` after `ADD`/`ADC` so each nibble stays a decimal digit | packed BCD addition is cheap, and printing is a nibble plus `'0'` |
 | `IX` is a 16-bit index register, used here as the global falling-piece pointer | any routine that touches `IX` moves the piece (`register-protocol`, §5) |
 
-## 3. `caida.asm`'s level arithmetic is dead code
+## 3. The dead level arithmetic this replaced — five defects in fourteen instructions
 
-Actual source, `caida.asm:22-35`:
+`caida.asm` is deleted; recover it with `git show 0a2377e:caida.asm`. It is reproduced here because
+every one of these five mistakes is easy to make again in new code, and because the routine *looked*
+like working level scaling — comments and all — while doing nothing at all.
+
+Old source, `caida.asm:22-35`:
 ```asm
     LD A, (NIVEL_ACTUAL)    ; :22  A = level
     LD HL, TIEMPO_BASE      ; :23  HL = 0x11FF
@@ -54,19 +73,20 @@ Actual source, `caida.asm:22-35`:
 | Clamp unreachable | `caida.asm:30-35` | the branch tests only `H`. With base `0x11FF`, `H` = `0x11` != 0 so the jump is always taken — unreachable for any base >= `$0100`. Even if reached it compares `H` against `L`, not against `TIEMPO_MINIMO` |
 | Dead routine | `caida.asm:63` | `InicializarTiempo` is never called |
 
-**Net effect: the drop interval is a hard constant; the level influences nothing.** T-state to
-millisecond derivation: `interrupts-and-timing`. Why `TIEMPO_BASE` became `0x11FF`:
-`failure-patterns`. **Rule: put `OR A` immediately before your own `SBC HL,rr`.**
+**Net effect: the drop interval was a hard constant and the level influenced nothing.** Gravity is
+now a frame counter with a lookup table, which has none of these failure modes
+(`interrupts-and-timing` §4). **Rule that outlives the file: put `OR A` immediately before your own
+`SBC HL,rr`.**
 
-## 4. Where the new state lives — code in one file, variables in another
+## 4. Where the state lives — code in one file, variables in another
 
-- **Code** — the routines below and the read-only `EQU`/`DB`/`DW` tables they index — goes in a new
-  `puntuacion.asm` ("scoring"), `INCLUDE`d from `main.asm`. Owned by this skill.
-- **Variables** — `PUNTOS`, `LINEAS`, `NIVEL`, `PROX_NIVEL`, `FRAMES_POR_FILA` — go in the single
-  `variables.asm`, `INCLUDE`d **last**, landing at `$A2C7`. Owned by **`memory-map` §6**.
+- **Code** — the routines below and the read-only `DB`/`DW`/`EQU` tables they index — is in
+  `puntuacion.asm` ("scoring"), `INCLUDE`d at `main.asm:44`. Owned by this skill.
+- **Variables** — `PUNTOS`, `LINEAS`, `NIVEL`, `PROX_NIVEL`, `FRAMES_POR_FILA`, `contador_frames` —
+  are in `variables.asm`, `INCLUDE`d **last**, landing at `$A581`. Owned by **`memory-map` §6**.
 
 **Never declare a second variable block in `puntuacion.asm`.** Declaring `NIVEL` and `LINEAS` in
-both files is a duplicate-label error: `Errors: 2, warnings: 4` — verified. Declare each exactly once:
+both files is a duplicate-label error: `Errors: 2, warnings: 4` — verified. Each exists once:
 
 ```asm
 ; in variables.asm (memory-map §6) -- the ONLY place these exist
@@ -75,17 +95,18 @@ LINEAS:          DB 0       ; "lines": total rows cleared (8-bit binary)
 NIVEL:           DB 0       ; "level" (8-bit binary)
 PROX_NIVEL:      DB 10      ; "next level": rows still needed to level up
 FRAMES_POR_FILA: DB 48      ; gravity reload, frames per row; written by ActualizarVelocidad (§8)
+contador_frames: DB 48      ; frames left until the next drop; the loop decrements it
 ```
 
 **Packed BCD for the score, not 16-bit binary.** Each byte holds two decimal digits (`$47` = 47),
 `DAA` keeps addition correct, printing is a nibble shift plus `ADD A,'0'`. Binary adds in one
-instruction but the Z80 has no divide, so displaying it costs a divide-by-10 loop. Lines and level
-stay 8-bit binary.
+instruction but the Z80 has no divide, so displaying it costs a divide-by-10 loop — which is
+exactly what `ImprimirDec3` has to do for `LINEAS` and `NIVEL` (§6). Lines and level stay 8-bit
+binary because three digits of repeated subtraction is cheap; six would not be.
 
-> **`main.asm` has no trailing newline.** A blind append puts your `INCLUDE` on the same line as
-> `INCLUDE "giro.asm"`, and sjasmplus then **ignores it while still reporting `Errors: 0, warnings:
-> 0`** — verified. Add the newline first, then each `INCLUDE` on its own line
-> (`assembler-conventions`). Hex prefixes: `caida.asm` uses `0x`, most files `$`, printat `#`.
+> A new `INCLUDE` goes on its **own line**, immediately before `INCLUDE "variables.asm"`. sjasmplus
+> honours the first directive on a line and silently ignores the rest, at `Errors: 0, warnings: 0`
+> (`assembler-conventions`). Hex prefixes: `#` in `L30.3 - printat.asm`, `$` everywhere else.
 
 ## 5. LANDMINE: printing destroys the falling piece
 
@@ -105,14 +126,22 @@ garbage. Wrap **every** print made while a piece is up:
 ```
 
 `register-protocol` holds the full clobber table; it is restated here because this is the most
-common way to break the game while adding a display.
+common way to break the game while adding a display. `ImprimirEtiquetas` (`puntuacion.asm:95`) and
+`ImprimirMarcador` (`:107`) both open with `push ix : push bc` and close with the mirror — copy from
+them. `reiniciar_marcador` (`:79`) pushes everything, because it is called from `iniciar` where the
+caller's registers still matter.
 
 ## 6. Printing a number — no such routine exists
 
 The library offers `PRINTSTR` (zero-terminated string) and `PRINTCHNUM` (one character, code in `A`);
-**there is no integer-to-decimal routine.** `PRINTCHNUM` advances the cursor itself, so digits can be
-emitted one at a time once `PREP_PRT` has set the position. Print **fixed width with leading zeros**
-(`000420`) so the field never shrinks and stale digits cannot survive.
+**it has no integer-to-decimal routine**, so `puntuacion.asm` supplies two: `ImprimirBCD` (`:125`)
+for the packed-BCD score and `ImprimirDec3` (`:136`) for `LINEAS` and `NIVEL`, which are binary and
+need repeated subtraction because the Z80 has no divide. `PRINTCHNUM` advances the cursor itself, so
+digits go out one at a time once `PREP_PRT` has set the position. Both print **fixed width with
+leading zeros** (`000420`, `007`) so the field never shrinks and stale digits cannot survive.
+
+`PRINTCHNUM` destroys `B`, which is why `ImprimirDec3` reloads `ld b, 0` before each digit's
+subtraction loop rather than keeping a counter across calls.
 
 ```asm
 ; Print the two decimal digits of the packed-BCD byte in A. Cursor must already be set.
@@ -143,12 +172,17 @@ only (`:125,127`), so it wraps inside a 256-byte block instead of wrapping to th
 
 Collision means "attribute byte != 0" (`game-loop-and-collision`), so **anything printed inside the
 well becomes solid, collidable geometry.** The well interior is columns 7-24 (`memory-map`), so
-**print only in columns 0-5 or 26-31.** Recommended: `SCORE` label at row 0 col 26 with digits at
-row 1 col 26; `LINES` rows 3-4; `LEVEL` rows 6-7. Six cells wide fits exactly.
+**print only in columns 0-5 or 26-31.**
+
+The shipped layout, all at column 26: `SCORE` label row 0, digits row 1; `LINES` rows 3-4; `LEVEL`
+rows 6-7; `NEXT` row 9, with the preview box at rows 10-13, columns 27-30
+(`puntuacion.asm:97-100`, `tetromino_next.asm:85-86`). Six cells wide fits columns 26-31 exactly —
+do not run a field past column 31, for the reason at the end of §6.
 
 **ASCII only in every string you add.** Non-ASCII (`¡`, `¿`, accents) assembles to multi-byte UTF-8
-that indexes outside the 768-byte character set and renders garbage — `pantallas.asm:113-114` already
-has this bug; `rendering-and-attributes` §7 explains it.
+that indexes outside the 768-byte character set and renders garbage. Every string in the tree is
+ASCII today — `puntuacion.asm:162` says so above its four labels — and it must stay that way;
+`rendering-and-attributes` §7 explains the mechanism.
 
 ## 8. Scoring and level rules
 
@@ -183,42 +217,52 @@ NivelOK:
     RET
 ```
 
-`FRAMES_POR_FILA` is a **variable declared once in `variables.asm`** (§4); without it this snippet
-fails with `error: Label not found: FRAMES_POR_FILA` — verified. The gravity loop that *reads* it
-belongs to `interrupts-and-timing` / `game-loop-and-collision`.
+`FRAMES_POR_FILA` is a **variable declared once in `variables.asm`** (§4); declaring it here too is
+`Errors: 2, warnings: 4`. The gravity loop that *reads* it belongs to `interrupts-and-timing` §5.
 
-## 9. Wiring it up
+Note `ActualizarVelocidad` changes `FRAMES_POR_FILA` but not `contador_frames`, so a level-up takes
+effect from the *next* drop rather than shortening the one in flight. `reiniciar_marcador` (`:87-88`)
+does reload `contador_frames`, because a new game must start the clock clean.
 
-1. `line-clear` returns the number of rows cleared in `A` (0-4). If 0, do nothing.
-2. Index `PUNTOS_POR_LINEA` at `(rows-1)*2`, load the entry into `DE`, `CALL SumarPuntos`.
-3. Add `rows` to `LINEAS`; decrement `PROX_NIVEL` once per row; at 0, reload 10 and `INC NIVEL`.
-4. `CALL ActualizarVelocidad`.
-5. Redraw the display **only if a value changed** — redrawing text every frame is pure waste.
+## 9. How it is wired
 
-### Hook point — the `juego.asm` labels are inverted; read before wiring anything
+`anotar_lineas` does steps 1-5 in one call:
 
-Update **once per lock**: the **fall-through at `juego.asm:34-37`**, never `cambiar_tetromino`.
+1. `A` = rows cleared from `limpiar_lineas` (0-4). If 0, `ret z` immediately (`:23-24`).
+2. Index `PUNTOS_POR_LINEA` at `(rows-1)*2`, load into `DE`, `call SumarPuntos` (`:28-34`).
+3. One loop pass per row: `LINEAS` +1, `PROX_NIVEL` −1; at 0, reload 10 and `INC NIVEL` up to the
+   cap (`:36-48`). Per-row rather than in bulk so a 4-row clear that crosses a level boundary
+   levels up exactly once.
+4. `call ActualizarVelocidad` (`:50`).
+5. `call ImprimirMarcador` (`:51`) — **only here**, i.e. only when something changed.
+
+### Hook point
+
+Once per lock, at `juego.asm:105-106`, immediately after the `pintar_tetromino` that locks the piece
+and immediately after `limpiar_lineas`:
 
 ```asm
-    call comprobar           ; :29  A = 0 means NO collision (test_col.asm:42)
-    or a
-    jr z, cambiar_tetromino  ; :32  A = 0 -> KEEP FALLING. Despite its name, not the lock path.
-    dec b                    ; :34  fall-through = collision = the piece locks
-    ld c, e                  ; :35
-    call pintar_tetromino    ; :36  <-- lock. limpiar_lineas, then score/level, go HERE
-    jr iniciar               ; :37  spawns the next piece
+    call pintar_tetromino    ; :103  this call IS the lock
+    call limpiar_lineas      ; :105  A = rows cleared
+    call anotar_lineas       ; :106  consumes A -- nothing may touch A between these two
 ```
 
-Hooked at `cambiar_tetromino` (`:39`) instead, the update fires on **every gravity step** and the
-score climbs with nothing cleared. `game-loop-and-collision` owns the loop; `line-clear` uses the
-same hook. **Ordering rule:** redraw **outside** the erase/draw window, never between
+Hooked anywhere else in the pass, the update fires on every gravity step and the score climbs with
+nothing cleared. `game-loop-and-collision` owns the loop; `line-clear` owns the call above it.
+**Ordering rule:** the scoreboard redraw stays **outside** the erase/draw window, never between
 `borrar_tetromino` and `pintar_tetromino` — there the `IX`/`BC` save-restore must nest around code
 already using those registers, and one missed `POP` silently moves the piece.
 
-## 10. Replacing the busy-wait
+`reiniciar_marcador` is called once per game from `iniciar` (`juego.asm:19`), before any piece
+exists — the only point where printing costs nothing and needs no wrapper.
 
-Correct end state: `HALT` once per frame, decrement a counter reloaded from `FRAMES_POR_FILA` (§4).
-Tuning `TIEMPO_BASE` is not a fix. `interrupts-and-timing` owns the mechanism — not implemented here.
+## 10. Gravity is frame-counted
+
+`HALT` once per frame, decrement `contador_frames`, reload from `FRAMES_POR_FILA` when it hits zero.
+That is the whole mechanism and `interrupts-and-timing` §5 owns it. The busy-wait it replaced is
+gone with `caida.asm`; **do not reintroduce one** — a spin loop's wall-clock speed depends on the
+emulator's contention model, so the game plays at a different speed on every target. To change how
+fast the game gets, edit `FRAMES_POR_NIVEL` (§8).
 
 ## Common mistakes
 
@@ -227,9 +271,11 @@ Tuning `TIEMPO_BASE` is not a fix. `interrupts-and-timing` owns the mechanism �
 - **Non-ASCII characters in a message string** — garbage glyphs (§7).
 - **`SBC HL, rr` without `OR A` first** — off by one whenever carry happens to be set.
 - **A level-to-speed formula instead of the table** — formulas underflow to 0 frames and the game becomes unplayable. The table's floor is 6.
-- **Redrawing the score every frame** — wasted T-states; redraw only on change.
+- **Redrawing the score every frame** — wasted T-states inside the border window; redraw only on change (§9).
 - **Storing the score as plain binary** — no divide instruction, so displaying it costs an extra divide-by-10 loop. Use packed BCD (§4).
-- **Assuming `NIVEL_ACTUAL` (`0x7002`) holds something** — nothing ever writes it. Use `NIVEL` from `variables.asm` (§4).
+- **Putting anything that touches `A` between `limpiar_lineas` and `anotar_lineas`** — the row count is the return value (§9).
+- **Adding `rows` to `PROX_NIVEL` in bulk instead of looping per row** — a 4-row clear that spans a boundary then skips or double-counts a level (§9).
 - **Declaring `NIVEL`/`LINEAS`/`FRAMES_POR_FILA` in `puntuacion.asm`** — they already exist in `variables.asm`; two declarations is `Errors: 2, warnings: 4` (§4).
-- **Hooking the update at `cambiar_tetromino`** — that is the keep-falling branch, so it fires on every gravity step, not once per lock (§9).
-- **Appending the `INCLUDE` to `main.asm` without a newline first** — silently dropped, 0 errors, 0 warnings (§4).
+- **Hooking the update anywhere but the lock path** — it then fires on every gravity step, not once per lock (§9).
+- **Reintroducing a busy-wait to control drop speed** — edit `FRAMES_POR_NIVEL` instead (§10).
+- **Putting a new `INCLUDE` on an existing line in `main.asm`** — silently dropped, 0 errors, 0 warnings (§4).

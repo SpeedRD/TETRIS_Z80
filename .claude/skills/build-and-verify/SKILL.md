@@ -20,7 +20,7 @@ Run from the repo root (`/Users/ed/Projects/TETRIS_Z80`):
 cd /Users/ed/Projects/TETRIS_Z80 && sjasmplus --fullpath --raw=main.bin --lst=main.lst --sld=main.sld main.asm
 ```
 
-Only `main.asm` is assembled; it `INCLUDE`s the other 13 `.asm` files (`main.asm:19-31`).
+Only `main.asm` is assembled; it `INCLUDE`s the other 15 `.asm` files (`main.asm:31-45`).
 Success looks like:
 
 ```
@@ -29,14 +29,14 @@ Pass 2 complete (0 errors)
 include data: name=TETRIS.scr (6912 bytes) Offset=0  Len=6912
 include data: name=charset.bin (768 bytes) Offset=0  Len=768
 Pass 3 complete
-Errors: 0, warnings: 0, compiled: 852 lines, work time: 0.007 seconds
+Errors: 0, warnings: 0, compiled: 1440 lines, work time: 0.010 seconds
 ```
 
 Success criteria: **0 errors and 0 warnings.** The two `include data:` lines are normal —
 they are `TETRIS.scr` (title screen) and `charset.bin` (font) being embedded.
 
 **sjasmplus exits 0 even with warnings.** Read the last line; do not trust the exit code.
-Baseline binary is **8903 bytes**. For what the directives mean, see `assembler-conventions`.
+Baseline binary is **9614 bytes**, `$8000-$A58D`. For directives, see `assembler-conventions`.
 
 ### The VS Code build task — fixed, was silently emitting no binary
 
@@ -74,8 +74,8 @@ the repo. `cmp -l` instead of `cmp` lists every differing offset.
 
 ## 3. Every build dirties the working tree
 
-`main.bin`, `main.lst` and `main.sld` are committed build products and there is **no
-`.gitignore`**, so they show as modified after every build. Expected — do not "clean it up".
+`main.bin`, `main.lst` and `main.sld` are committed build products, and `.gitignore` covers only
+`__pycache__/`, so they show as modified after every build. Expected — do not "clean it up".
 To see whether *source* changed:
 
 ```bash
@@ -109,13 +109,12 @@ any emulator can open directly, append one line to the end of `main.asm`:
     SAVESNA "main.sna", $8000
 ```
 
-**`main.asm` ends with no trailing newline.** A blind append lands this on the same line as
-`INCLUDE "giro.asm"`; sjasmplus honours the `INCLUDE` and **silently ignores the rest** — 0
-errors, 0 warnings, no `.sna` written. Add the newline first, then the line. Same hazard for
-any `INCLUDE` you append; see `assembler-conventions`.
+It must be on its **own line**: sjasmplus honours the first directive on a line and silently
+ignores whatever follows it — 0 errors, 0 warnings, no `.sna` written. See `assembler-conventions`.
 
 Verified: 49179-byte 48K snapshot, 0 errors, 0 warnings. A snapshot captures the interrupt enable
-state and `IM` mode, which matters here (`interrupts-and-timing`). Optional — §4 is supported.
+state and `IM` mode — less critical now that `main.asm:8-11` sets `DI`/`IY`/`IM 1`/`EI` explicitly
+at startup rather than inheriting it (`interrupts-and-timing` §1). Optional — §4 is supported.
 
 ## 5b. Automated suites — `tests/`, run these first
 
@@ -161,18 +160,28 @@ Run through this in order after **every** change. Key bindings verified against 
 5. Restart and press **S** — the well is drawn: yellow columns down both sides (screen columns
    6 and 25, rows 0-21) and a yellow floor along row 22, over a 3D background pattern.
    (`tableroJuego.asm:8-39`; attribute `6*8+7` = yellow paper)
-6. A coloured piece appears near the top of the well and descends on its own.
-7. **J** moves it left, **K** moves it right. (`movimiento.asm:10-15`, port `$BFFE`)
-8. **Q** rotates it one way, **W** the other. (`giro.asm:9-14`, port `$FBFE`)
-9. The piece stops on the floor or on a settled piece, and a new piece appears at the top.
-10. Repeat until several pieces have settled: the well's yellow borders and floor are still
+6. A coloured piece appears near the top of the well and descends on its own, roughly one row per
+   second at level 0 (`FRAMES_POR_FILA` = 48 at 50 fps). `SCORE`/`LINES`/`LEVEL` labels and a
+   `NEXT` box are visible in columns 26-31, and the box shows a piece.
+7. **J** moves it left, **K** moves it right — one cell per press, and holding a key does **not**
+   repeat or freeze the fall. (`entrada.asm:17-33`, port `$BFFE`)
+8. **Q** rotates it one way, **W** the other, including flush against either wall. (`giro.asm`,
+   port `$FBFE`)
+9. The piece stops on the floor or on a settled piece, a new piece appears at the top, and the
+   `NEXT` box changes to a different piece.
+10. Fill a row across all 18 interior columns: it disappears, everything above drops one row, the
+    `LINES` and `SCORE` values change, and after ten cleared rows `LEVEL` increments and the fall
+    visibly speeds up.
+11. Repeat until several pieces have settled: the well's yellow borders and floor are still
     intact and unbroken.
+12. Stack to the top: the game-over screen appears, and a key returns to the start menu with the
+    board and scoreboard reset.
 
-**All ten items pass today**, and `tests/checklist6.py` asserts them automatically. If one
+**All twelve items pass today**, and `tests/checklist6.py` asserts them automatically. If one
 starts failing, it is a regression you introduced — §7 maps symptoms to owning skills.
 
 Historical note, because it explains the shape of several fixes: on the original
-`school-submission` tree items 1-5 passed and 6-10 did not. The tree also **hung on the title
+`school-submission` tree items 1-5 passed and everything from 6 on did not. The tree also **hung on the title
 screen under ZEsarUX** — all four key-release waits compared the raw port byte to `$FF`, and
 bit 6 is the EAR line, which reads 0. They now mask to bits 0-4 (`AND $1F` / `CP $1F`). That is
 the check to reach for first if input ever appears dead on real hardware or a different
@@ -184,11 +193,15 @@ emulator.
 |---|---|
 | Border cells vanish; the well develops holes | `rendering-and-attributes`, `piece-rotation` |
 | Piece drawn outside the well; garbage elsewhere on screen | `game-loop-and-collision` |
-| Title screen reappears on its own | `game-loop-and-collision` (game-over path falls through) |
+| Title screen reappears on its own | `game-loop-and-collision` (a game-over path falling through) |
 | Flicker or tearing | `interrupts-and-timing` |
 | Piece visibly jumps position when rotated | `piece-rotation` |
-| Everything freezes while a key is held | `interrupts-and-timing` |
-| Rows fill but never clear | `line-clear` |
+| Everything freezes while a key is held | `interrupts-and-timing` §6 |
+| Rows fill but never clear, or a double clear removes one row | `line-clear` |
+| Score or level wrong, or the scoreboard swaps the falling piece | `scoring-and-level` |
+| Preview box empty, or the previewed piece is not the one that spawns | `piece-data-and-spawn` |
+| Garbage appears in the piece table or code after a while | `interrupts-and-timing` §1 (`IY`) |
+| Input dead on real hardware or a different emulator | `interrupts-and-timing` §6 (`CP $FF`) |
 
 ## 8. Debugging techniques that work here
 
@@ -197,8 +210,10 @@ emulator.
 - **Watch the attribute file.** Open a DeZog memory view at `$5800` (768 bytes) — pieces, well
   and collisions are all attribute bytes there. See `memory-map`.
 - **Freeze-frame trap.** The codebase idiom is a self-branch, e.g. `parar: jr parar`. Insert one
-  temporarily to stop execution and inspect memory. Two already exist but sit after a `ret` and
-  are unreachable: `tableroJuego.asm:45`, `tetromino_next.asm:28` — see `failure-patterns`.
+  temporarily to stop execution and inspect memory. The two leftover unreachable ones were removed
+  with the rewrites of `tableroJuego.asm` and `tetromino_next.asm`; the only live self-branches now
+  are deliberate — `main.asm:27` (`fin_del_programa`) and `pantallas.asm:67` (`fin`). `tests/unit.py`
+  uses the same idiom as a return trap, for the reason documented in `tests/README.md`.
 
 ## 9. The discipline rule
 
@@ -217,8 +232,9 @@ catches timing and rendering.
 gathers real evidence — do all four, then say what is missing. Do not skip the rule silently.
 
 1. **Clean build** (§1): the last line must read `Errors: 0, warnings: 0`.
-2. **Line count moved**: `compiled: N lines` must be above the 852 baseline by roughly the size of
-   your addition. This is what catches a file that was never assembled (§5's newline hazard).
+2. **Line count moved**: `compiled: N lines` must be above the 1440 baseline by roughly the size of
+   your addition. This is what catches a file that was never assembled (§5's one-line-two-directives
+   hazard).
 3. **Code landed where expected**: `grep -n "MiEtiqueta" main.lst` — the listing shows the address
    and the opcode bytes. Confirm both against what you intended to emit.
 4. **Only the intended bytes changed**: `cmp -l main.bin /tmp/tetris-z80/baseline.bin` (§2) lists
@@ -231,16 +247,18 @@ explicitly that §6 was not run.
 ## Common mistakes
 
 - **Treating a clean build as proof the change works.** It proves the syntax parsed. Run §6.
-- **Pressing Cmd+Shift+B and assuming `main.bin` is fresh.** It is not (§1); you will debug the
-  June-2024 binary and conclude your edit did nothing.
+- **Pressing Cmd+Shift+B and assuming `main.bin` is fresh.** It is now (`--raw` was added to
+  `tasks.json`), but if that flag ever goes missing again the build reports success and writes no
+  binary, and you debug the previous image while concluding your edit did nothing (§1).
 - **Trusting stale `main.sld`.** DeZog then shows the wrong lines and labels. Rebuild every time.
 - **Committing or reverting `main.lst`/`main.bin`/`main.sld` churn as if it were a source
   edit.** It is build output (§3). Check `git status --porcelain -- '*.asm'` instead.
 - **Running the launch config with ZEsarUX not started or ZRCP off.** DeZog cannot reach
   `localhost:10000`. Do §4 steps 1-3 first.
 - **Assembling one `.asm` standalone to "check it".** Only `main.asm` produces the real image.
-  Most other files reference labels defined elsewhere and fail — `sjasmplus juego.asm` yields
-  `juego.asm(4): error: Label not found: seleccionar_pieza`. **`caida.asm` is the exception:** no
-  external references, assembles cleanly, which is why `caida.lst` is error-free — and it still
-  tells you nothing. The committed `caida.bin`, `clear.bin`, `juego.bin`, `pantallas.bin`,
-  `piezas.bin` and their `.lst`/`.sld` are stale relics of this mistake — see `failure-patterns`.
+  Every other file references labels defined elsewhere and fails. A file that happens to have no
+  external references would assemble cleanly and still tell you nothing — that is exactly why the
+  committed `caida.lst` is error-free while the other four stale listings are not. The committed
+  `caida.bin`, `clear.bin`, `juego.bin`, `pantallas.bin`, `piezas.bin` and their `.lst`/`.sld` are
+  relics of this mistake, kept only as history — see `failure-patterns`. Note `caida.asm` and
+  `movimiento.asm` no longer exist as source.

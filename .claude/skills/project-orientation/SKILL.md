@@ -10,82 +10,97 @@ Load this first. It says what each file is, what the Spanish names mean, and whi
 ## What this is
 
 ZX Spectrum 48K Tetris in Z80 assembly, assembled with **sjasmplus 1.23.1**. One translation unit:
-`main.asm` (`ORG $8000`, `main.asm:4`) `INCLUDE`s 13 other `.asm` files (`main.asm:19-31`); the output
-is a raw 8903-byte image spanning `$8000-$A2C6`. Today it is a **piece-dropper, not Tetris**: pieces
-spawn, fall, move and rotate, but nothing clears lines, nothing scores, and game over never fires.
+`main.asm` (`ORG $8000`, `main.asm:4`) `INCLUDE`s 15 other `.asm` files (`main.asm:31-45`); the output
+is a raw 9614-byte image spanning `$8000-$A58D`. It is **a complete game**: pieces spawn, fall, move,
+rotate with wall kicks, lock, complete rows clear and compact, score/lines/level are kept and
+displayed, gravity speeds up with the level, the next piece is previewed, and game over reaches
+`Pantalla_Final` and restarts.
 
-**Goal: complete the game in place, keeping the existing architecture.** The ZX Spectrum attribute
-file at `$5800` *is* the board — a cell is occupied iff its attribute byte is non-zero. The well is
-18 columns wide. `B` = piece row, `C` = piece column, `IX` = pointer to the current piece record.
-This is not a rewrite.
+**Architecture is unchanged and stays unchanged.** The ZX Spectrum attribute file at `$5800` *is* the
+board — a cell is occupied iff its attribute byte is non-zero. The well is 18 columns wide. `B` =
+piece row, `C` = piece column, `IX` = pointer to the current piece record. This is not a rewrite, and
+neither is your change.
 
 ## Source file map
 
 | File | Spanish → English | Purpose | State |
 |---|---|---|---|
-| `main.asm` | — | Entry point; sets `SP`, calls title → menu → board → `iniciar`, then INCLUDEs everything | **BROKEN** — no jump after `CALL iniciar` (`main.asm:14`); on return it falls into `InicioDePantalla` at `$800F` |
-| `titulo.asm` | "title" | LDIRs `TETRIS.scr` into `$4000`, waits for **Q** | PARTIAL — works; comment at `:22` contradicts the code, dead `ld d,1` at `:24` |
-| `pantallas.asm` | "screens" | Start menu, `CalcularAtributo`, keyboard helpers, all message strings | MIXED — menu and `CalcularAtributo` work; `Pantalla_Final` (`:27`) and `MensajeReiniciar` (`:113`) are **DEAD** (defined, never referenced) |
+| `main.asm` | — | Entry point; sets `SP`, fixes the interrupt state (`DI`/`IY=$5C3A`/`IM 1`/`EI`), calls title → menu → board → `iniciar`, then INCLUDEs everything | WORKING — `fin_del_programa: jr` terminator at `:27`; `inicializar:` (`:14`) is the restart target and re-sets `SP` |
+| `titulo.asm` | "title" | LDIRs `TETRIS.scr` into `$4000`, waits for **Q** | WORKING — key wait masks to `AND $1F` / `CP $1F` |
+| `pantallas.asm` | "screens" | Start menu, game-over screen, `CalcularAtributo`, keyboard helpers, all message strings | WORKING — `Pantalla_Final` (`:27`) is now reached (`jp` from `juego.asm`) and restarts with `jp inicializar`; strings are ASCII-only |
 | `L30.3 - printat.asm` | — | Text/print library: `PRINTAT`, `CLEARSCR`, charset | **COURSE-SUPPLIED** (header credits Daniel León, UFV 2020) — treat as stable, do not edit |
-| `L35 - Tetris_3D.asm` | — | Fills the pixel file with an 8-byte bevel pattern | **COURSE-SUPPLIED** — treat as stable; leaves `IY` corrupted on exit |
-| `tableroJuego.asm` | "game board" | Draws the well: borders at attribute columns 6 and 25, floor at row 22 (`:8,:19,:30`) | WORKING — interior is columns 7-24 = **18 wide**; dead trap at `:45` |
-| `juego.asm` | "game" | The main loop: `iniciar`, `ciclo_juego` | **BROKEN** — checks collision against the stale column, labels are inverted, game over unreachable |
-| `tetromino_next.asm` | "next tetromino" | `seleccionar_pieza`: picks a random rotation record, returns `B=0, C=15` | PARTIAL, MISNAMED — **there is no next-piece preview**; RNG is biased |
-| `piezas.asm` | "pieces" | 19 twelve-byte piece records, the `Medio` variable, `pintar_tetromino` | WORKING — but **two** colour collisions: Z and S both `7*8`, O and I both `6*8` |
-| `test_col.asm` | "collision test" | `comprobar`: returns `A=1` on collision, `A=0` clear | WORKING as written, **MISUSED by its only caller** (`juego.asm`) |
+| `L35 - Tetris_3D.asm` | — | Fills the pixel file with an 8-byte bevel pattern | **COURSE-SUPPLIED** — treat as stable; leaves `IY` corrupted, so its call site brackets it |
+| `tableroJuego.asm` | "game board" | Draws the well: borders at attribute columns 6 and 25, floor at row 22 (`:8,:19,:30`) | WORKING — interior is columns 7-24 = **18 wide**; brackets `Tetris_3D` with `di`/`ld iy,$5C3A`/`ei` |
+| `juego.asm` | "game" | The main loop: `iniciar`, `paso` | WORKING — `HALT`-synced frame loop; every candidate position is validated before it is drawn |
+| `tetromino_next.asm` | "next tetromino" | LFSR randomness, `seleccionar_pieza` (returns `B=0, C=15`), and `pintar_siguiente` — the preview | WORKING — picks a *shape* uniformly from `spawn_table`; preview box at rows 10-13, columns 27-30 |
+| `piezas.asm` | "pieces" | 19 twelve-byte piece records, `spawn_table`, `pintar_tetromino` | WORKING — all seven shapes have distinct colours |
+| `test_col.asm` | "collision test" | `comprobar`: returns `A=1` on collision, `A=0` clear | WORKING — and now called correctly, with the exact position about to be drawn |
 | `clear.asm` | (English) | `borrar_tetromino`: erases the piece by writing attribute `0` | WORKING |
-| `caida.asm` | "fall" | `Tiempo` busy-wait between drops, level/time constants | **BROKEN** — level scaling is dead arithmetic; `InicializarTiempo` (`:63`) is DEAD |
-| `movimiento.asm` | "movement" | `MOVER`: reads J/K, adjusts `Medio` by ±1 | PARTIAL — no bounds check, no collision check, blocks until key release |
-| `giro.asm` | "rotation" | `GIRAR`: reads Q/W, follows the piece record's rotation pointer | PARTIAL — no validation, no wall kick, blocks until key release |
+| `giro.asm` | "rotation" | `GIRAR`: takes a direction in `A`, recentres, kicks, validates and commits | WORKING — reads no keys, never blocks |
+| `entrada.asm` | "input" | `leer_teclas` (non-blocking, edge-detected J/K/Q/W) and `en_rango` (column bounds) | WORKING — new file |
+| `lineas.asm` | "lines" | `limpiar_lineas`, `fila_llena`, `bajar_filas` — full-row detection and downward compaction | WORKING — new file |
+| `puntuacion.asm` | "score" | `anotar_lineas`, BCD score, level, speed table, marker printing | WORKING — new file; prints in columns 26-31 only |
+| `variables.asm` | "variables" | Every mutable byte the new code needs, in one block at `$A581` | WORKING — new file; **must stay the last `INCLUDE`** |
 
-Data blobs: `TETRIS.scr` (`titulo.asm:33`) and `charset.bin` (`L30.3 - printat.asm:162`), both INCBIN;
-`TETRIS2.scr` is referenced by nothing. Of the committed `*.bin/*.lst/*.sld` build output only
-`main.lst` matches the current sources — the per-file ones are stale, see `failure-patterns`.
+Data blobs: `TETRIS.scr` (`titulo.asm:32`) and `charset.bin` (`L30.3 - printat.asm:162`), both INCBIN;
+`TETRIS2.scr` is referenced by nothing.
+
+**Deleted:** `caida.asm` (the `Tiempo` busy-wait and its dead level arithmetic — gravity is now frame
+counted) and `movimiento.asm` (`MOVER` — its job is now inline in `juego.asm`, validated). Both are
+recoverable at commit `0a2377e` / tag `school-submission`. Of the committed `*.bin/*.lst/*.sld` build
+output only `main.lst` matches the current sources — the per-file ones are stale, see
+`failure-patterns`.
 
 ## Spanish → English glossary
 
 | Identifier | Literal | What it is |
 |---|---|---|
-| `iniciar` | "to start" | `juego.asm:3` — spawns a piece and enters the loop. Also the fall/land re-entry point |
-| `inicializar` | "to initialise" | `main.asm:9` — restart target (menu → board → `iniciar`) |
-| `ciclo_juego` | "game cycle" | `juego.asm:14` — top of the drop loop |
-| `siguiente_juego` | "next game" | `juego.asm:22` — advance one row and re-test |
-| `cambiar_tetromino` | "change tetromino" | `juego.asm:39` — **misleading, see below** |
+| `iniciar` | "to start" | `juego.asm:16` — seeds the sequence, spawns the first piece, enters the loop |
+| `inicializar` | "to initialise" | `main.asm:14` — restart target (reset `SP` → menu → board → `iniciar`) |
+| `paso` | "step/pass" | `juego.asm:34` — top of the frame loop; opens with `HALT` |
+| `sin_gravedad` / `sin_lateral` / `sin_giro` | "without gravity/sideways/rotation" | `juego.asm:45,80,91` — skip labels for the three optional actions in a pass |
+| `dibujar` | "to draw" | `juego.asm:116` — the single paint of the validated `(B, C, IX)` |
+| `fin_partida` | "end of the game session" | `juego.asm:120` — `JP Pantalla_Final` |
 | `comprobar` | "to check" | `test_col.asm:3` — collision test; result in `A`, does **not** preserve `AF` |
-| `pintar_tetromino` | "paint tetromino" | `piezas.asm:34` — draw the piece at `B`,`C` |
+| `pintar_tetromino` | "paint tetromino" | `piezas.asm:42` — draw the piece at `B`,`C` |
 | `borrar_tetromino` | "erase tetromino" | `clear.asm:3` — erase the piece at `B`,`C` |
-| `seleccionar_pieza` | "select piece" | `tetromino_next.asm:5` — random piece into `IX` |
+| `seleccionar_pieza` | "select piece" | `tetromino_next.asm:65` — the announced piece into `IX`, and draw a new one |
+| `nueva_pieza` / `sembrar_azar` / `iniciar_secuencia` | "new piece" / "seed the randomness" / "start the sequence" | `tetromino_next.asm:28,17,51` — LFSR draw, seeding, once-per-game setup |
+| `pintar_siguiente` | "paint the next one" | `tetromino_next.asm:90` — the preview box |
 | `dibujar_tablero` | "draw the board" | `tableroJuego.asm:4` — draw well borders and floor |
-| `GIRAR` | "to rotate" | `giro.asm:1` — rotation input handler |
-| `MOVER` | "to move" | `movimiento.asm:1` — horizontal input handler |
-| `Tiempo` | "time" | `caida.asm:14` — busy-wait delay (the gravity tick) |
-| `CalcularAtributo` | "calculate attribute" | `pantallas.asm:67` — `B`,`C` → `HL` = attribute address. **Clobbers `BC`** (`:77`) |
-| `EsperarTecla` / `LeerTecla` / `SoltarTecla` | "wait for key" / "read key" / "release key" | `pantallas.asm:83,89,100` — blocking keyboard helpers |
+| `GIRAR` | "to rotate" | `giro.asm:1` — rotate: recentre, kick, validate, commit. Direction in `A` |
+| `leer_teclas` | "read keys" | `entrada.asm:17` — one non-blocking, edge-detected read per pass |
+| `en_rango` | "in range" | `entrada.asm:42` — does the whole piece fit in columns 7-24? |
+| `limpiar_lineas` / `fila_llena` / `bajar_filas` | "clear lines" / "row full" / "lower the rows" | `lineas.asm:16,40,62` — clear detection and compaction |
+| `anotar_lineas` | "record the lines" | `puntuacion.asm:22` — score, lines, level and marker refresh, once per lock |
+| `ActualizarVelocidad` / `reiniciar_marcador` / `ImprimirMarcador` | "update the speed" / "reset the scoreboard" / "print the scoreboard" | `puntuacion.asm:66,79,107` |
+| `CalcularAtributo` | "calculate attribute" | `pantallas.asm:69` — `B`,`C` → `HL` = attribute address. **Clobbers `BC`** (`:79`) |
+| `EsperarTecla` / `LeerTecla` / `SoltarTecla` | "wait for key" / "read key" / "release key" | `pantallas.asm:85,91,102` — blocking keyboard helpers, menus only |
 | `Pantalla_Ini` | "screen, start" | `pantallas.asm:3` — start menu, waits for S or N |
-| `Pantalla_Final` | "final screen" | `pantallas.asm:27` — game-over screen, **DEAD** |
-| `FinDelJuego` | "end of the game" | `pantallas.asm:56` — prints thanks, then `fin: JR fin` (hard hang, the only real exit) |
+| `Pantalla_Final` | "final screen" | `pantallas.asm:27` — game-over screen; `jp inicializar` to restart |
+| `FinDelJuego` | "end of the game" | `pantallas.asm:58` — prints thanks, then `fin: JR fin` (the deliberate quit path, via **N**) |
 | `InicioDePantalla` | "start of screen" | `titulo.asm:3` — title screen |
 | `PintarPantalla` | "paint screen" | `titulo.asm:8` — blits 6912 bytes to `$4000`, then falls into the key wait |
-| `Medio` | "middle" | `piezas.asm:31` (`$A16F`, `DB 14`) — the *shadow* column written by `MOVER` |
-| `NIVEL_ACTUAL` | "current level" | `caida.asm:11` — `$7002`, declared and never written |
-| `TIEMPO_CAIDA` / `TIEMPO_BASE` / `TIEMPO_MINIMO` / `REDUCCION_TIEMPO` | "fall time" / "base time" / "minimum time" / "time reduction" | `caida.asm:5-11` — delay constants |
-| `longitud_pieza` | "piece length" | `tetromino_next.asm:3` — `T_L1 - T_0` = **12** bytes per record |
-| `MensajeIniciar` / `MensajeReiniciar` / `MensajeGameOver` | "start message" / "restart message" / "game-over message" | `pantallas.asm:111` / `:113` (DEAD) / `:114` — zero-terminated strings |
-| `fin`, `end` | "end", "end" | `pantallas.asm:65` (infinite loop) and `juego.asm:47` (a plain `ret`) |
+| `Medio` | "middle" | `variables.asm:36` (`$A58D`) — the memory copy of `C`, kept in sync at every commit |
+| `PUNTOS` / `LINEAS` / `NIVEL` / `PROX_NIVEL` | "points" / "lines" / "level" / "next level" | `variables.asm:13-16` — score (packed BCD) and progression counters |
+| `FRAMES_POR_FILA` / `contador_frames` / `FRAMES_POR_NIVEL` | "frames per row" / "frame counter" / "frames per level" | `variables.asm:19-20`, `puntuacion.asm:16` — the gravity clock |
+| `semilla` / `siguiente_pieza` / `teclas_ant` | "seed" / "next piece" / "previous keys" | `variables.asm:28,30,23` — LFSR state, preview slot, edge-detection state |
+| `MensajeIniciar` / `MensajeReiniciar` / `MensajeGameOver` | "start message" / "restart message" / "game-over message" | `pantallas.asm:114`, `:120`, `:121` — zero-terminated, ASCII only |
+| `fin` | "end" | `pantallas.asm:67` — the infinite loop after "Gracias por jugar" |
 
 Comment vocabulary: *fila* row, *columna* column, *pantalla* screen, *tecla* key, *pulsada* pressed,
 *soltar* release, *esperar* wait, *pieza* piece, *tablero* board, *borde* border, *izquierda/derecha*
 left/right, *siguiente* next, *dirección* address, *guardar* save, *borrar* erase, *pintar* paint,
-*aleatorio* random, *nivel* level, *caída* fall, *partida* game session.
+*aleatorio* random, *nivel* level, *caída* fall, *partida* game session, *retranqueo* wall kick,
+*marcador* scoreboard, *pozo* well, *hueco* gap/hole, *ancho* width, *cuenta* count.
 
-### Two label names in `juego.asm` mean the opposite of what they do
+### The old inverted label names are gone
 
-`comprobar` returns `A=0` for **no collision**. So at `juego.asm:32` (`jr z, cambiar_tetromino`):
-
-- `cambiar_tetromino` ("change tetromino", `:39`) is the **keep falling** path — rotate, draw, delay, move.
-- The fall-through at `:34-37` (`dec b … jr iniciar`) is the **land and spawn a new piece** path.
-
-Read the flag, not the name. Details in `game-loop-and-collision`.
+`juego.asm` used to name its keep-falling branch `cambiar_tetromino` ("change tetromino") and its
+lock-and-spawn path was the unnamed fall-through — the names meant the opposite of what they did.
+The loop was rewritten and those labels no longer exist. **If you see `ciclo_juego`,
+`siguiente_juego` or `cambiar_tetromino` referenced anywhere, that text is stale.** Read the flag,
+not the name, regardless: `comprobar` returns `A=0` for **no collision**.
 
 ## Which skill to load
 
@@ -97,7 +112,8 @@ Read the flag, not the name. Details in `game-loop-and-collision`.
 | "add a score", "show the level" | `scoring-and-level`, `rendering-and-attributes` |
 | "the game restarts by itself", "game over never happens" | `game-loop-and-collision`, `failure-patterns` |
 | "gravity is too fast/slow", "it freezes" | `interrupts-and-timing` |
-| "add soft drop", "add a down key" | `game-loop-and-collision` (it owns input and the loop). No down key is read today; `memory-map`'s port table shows which half-row a new one would come from |
+| "add soft drop", "add a down key" | `game-loop-and-collision` (it owns input and the loop) and `entrada.asm`'s `leer_teclas`. No down key is read today; `memory-map`'s port table shows which half-row a new one would come from |
+| "add sound", "set the border colour" | `memory-map` §7 — port `$FE` is still never written |
 | "it won't build", "unknown instruction", "what is `LD IX, DE`" | `assembler-conventions`, `build-and-verify` |
 | "how do I run it", "how do I check my change" | `build-and-verify` |
 | "where can I put a variable", "what address is free" | `memory-map` |
@@ -111,13 +127,16 @@ Read the flag, not the name. Details in `game-loop-and-collision`.
 1. **`IX` is the live piece pointer, globally.** `PRINTAT` also uses `IX` as its string pointer, so
    **any text output destroys the current piece**. Save and restore it. → `register-protocol`
 2. **`B` and `C` are the piece position, globally.** There is no position variable; any routine that
-   clobbers `BC` moves the piece. `CalcularAtributo` clobbers `BC` (`pantallas.asm:77`). → `register-protocol`
-3. **`Medio` is not the live column — `C` is.** `MOVER` writes only `Medio`; the loop copies it into
-   `C` one step later. → `game-loop-and-collision`
-4. **Include order in `main.asm:19-31` is load-bearing** (forward-referenced `EQU`, address adjacency).
-   Append new files at the end; do not reorder. → `assembler-conventions`
-5. **The build must stay at 0 errors, 0 warnings** (currently 852 lines, clean). → `build-and-verify`
-6. **There is no test suite.** Every change is verified by a human watching the emulator screen.
+   clobbers `BC` moves the piece. `CalcularAtributo` clobbers `BC` (`pantallas.asm:79`). → `register-protocol`
+3. **`C` is the live column and `(Medio)` must equal it at every `comprobar`.** Both are written
+   together at every commit; `GIRAR` writes `Medio` itself. → `game-loop-and-collision`
+4. **`IY` must be `$5C3A` outside a `di`/`ei` bracket.** Interrupts are on and the ROM's 50 Hz handler
+   addresses through `IY`. → `interrupts-and-timing`
+5. **Include order in `main.asm:31-45` is load-bearing**, and `variables.asm` must stay last.
+   Append new files before it; do not reorder. → `assembler-conventions`
+6. **The build must stay at 0 errors, 0 warnings** (currently 1440 lines, 9614 bytes). → `build-and-verify`
+7. **Run `python3 tests/run_all.py`** — ~130 assertions over five suites plus the manual checklist,
+   driving ZEsarUX. It cannot see tearing or flicker, so anything visual still needs a human.
    → `build-and-verify`
 
 ### Correct example: print during play without breaking the game
@@ -135,21 +154,28 @@ Read the flag, not the name. Details in `game-loop-and-collision`.
     call PRINTAT
     pop bc                  ; restore piece row/column
     pop ix                  ; restore piece pointer -- game state is now intact
-; Put the string with the other strings (pantallas.asm:110-114), never in the
-; instruction stream. ASCII only -- no accents; see rendering-and-attributes.
+; Put the string with the other strings (pantallas.asm:113-121, or
+; puntuacion.asm:163-166), never in the instruction stream. ASCII only -- no
+; accents; see rendering-and-attributes.
 MiTexto: db "SCORE",0
 ```
+
+`puntuacion.asm`'s `ImprimirEtiquetas` / `ImprimirMarcador` (`:95`, `:107`) already do exactly this;
+copy from them rather than from scratch.
 
 Column 27 matters as much as the pushes: `comprobar` treats *any* non-zero attribute byte as solid,
 so text printed inside columns 7-24 becomes collidable geometry.
 
 ## Traps a first edit usually hits
 
-- Moving `call CalcularAtributo` after the `ld b,(ix)` / `ld c,(ix+1)` pair in `piezas.asm:41-43`,
-  `test_col.asm:10-13`, `clear.asm:10-12`. The order is deliberate — `CalcularAtributo` destroys `BC`.
-- Making `comprobar` preserve `AF` "for consistency". It returns its result in `A` (`test_col.asm:42,46`).
-- Trusting the `juego.asm` label names instead of the flag (see above).
+- Moving `call CalcularAtributo` after the `ld b,(ix)` / `ld c,(ix+1)` pair in `piezas.asm:49-51`,
+  `test_col.asm:11-14`, `clear.asm:11-13`. The order is deliberate — `CalcularAtributo` destroys `BC`.
+- Making `comprobar` preserve `AF` "for consistency". It returns its result in `A` (`test_col.asm:43,47`).
 - Adding a score/level display without saving `IX`, which silently swaps the falling piece.
-- Assuming an interrupt or frame sync exists. Nothing sets **any** interrupt state anywhere in the
-  tree — no `DI`, no `EI`, no `IM 0/1/2`, no `HALT`, no `RETI`/`RETN`. → `interrupts-and-timing`
+- Wrapping `GIRAR` in a `comprobar` check. It validates, kicks and commits by itself
+  (`juego.asm:90`). → `piece-rotation`
+- Adding a routine that points `IY` somewhere without a `di`/`ei` bracket around that window, or
+  putting the `ei` before the `pop iy`. → `interrupts-and-timing`
+- Declaring a variable outside `variables.asm`, or putting `variables.asm` anywhere but last in the
+  `INCLUDE` list. → `memory-map` §6
 - Editing `L30.3 - printat.asm` or `L35 - Tetris_3D.asm`. They are course-supplied and known good.

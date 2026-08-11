@@ -12,10 +12,11 @@ routines by convention. Nothing enforces it, nothing validates it, and there is 
 
 | State | Lives in | Written at |
 |---|---|---|
-| Current piece row | register `B` | `juego.asm:6, 23, 34` |
-| Current piece column | register `C` | `juego.asm:35, 40` |
-| Current piece shape | `IX` → 12-byte rotation record | `tetromino_next.asm:6`, `giro.asm:19, 27` |
-| Column, second copy | `Medio` ("middle"), memory `$A16F` | `piezas.asm:31`, `juego.asm:8`, `movimiento.asm:22, 30` |
+| Current piece row | register `B` | `juego.asm:97, 102`; `seleccionar_pieza` returns `B=0` |
+| Current piece column | register `C` | `juego.asm:65, 75`; `giro.asm:47`; `seleccionar_pieza` returns `C=15` |
+| Current piece shape | `IX` → 12-byte rotation record | `tetromino_next.asm:72`, `giro.asm:30, 60` |
+| Column, memory copy | `Medio` ("middle"), `$A58D` | `variables.asm:36`, `juego.asm:26, 79, 111`, `giro.asm:55, 61` |
+| Sideways delta / key mask / gravity flag, within one pass | `D` / `E` / `H` | `juego.asm:8-14` |
 
 **Any routine that clobbers `BC` moves the piece. Any routine that clobbers `IX` changes which
 piece is falling.** The game does not crash — it silently does something wrong.
@@ -38,20 +39,29 @@ Traced from each routine body. `—` means none.
 
 | Routine (English) | file:line | Inputs | Returns | Preserves | Destroys |
 |---|---|---|---|---|---|
-| `CalcularAtributo` (calculate attribute address) | `pantallas.asm:67` | `B`=row, `C`=col | `HL`=attr address | `AF DE IX IY` | **`BC`** (→`$5800`), `HL` |
+| `CalcularAtributo` (calculate attribute address) | `pantallas.asm:69` | `B`=row, `C`=col | `HL`=attr address | `AF DE IX IY` | **`BC`** (→`$5800`), `HL` |
 | `comprobar` (to check — collision test) | `test_col.asm:3` | `B`,`C`,`IX` | `A`=1 collision, 0 free | `BC DE HL IX IY` | **`AF`** |
-| `pintar_tetromino` (paint piece) | `piezas.asm:34` | `B`,`C`,`IX` | — | `AF BC DE HL IX IY` | — |
+| `pintar_tetromino` (paint piece) | `piezas.asm:42` | `B`,`C`,`IX` | — | `AF BC DE HL IX IY` | — |
 | `borrar_tetromino` (erase piece) | `clear.asm:3` | `B`,`C`,`IX` | — | `AF BC DE HL IX IY` | — |
-| `GIRAR` (to rotate) | `giro.asm:1` | `IX`, keyboard | `IX`=new rotation | `BC HL IY` | `AF`, `DE`, **`IX`** |
-| `MOVER` (to move) | `movimiento.asm:1` | keyboard | writes `(Medio)` | `BC DE HL IX IY` | `AF` |
-| `Tiempo` (time — busy-wait) | `caida.asm:14` | — | — | `AF BC DE HL IX IY` | — (writes `$7000`) |
-| `seleccionar_pieza` (select piece) | `tetromino_next.asm:5` | — | `IX`=piece, `B`=0, `C`=15 | `HL IY` | `AF`, **`BC`**, `DE`, **`IX`** |
-| `dibujar_tablero` (draw board) | `tableroJuego.asm:4` | — | — | — | `AF BC DE HL` **`IX IY`** |
-| `iniciar` (to start — the game loop) | `juego.asm:3` | — | — | — | everything |
+| `GIRAR` (to rotate) | `giro.asm:1` | `IX`, `B`, `C`, `(Medio)`, `A`=direction | on success `IX`, `C`, `(Medio)` = new | `B HL IY` | `AF`, `DE`; **`IX`/`C` are outputs** |
+| `leer_teclas` (read keys) | `entrada.asm:17` | — | `A`=new-press mask | `BC DE HL IX IY` | `AF` |
+| `en_rango` (in range) | `entrada.asm:42` | `C`, `IX` | `A`=0 fits, 1 outside | `BC DE HL IX IY` | `AF` |
+| `limpiar_lineas` (clear lines) | `lineas.asm:16` | — | `A`=rows cleared | `BC DE HL IX IY` | `AF` |
+| `fila_llena` (row full) | `lineas.asm:40` | `B`=row | `A`=1 full, 0 not | `BC DE HL` | `AF` |
+| `bajar_filas` (lower rows) | `lineas.asm:62` | `B`=cleared row | — | `AF BC DE HL` | — |
+| `anotar_lineas` (record lines) | `puntuacion.asm:22` | `A`=rows cleared | — | `BC DE HL IX IY` | `AF` |
+| `reiniciar_marcador` (reset scoreboard) | `puntuacion.asm:79` | — | — | `AF BC DE HL IX IY` | — |
+| `ImprimirMarcador` (print scoreboard) | `puntuacion.asm:107` | — | — | `BC IX IY` | `AF`, `DE`, `HL` |
+| `ActualizarVelocidad` (update speed) | `puntuacion.asm:66` | — | writes `FRAMES_POR_FILA` | `BC IX IY` | `AF`, `DE`, `HL` |
+| `seleccionar_pieza` (select piece) | `tetromino_next.asm:65` | — | `IX`=piece, `B`=0, `C`=15 | `HL IY` | `AF`, **`BC`**, `DE`, **`IX`** |
+| `nueva_pieza` (new piece) | `tetromino_next.asm:28` | — | `DE`=record address | `BC HL IX IY` | `AF`, `DE` |
+| `pintar_siguiente` (paint the next one) | `tetromino_next.asm:90` | — | — | `AF BC DE HL IX IY` | — |
+| `dibujar_tablero` (draw board) | `tableroJuego.asm:4` | — | — | `IY` (reloaded to `$5C3A`) | `AF BC DE HL` **`IX`** |
+| `iniciar` (to start — the game loop) | `juego.asm:16` | — | **never returns** | — | everything |
 | `Pantalla_Ini` (initial screen) | `pantallas.asm:3` | — | — | `IY` | `AF BC DE HL` **`IX`** |
-| `EsperarTecla` (wait for key) | `pantallas.asm:83` | — | `A`=`$FF` | `DE HL IX IY` | `AF`, `BC` |
-| `LeerTecla` (read key) | `pantallas.asm:89` | — | `A`=`$FF` | `DE HL IX IY` | `AF`, `BC` |
-| `SoltarTecla` (release key) | `pantallas.asm:100` | `BC`=port | `A`=`$FF` | `BC DE HL IX IY` | `AF` |
+| `EsperarTecla` (wait for key) | `pantallas.asm:85` | — | `A`=`$1F` | `DE HL IX IY` | `AF`, `BC` |
+| `LeerTecla` (read key) | `pantallas.asm:91` | — | `A`=`$1F` | `DE HL IX IY` | `AF`, `BC` |
+| `SoltarTecla` (release key) | `pantallas.asm:102` | `BC`=port | `A`=`$1F` | `BC DE HL IX IY` | `AF` |
 | `PRINTAT` | `L30.3 - printat.asm:14` | `A`=attr, `B`=row, `C`=col, `IX`=string | — | `C`, `IY` | `AF`, **`B`**(→0), `DE`, `HL`, **`IX`** |
 | `PRINTSTR` | `L30.3 - printat.asm:20` | `IX`=string | — | `C`, `IY` | `AF`, **`B`**(→0), `DE`, `HL`, **`IX`** |
 | `PREP_PRT` (set attribute + cursor) | `L30.3 - printat.asm:32` | `A`=attr, `B`, `C` | `HL` | `BC DE IX IY` | `AF`, `HL` |
@@ -64,19 +74,23 @@ Traced from each routine body. `—` means none.
 | `InicioDePantalla` (start of screen) | `titulo.asm:3` | — | blocks until **Q** | `E`, `IX`, `IY` | `AF`, `BC`, `D`, `HL` |
 | `PintarPantalla` (paint screen) | `titulo.asm:8` | `HL`=6912-byte source | blocks until **Q** | `E`, `IX`, `IY` | `AF`, `BC`, `D`, `HL` |
 
-`pintar_tetromino`, `borrar_tetromino` and `Tiempo` are the only fully register-safe routines here.
-`CRtoATTR` returns the **same address** as `CalcularAtributo` **for rows 0-23** but keeps `BC` —
-prefer it in new code (its only side effect is the print-cursor variable, which `PRINTAT`
-recomputes anyway). Outside that range they differ: `CRtoATTR` does `AND 3 : OR #58`
-(`L30.3 - printat.asm:78-79`) and so wraps rows mod 32 — `B=255, C=15` gives `$5BEF`, where
-`CalcularAtributo` gives `$77EF`. See `memory-map` §1.
+`pintar_tetromino`, `borrar_tetromino`, `pintar_siguiente`, `bajar_filas` and `reiniciar_marcador`
+are fully register-safe. `CRtoATTR` returns the **same address** as `CalcularAtributo` **for rows
+0-23** but keeps `BC` — prefer it in new code (its only side effect is the print-cursor variable,
+which `PRINTAT` recomputes anyway); `lineas.asm` and `pintar_siguiente` both depend on that. Outside
+rows 0-23 they differ: `CRtoATTR` does `AND 3 : OR #58` (`L30.3 - printat.asm:78-79`) and so wraps
+rows mod 32. Nothing in the program passes such a row any more. See `memory-map` §1.
+
+**New routines follow the same contract:** push everything you write, pop in mirror order, and
+return the one result in `A`. Every routine added by the fix work does — which is what lets the loop
+carry `D`, `E` and `H` across half a dozen calls (`game-loop-and-collision` §2).
 
 ## Landmine 1 — `CalcularAtributo` destroys `BC`
 
-`pantallas.asm:77` is `LD BC, $5800`: it loads the attribute-file base into `BC` to add it, and
-never restores it. Its header comment (`pantallas.asm:68-69`) does not say so. All three callers
+`pantallas.asm:79` is `LD BC, $5800`: it loads the attribute-file base into `BC` to add it, and
+never restores it. Its header comment (`pantallas.asm:70-71`) does not say so. All three callers
 survive only because they reload `B`/`C` from the piece record *after* the call —
-`piezas.asm:41-43`, identical at `test_col.asm:10-13` and `clear.asm:10-12`:
+`piezas.asm:49-51`, identical at `test_col.asm:11-14` and `clear.asm:11-13`:
 
 ```asm
     call CalcularAtributo  ; HL = attribute address for (B,C). BC is now $5800.
@@ -98,8 +112,9 @@ survive only because they reload `B`/`C` from the piece record *after* the call 
 `PRINTSTR` reads the string through `IX` and walks it to the terminating zero
 (`L30.3 - printat.asm:20, 24`); `PRINTCHAR` runs `djnz` over 8 scanlines (`:113, 120`), leaving
 `B` = 0. **Every text call destroys both the piece pointer and the piece row.** This is the number
-one way to break the game while adding a score display. `Pantalla_Ini` gets away with it only
-because it runs before any piece exists (`main.asm:10` precedes `main.asm:14`).
+one way to break the game while adding a display. `Pantalla_Ini` and `reiniciar_marcador` get away
+with it only because they run before any piece exists; `ImprimirMarcador`, which runs mid-game,
+wraps every print in `push ix : push bc` (`puntuacion.asm:108, 120`).
 
 Mandatory wrapper — copy the whole block:
 
@@ -120,32 +135,41 @@ non-zero", so text there becomes solid blocks. See `rendering-and-attributes`.
 
 ## Landmine 3 — `comprobar` returns in `A` and must not be "cleaned up"
 
-`test_col.asm:4-8` pushes `IX IY HL DE BC` and `:49-53` pops them — **`AF` is deliberately absent**.
-The result is set by `ld a,0` / `ld a,1` at `:42` / `:46` and read by callers with `or a` / `jr z`.
+`test_col.asm:4-8` pushes `IX IY HL DE BC` and `:50-55` pops them — **`AF` is deliberately absent**.
+The result is set by `ld a,0` / `ld a,1` at `:43` / `:47` and read by callers with `or a` / `jr z`.
 Every other routine in the tree preserves `AF`. Adding `push af` / `pop af` here for "consistency"
-restores the old `A` and throws the collision result away. Do not do it.
+restores the old `A` and throws the collision result away. Do not do it. The comment at `:55` says
+so in the source; keep it there.
 
-## `Medio` vs `C` — two copies of the column, out of sync by design
+## `Medio` mirrors `C` — and must, at every `comprobar`
 
-`MOVER` writes `(Medio)` in memory (`movimiento.asm:22, 30`) and never touches `C`. The loop
-reconciles them with `ld c, e` (`juego.asm:35, 40`) — but only **after** `call comprobar`
-(`juego.asm:29`) has already tested the old `C`, so a sideways move is validated one iteration late.
+`(Medio)` is the memory copy of the current column. It is **not** an independent value and no longer
+drifts: every site that commits a new column writes both. `juego.asm:78-79` after a sideways move,
+`juego.asm:26` and `:110-111` at spawn, and `giro.asm:54-55` inside a successful rotation — which
+matters because `GIRAR` may kick the column sideways and the rollback path (`giro.asm:61-62`) reads
+`(Medio)` back into `C`.
 
 **Invariant every correct edit must maintain: `C` equals `(Medio)` at every `call comprobar`.**
-Fixing the loop ordering belongs to `game-loop-and-collision`; do not do it here.
 
-Three places define the spawn column and they disagree: `piezas.asm:31` `Medio: DB 14`,
-`tetromino_next.asm:25` `ld c, 15`, `juego.asm:7-8` `ld a,15 / LD (Medio),A`. The `DB 14` never
-takes effect because `iniciar` overwrites it first. See `piece-data-and-spawn`.
+The spawn column now has exactly one definition — `ld c, 15` in `seleccionar_pieza`
+(`tetromino_next.asm:75`). The `Medio: DB 15` initialiser in `variables.asm:36` is a placeholder
+that `juego.asm` overwrites from `C` before the first piece is drawn; there is no third definition
+any more. See `piece-data-and-spawn`.
 
-## `IY` is unmanaged
+## `IY` is a managed invariant: `$5C3A`, always, outside a bracket
 
-`piezas.asm:44`, `clear.asm:13` and `test_col.asm:14` point `IY` at piece-pattern data around
-`$A0xx`; `L35 - Tetris_3D.asm:9` sets it to `Tetro_3D` = `$9FD7` and exits with `$9FDF`. Nothing
-ever restores a sane value. `pintar_tetromino`, `borrar_tetromino` and `comprobar` do `push iy` /
-`pop iy`, so they restore the **caller's** `IY` — which is already garbage. Treat `IY` as undefined
-at all times: never pass data in it, never assume it survives a call. Why this is dangerous rather
-than merely untidy: `interrupts-and-timing`.
+`main.asm:8-11` sets `DI` / `LD IY,$5C3A` / `IM 1` / `EI` at startup, and interrupts stay on. The
+ROM's 50 Hz handler at `$0038` addresses the system variables through `IY`, so **`IY = $5C3A` is a
+program-wide invariant**, not a don't-care.
+
+`piezas.asm:52`, `clear.asm:14` and `test_col.asm:15` still point `IY` at piece-pattern data, and
+each one now brackets that window with `di` after its pushes and `ei` immediately after `pop iy`.
+`L35 - Tetris_3D.asm` does not restore `IY`, so its caller brackets it and reloads `$5C3A`
+(`tableroJuego.asm:39-41`).
+
+Rules for a new routine that needs `IY`: bracket it yourself, `ei` **after** `pop iy` and never
+before, and do not nest brackets. Still never pass data in `IY` across a call. Full reasoning:
+`interrupts-and-timing` §1.
 
 ## Rules for writing a new routine
 
@@ -155,10 +179,12 @@ than merely untidy: `interrupts-and-timing`.
 4. Balance `push`/`pop` per path: an early `ret` that skips a `pop` returns to a garbage address.
 5. If your routine needs the piece position, take it in `B`/`C`. Do not add a new variable.
 6. Need an attribute address without losing `BC`? Call `CRtoATTR` — but only for rows 0-23. Do not
-   swap it into existing `CalcularAtributo` call sites; the `B=255` probe in `test_col.asm` moves.
-7. Never assume a routine preserves a register because a similar one does — check the table.
+   swap it into the three existing `CalcularAtributo` call sites; they are written around its
+   clobber and work as they stand.
+7. If you point `IY` anywhere, bracket the window with `di` / `ei`, `ei` after `pop iy`.
+8. Never assume a routine preserves a register because a similar one does — check the table.
 
-Skeleton to copy (a row scanner, the shape line-clear work needs):
+Skeleton to copy (`lineas.asm:40-57`'s `fila_llena` is the shipped version of this shape):
 
 ```asm
 ; contar_fila ("count row") — counts occupied cells in one board row.
@@ -201,7 +227,9 @@ cf_next:
 | Printing text mid-game without `push ix` | `IX` ends on the string terminator; the "current piece" becomes whatever bytes follow it. |
 | Using `B` as a scratch counter, or any `djnz`, without `push bc` | Piece row jumps. `PRINTAT` does this to you too. |
 | Assuming a routine preserves registers because a neighbour does | `pintar_tetromino` preserves everything; `CalcularAtributo` two files away eats `BC`. |
-| Adding a `FILA`/`COLUMNA` variable instead of using `B`/`C` | Three copies of the position (`B`/`C`, `Medio`, yours) drift apart, as `Medio` already does. |
+| Adding a `FILA`/`COLUMNA` variable instead of using `B`/`C` | A third copy of the position drifts from `B`/`C` and `Medio`. Two is already the maximum the loop can keep in sync. |
+| Writing `C` without writing `(Medio)` | The next `comprobar` or `GIRAR` rollback uses the other column; the piece ghosts or teleports. |
+| Pointing `IY` somewhere with no `di`/`ei`, or `ei` before `pop iy` | The ROM's 50 Hz handler writes through the wrong `IY` into the code image. |
 | Unbalanced `push`/`pop` on an early-exit path | `ret` pops a saved register as the return address; execution lands in data. |
 
 ## See also
