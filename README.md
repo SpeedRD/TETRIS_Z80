@@ -11,8 +11,11 @@ byte is non-zero, and every draw, erase, and collision check reads or writes tha
 
 ## Screenshot
 
-*(Drop a screenshot or GIF of the game running in ZEsarUX here — none is included in this
-repo yet.)*
+![Title screen](Images/Title.png)
+
+![Start menu](Images/Start.png)
+
+![Gameplay](Images/Game.gif)
 
 ## How to play
 
