@@ -227,6 +227,7 @@ cf_next:
 | Printing text mid-game without `push ix` | `IX` ends on the string terminator; the "current piece" becomes whatever bytes follow it. |
 | Using `B` as a scratch counter, or any `djnz`, without `push bc` | Piece row jumps. `PRINTAT` does this to you too. |
 | Assuming a routine preserves registers because a neighbour does | `pintar_tetromino` preserves everything; `CalcularAtributo` two files away eats `BC`. |
+| Carrying a **loop counter in `A`** across `call CRtoATTR` (or any AF-destroying call) | `CRtoATTR` ends in `LD A,L`, so the counter silently becomes the low byte of the returned address. This shipped in `bajar_filas` for a while: 167 iterations instead of 21, and the board still came out correct, so nothing caught it. `push af`/`pop af` around the call, as `anotar_lineas`, `ImprimirBCD` and `ImprimirDec3` already do. |
 | Adding a `FILA`/`COLUMNA` variable instead of using `B`/`C` | A third copy of the position drifts from `B`/`C` and `Medio`. Two is already the maximum the loop can keep in sync. |
 | Writing `C` without writing `(Medio)` | The next `comprobar` or `GIRAR` rollback uses the other column; the piece ghosts or teleports. |
 | Pointing `IY` somewhere with no `di`/`ei`, or `ei` before `pop iy` | The ROM's 50 Hz handler writes through the wrong `IY` into the code image. |

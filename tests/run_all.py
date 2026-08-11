@@ -11,6 +11,7 @@ SUITES = [
     ("test_entrada",    "leer_teclas / en_rango"),
     ("test_giro",       "GIRAR: cycles, kicks, atomic rollback"),
     ("test_lineas",     "limpiar_lineas / fila_llena / bajar_filas"),
+    ("test_bajar_filas", "row-copy count: exact iterations, no pixel-file damage"),
     ("test_puntuacion", "score, lines, level, speed table"),
     ("test_spawn",      "spawn RNG, preview handoff"),
     ("test_pantallas",  "redesigned screens, panels, best score"),

@@ -132,7 +132,13 @@ bajar_filas:
     ld a, b : or a           ; A = number of row copies to do = B
     jr z, bf_fila0           ; row 0 cleared -> nothing above it, just blank it
     ld c, COL_IZQ
-    call CRtoATTR            ; HL = destination = $5800 + B*32 + 7
+    push af                  ; MANDATORY. CRtoATTR ends in "LD A,L", so it
+    call CRtoATTR            ;  DESTROYS A. HL = destination = $5800 + B*32 + 7
+    pop af                   ;  Without this the copy count became the low byte
+                             ;  of that address: 167 passes instead of 21 for
+                             ;  row 21. See the timing table and the mistakes
+                             ;  table below -- this one is invisible in the
+                             ;  finished board, so only a count assertion sees it.
     ex de, hl                ; DE = destination
     ld hl, -32 : add hl, de  ; HL = source = destination - 32 = one row higher
 bf_copiar:
@@ -185,16 +191,34 @@ placement, and a second declaration of an existing name is a duplicate-label err
 
 `LDIR` costs 21 T-states per byte moved plus 16 for the last, so 18 bytes = 373 T.
 
+**Measured under ZEsarUX, stepping opcode by opcode, against the fixed build.** The earlier
+hand-counted figures here counted only the row copies and left out the 22 `fila_llena` scans, which
+is most of the cost of a single clear — trust the table below, not an opcode count of the copy loop.
+
 | Case | Cost |
 |---|---|
 | One row copy including loop overhead | ~439 T |
-| Worst single clear: row 21, 21 copies = 378 bytes, plus blanking row 0 | **~9,700 T** |
-| Absolute worst: 4 clears at the bottom, every row scan running full length | **~57,000 T** |
+| `limpiar_lineas`, nothing to clear (22 scans, all exiting early) | **6,291 T** |
+| `limpiar_lineas`, one full row at row 21 | **22,235 T** |
+| `limpiar_lineas`, two full rows | **30,612 T** |
+| `limpiar_lineas`, four full rows — the absolute worst | **65,059 T** |
 
-One 50 Hz frame is 69,888 T, so even the pathological case fits in a single frame and a normal
-clear costs ~14% of one. It runs on the locking frame only, which is why a clear can tear slightly
-while normal play does not. The attribute file is contended memory so real cost is higher than these
-figures — `interrupts-and-timing` owns contention; do not re-derive it here.
+The whole locking `paso` frame is what actually has to fit, and `limpiar_lineas` is only part of it —
+`anotar_lineas` reprints the scoreboard, then a piece is spawned and previewed:
+
+| Locking frame | Cost | Share of a 69,888 T frame |
+|---|---|---|
+| lock, 0 rows cleared | 13,848 T | 19.8% |
+| lock, 1 row cleared | 37,516 T | 53.7% |
+| lock, 2 rows cleared | 44,875 T | 64.2% |
+| lock, 3 rows cleared | 63,129 T | 90.3% |
+| lock, 4 rows cleared | **76,864 T** | **110.0% — overruns the frame** |
+
+So a *tetris* does not fit in one frame even with the copy loop correct: the loop misses one 50 Hz
+interrupt and that frame takes two. Everything below four rows fits. This is inherent to doing the
+whole shift in one frame, and doing it in one frame is still right (§ "One call, do not split") —
+the alternative is a half-shifted board visible to `comprobar`. The attribute file is contended
+memory, so these are floors; `interrupts-and-timing` owns contention.
 
 ## Optional: flash the cleared row — two mandatory rules
 
@@ -223,6 +247,7 @@ Frame sync exists now (`HALT` at `juego.asm:35`), so this is buildable. If you a
 | Running the clear before the piece is locked | The piece is not in the attribute file yet, so its row never reads as full. |
 | Putting anything that touches `A` between `limpiar_lineas` and `anotar_lineas` | The row count is the return value; the score silently stops matching the clears. |
 | Making `limpiar_lineas` clobber `BC` or `IX` | They still hold the locked piece's position and record when it runs. |
+| Holding the row-copy count in `A` across `call CRtoATTR` in `bajar_filas` | `CRtoATTR` ends in `LD A,L`, so the count becomes the low byte of the attribute address — 167 passes instead of 21 for row 21. The finished board is still correct, because `bf_cero` rewrites row 0 afterwards, so **every board-state assertion passes**. What it costs is 146 stray row copies walking down through the pixel display file, ~230 corrupted bytes of background per clear, and a 119,000 T frame instead of 38,000. `tests/test_bajar_filas.py` counts the iterations directly; keep the `push af`/`pop af`. |
 | Using `CalcularAtributo` instead of `CRtoATTR` **here** | It clobbers `BC` (`pantallas.asm:79`), destroying the row counter mid-loop. This is a rule for *these* loops, not everywhere: `CRtoATTR` is only valid for rows 0-23 (`AND 3 : OR #58`), and rows 0-21 is all this file ever passes. For a row outside 0-23, `CalcularAtributo` is the correct routine — see `rendering-and-attributes` §2. |
 
 ## See also

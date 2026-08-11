@@ -64,7 +64,19 @@ bajar_filas:
     ld a, b : or a           ; A = numero de copias a hacer = B
     jr z, bf_fila0           ; se elimino la fila 0: no hay nada encima
     ld c, COL_IZQ
-    call CRtoATTR            ; HL = destino = $5800 + B*32 + 7
+    push af                  ; CRtoATTR TERMINA EN "LD A,L" (L30.3 - printat.asm):
+    call CRtoATTR            ;  destruye A. Sin este push la cuenta de copias se
+    pop af                   ;  perdia y el bucle giraba (bajo de $5800+B*32+7)
+                             ;  veces en vez de B: 167 en vez de 21 para la fila
+                             ;  21. Las 146 vueltas de mas seguian copiando por
+                             ;  debajo del fichero de atributos y ensuciaban 230
+                             ;  bytes del fichero de pixeles en cada linea hecha.
+                             ;  El tablero acababa bien -- bf_cero repara la fila
+                             ;  0 -- asi que el fallo solo se veia como fondo
+                             ;  corrupto y como un frame de 119.000 T en vez de
+                             ;  38.000. Preservar AF, y no fiarlo a que CRtoATTR
+                             ;  respete B, es lo que mantiene esto a salvo si
+                             ;  alguien cambia la rutina de direccion.
     ex de, hl                ; DE = destino
     ld hl, -32 : add hl, de  ; HL = origen = destino - 32 = una fila mas arriba
 bf_copiar:
