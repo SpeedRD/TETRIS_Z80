@@ -137,6 +137,7 @@ python3 tests/run_all.py test_giro    # one suite
 | `test_lineas.py` | 1/2/4-row and full-board clears, non-adjacent rows, border survival |
 | `test_puntuacion.py` | points, BCD carry, line count, level-up, level cap, speed table |
 | `test_spawn.py` | shape distribution, LFSR health, preview handoff |
+| `test_musica.py` | note table vs the two driver formulas, melody well-formedness, measured per-note cost against the 48,000 T budget, the `juego.asm` hook, and the mute flag against `LINEAS` in a live game. **Cannot hear it** — pitch and tune are human-only |
 | `checklist6.py` | §6 end to end, across several games including game-over→restart |
 
 Two properties make this possible and are worth knowing before writing another test: the

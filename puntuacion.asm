@@ -73,8 +73,13 @@ NivelOK:
     LD A, (HL) : LD (FRAMES_POR_FILA), A   ; suelo de 6 frames (~120 ms):
     RET                                    ;  una tabla no puede dar 0
 
-; reiniciar_marcador -- pone el marcador a cero y pinta rotulos y valores.
+; reiniciar_marcador -- pone a cero TODO el estado de una partida y pinta los
+;   rotulos y los valores. Es el unico sitio donde se reinicia estado por
+;   partida: hay uno solo, asi que no se puede olvidar (memory-map 6a).
 ;   Se llama al empezar una partida, cuando aun no hay ninguna pieza en juego.
+;   NO toca MEJOR: la mejor puntuacion es de la SESION y sobrevive a
+;   inicializar; la escribe solo ActualizarMejor. Zapearla aqui borraria
+;   justo lo que existe para conservar.
 ;   Preserva AF, BC, DE, HL, IX, IY.
 reiniciar_marcador:
     push af : push bc : push de : push hl : push ix
@@ -86,6 +91,12 @@ reiniciar_marcador:
     call ActualizarVelocidad           ; FRAMES_POR_FILA = tabla[0] = 48
     ld a, (FRAMES_POR_FILA)
     ld (contador_frames), a
+    call musica_reiniciar              ; la melodia vuelve a empezar por el
+                                       ;  principio. Un fin de partida no borra
+                                       ;  la RAM -- inicializar solo rehace SP --
+                                       ;  asi que sin esta llamada la segunda
+                                       ;  partida arrancaba a mitad de frase
+                                       ;  (musica.asm; NO vale mus_cargar)
     call ImprimirEtiquetas
     call ImprimirMarcador
     pop ix : pop hl : pop de : pop bc : pop af

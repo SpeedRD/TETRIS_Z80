@@ -43,6 +43,7 @@ line is read rather than the exit code.
 | `test_lineas.py` | Single/double/quadruple clears, non-adjacent full rows, top-row clear, a completely full board, and that the well border survives all of it |
 | `test_puntuacion.py` | Points per clear, packed-BCD carry across digit boundaries, line counter, level-up at 10 lines, level cap, and the whole frames-per-level speed table |
 | `test_spawn.py` | Shape distribution (was 25%/6.25%, must now be ~14.3% each), LFSR never reaching zero, and that the previewed piece is the one that actually spawns |
+| `test_musica.py` | The note table re-derived from the two driver formulas and compared byte for byte, melody well-formedness (bar sums, valid note indices, no duration the articulation gap would swallow), the **measured** cost of all 28 notes against the 48,000 T budget, register preservation, no `DI`/`EI` in the driver, the hook's position in `juego.asm`, `musica_silencio` checked frame by frame against `LINEAS` in a running game, and the per-game reset — all four music variables back to their initial values from any prior state, without disturbing `MEJOR` |
 | `checklist6.py` | `build-and-verify` §6 end to end: title, menu, quit, well, gravity, J/K, Q/W, soft drop (SPACE falls faster while held, reverts to normal the instant it's released, and doesn't block J/K/Q/W while held), settling, and border integrity across several full games including game-over→restart |
 
 ## Harness notes
@@ -77,3 +78,10 @@ These suites do not prove the game is fun, and they cannot see tearing or
 flicker — anything about *when* within a frame a write lands still needs a
 human watching. They do cover every routine's contract, the register protocol,
 and board-level outcomes.
+
+**They also cannot hear.** `test_musica.py` measures T-states and compares
+bytes: it can prove a half-period is 3,968 T-states, and therefore 441.03 Hz,
+but not that the ULA is wired to a speaker or that the result is in tune or
+recognisable. Pitch and tune were confirmed by a human listening to ZEsarUX
+before the melody was built out, and that step is not automatable — the suite's
+docstring says so rather than implying coverage it does not have.

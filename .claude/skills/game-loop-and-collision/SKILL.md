@@ -51,7 +51,7 @@ that *jumped over* the border reads empty cells outside the well and is **accept
 kick from column 24 with a 1-wide record tests column 26 and passes. `en_rango` (§7) catches that.
 Use both, never one instead of the other.
 
-## 2. One pass of the loop (`juego.asm:42-141`)
+## 2. One pass of the loop (`juego.asm:42-154`)
 
 `paso` runs **once per 50 Hz frame**, opening with `HALT` (`interrupts-and-timing` §5). Each pass
 does at most three things — a sideways move, a rotation, a one-row fall — and each is a *candidate*
@@ -65,8 +65,9 @@ that is validated before anything is drawn. The pass draws exactly once, at `dib
 | Erase | `:72` | `borrar_tetromino` at the **current** `(B, C)` with the **current** `IX` |
 | Sideways | `:74-102` | `D` = −1/0/+1 from `E` bits0-1; candidate `C`, then `en_rango` **then** `comprobar`; on failure restore `C` and fall through — the pass's gravity still runs |
 | Rotate | `:105-114` | `GIRAR` with the direction in `A`, from `E` bits2-3. It validates, kicks and commits **by itself** |
-| Gravity apply | `:116-137` | If `H`, `inc b` and `comprobar`; free → committed, blocked → `dec b`, lock, clear lines, score, spawn |
-| Draw | `:139-141` | One `pintar_tetromino` of the validated `(B, C, IX)`, then back to `paso` |
+| Gravity apply | `:116-142` | If `H`, `inc b` and `comprobar`; free → committed, blocked → `dec b`, lock, clear lines (and set the music mute flag from the count, `:129`), score, spawn |
+| Draw | `:144-145` | One `pintar_tetromino` of the validated `(B, C, IX)` |
+| Music | `:147` | `musica_frame` — one frame of beeper tone, **last**, after the render (§8) |
 
 Register roles across a pass, from `juego.asm:8-15`: `B` row, `C` column, `IX` piece record, `D` the
 sideways delta, `H` the gravity flag. `E` holds `leer_teclas`'s mask and carries **two different
@@ -173,6 +174,8 @@ that wrapped `255 → 0`.
 | When a row is owed (soft drop, SPACE held) | `contador_rapido` / `FRAMES_CAIDA_RAPIDA` (`juego.asm:17`) | Only decrements while held; frozen (not reset) on release, so it resumes where it left off next time |
 | Clearing and compacting rows | `limpiar_lineas` (`lineas.asm`) | Returns the count in `A` |
 | Score, lines, level, speed, display | `anotar_lineas` (`puntuacion.asm`) | Consumes that count |
+| One frame of music, and the melody's position | `musica_frame` (`musica.asm`) | Called last, after the render (§8) |
+| Whether this frame may make a sound | `(musica_silencio)`, set at `juego.asm:129` | Non-zero = mute; `musica_frame` consumes and clears it (§8) |
 
 Adding a new action to the pass means adding a candidate that follows invariant 2 and 3, not a new
 place that writes `C`.
@@ -186,8 +189,10 @@ This is `juego.asm` as shipped, lightly condensed. Read it as the shape any edit
 ```asm
 iniciar:
     call iniciar_secuencia  ; seed the LFSR and announce the first piece
-    call reiniciar_marcador ; score/lines/level to zero + labels. The ONLY free place to
-                            ;   print: no piece exists yet (scoring-and-level §5)
+    call reiniciar_marcador ; ALL per-game state to zero + labels: score, lines, level,
+                            ;   gravity counters, and the music player (§8). The ONLY
+                            ;   free place to print: no piece exists yet
+                            ;   (scoring-and-level §5). Does NOT touch MEJOR (§3)
     call seleccionar_pieza  ; IX = piece record, B = 0, C = 15
     call pintar_siguiente   ; show the piece queued behind it
     ld a, c : ld (Medio), a ; Medio always mirrors C
@@ -246,6 +251,10 @@ sin_giro:                   ;   NEVER wrap it in comprobar (piece-rotation §5).
     dec b                   ; blocked -> undo the fall: the piece rests here
     call pintar_tetromino   ; lock it into the attribute file
     call limpiar_lineas     ; A = rows cleared, 0..4          (`line-clear`)
+    ld (musica_silencio), a ; a frame that clears rows is MUTE: not even a
+                            ;   one-row clear fits beside the music fill (§8).
+                            ;   ld (nn),a touches neither A nor the flags, so
+                            ;   anotar_lineas still gets the count intact.
     call anotar_lineas      ; score, level, speed, scoreboard  (`scoring-and-level`)
     call seleccionar_pieza  ; IX = next piece, B = 0, C = 15
     call pintar_siguiente   ; refresh the preview box
@@ -254,6 +263,9 @@ sin_giro:                   ;   NEVER wrap it in comprobar (piece-rotation §5).
     or a : jp nz, fin_partida
 dibujar:
     call pintar_tetromino   ; draw the committed (B, C, IX)
+    call musica_frame       ; one frame of beeper tone. LAST, after the render:
+                            ;   the erase/redraw pair must stay glued to HALT
+                            ;   inside the border window (§8, `musica.asm`)
     jp paso                 ; jp, not jr: paso is out of an 8-bit relative jump's range
 fin_partida:
     call relleno_pozo       ; el pozo se llena de bloques antes de cortar (§3).
@@ -355,6 +367,59 @@ not leak), SPACE's level detection (reports held on every pass, not just the fir
 instant it releases, without disturbing the edge bits), and `en_rango`'s boundaries for 1-, 2- and
 4-wide pieces.
 
+## 8. The music hook — the whole of it, in two instructions
+
+Music is the only thing added to this loop since it was rebuilt, and it is deliberately the smallest
+possible change to it: **two instructions, and no new decision inside the pass.** `musica.asm` owns
+the driver, the note table and the melody; `MUSIC_DESIGN.md` owns the budget. This section owns only
+how it attaches.
+
+| Instruction | Where | Why there |
+|---|---|---|
+| `call musica_frame` | `:147`, last in `dibujar`, after `pintar_tetromino` | The erase/redraw pair must stay immediately after `HALT`, inside the ~14,000 T border window. Music before the render pushes the redraw out of that window and the piece tears. After it, ~48,000 T of tone is harmless — the frame still reaches `HALT` with ~13,000 T to spare. |
+| `ld (musica_silencio), a` | `:129`, between `call limpiar_lineas` and `call anotar_lineas` | `limpiar_lineas` returns the row count in `A`, and a frame that clears rows has no budget left for sound. `ld (nn),a` alters neither `A` nor the flags, so `anotar_lineas` still receives the count. |
+
+Four properties that make this safe, and that an edit must not break:
+
+1. **It preserves everything.** `musica_frame` pushes `AF`, `BC`, `DE`, `HL` and touches neither `IX`
+   nor `IY`, so the piece survives it (`register-protocol`). It is verified in
+   `tests/test_musica.py`, not assumed.
+2. **It does no `DI`.** The ULA interrupt is a short pulse — mask it and it is *missed*, not
+   deferred, and the next `HALT` then waits a whole extra frame, halving the frame rate. The driver
+   never touches `IY` either, so it needs no bracket of its own (`interrupts-and-timing` §1, §8).
+3. **The mute flag lasts exactly one frame.** `musica_frame` reads it and zeroes it on *every* call,
+   including the calls that were going to be silent anyway. Nothing else writes it.
+4. **The game-over path skips it.** `jr nz, fin_partida` at `:142` jumps past `dibujar`, so a pass
+   that ends the game plays no note. `relleno_pozo` is silent for the same reason — it is not in
+   this loop.
+
+**If you add anything to the pass, it goes before `dibujar`, not between the render and
+`musica_frame`.** The order render-then-music is the one property of this hook that is load-bearing.
+
+### The melody is rewound by the new-game reset, not by the loop
+
+Music state is **per-game**, and a game over does not clear RAM: `Pantalla_Final` does
+`jp inicializar`, and `inicializar` only re-sets `SP` (§3). So the four music variables carry
+straight over into the next game unless something zeroes them — which is why
+**`reiniciar_marcador` now calls `musica_reiniciar`**, alongside the score, lines, level and gravity
+counters it already reset. Without it the first game was right and every game after it started
+partway through the melody, mid-note, possibly with a stale mute flag pending.
+
+Three things worth knowing before editing this:
+
+- **`reiniciar_marcador` is the per-game reset point, and it is the only one.** The call lives
+  *inside* it rather than next to it in `iniciar`, for the same reason the `di`/`ei` brackets live
+  inside the piece routines: there is exactly one of it, so it cannot be forgotten. Its name
+  understates what it does — read it as "reset the game", not "reset the scoreboard".
+  `memory-map` §6a is the table of what is per-game versus per-session.
+- **It still does not touch `MEJOR`** (§3). The session best has one writer, `ActualizarMejor`, and
+  nothing zeroes it. `tests/test_musica.py` asserts that the music reset did not disturb it.
+- **`mus_cargar` is not a reset routine and must not be used as one.** It *advances* the melody:
+  it reads the pair at `musica_puntero` (rewinding only if that pair happens to be `NOTA_FIN`),
+  steps the pointer on by two, and leaves `musica_frames` holding that note's duration rather than
+  `0`. It never touches `musica_silencio`. Calling it from the reset would eat one note of the
+  melody per game — making the original bug worse, not better.
+
 ## Common mistakes
 
 1. Committing a candidate position before testing it. Write `C`, test, and restore on failure.
@@ -384,7 +449,23 @@ instant it releases, without disturbing the edge bits), and `en_rango`'s boundar
 14. Adding a second writer of `MEJOR`, or capturing the session best anywhere other than the top of
     `Pantalla_Final`. After `reiniciar_marcador` runs, `PUNTOS` is already zero and the finished
     score is gone (§3).
+15. Moving `call musica_frame` above `call pintar_tetromino`, or inserting anything between them.
+    ~48,000 T of tone in front of the redraw pushes it clean out of the border window and the piece
+    tears every frame (§8).
+16. Putting `ld (musica_silencio), a` after `call anotar_lineas`. `anotar_lineas` destroys `AF`, so
+    the flag would be set from garbage instead of the row count (§8, `register-protocol`).
+17. Wrapping `call musica_frame` in `di`/`ei` to stop the ROM handler clicking mid-note. The masked
+    ULA pulse is *lost*, not delayed, and the next `HALT` waits a full extra frame — 25 fps (§8).
+18. Making the mute flag sticky, or clearing it anywhere but inside `musica_frame`. It is a
+    one-frame flag with exactly one writer and one consumer (§8).
+19. Adding a per-game variable without resetting it in `reiniciar_marcador`. A game over does not
+    clear RAM, so it silently carries into the next game — first game right, every one after wrong
+    (§8, `memory-map` §6a). This is exactly how the music started mid-melody.
+20. Calling `mus_cargar` to rewind the melody. It advances it; `musica_reiniciar` rewinds it (§8).
+21. Zeroing `MEJOR` in `reiniciar_marcador` while adding a reset there. It is per-session by
+    design (§3).
 
 Related: `register-protocol` (clobbers), `memory-map` (geometry, `variables.asm`), `piece-rotation`
 (`GIRAR`), `line-clear` and `scoring-and-level` (the lock-path hooks), `interrupts-and-timing` (frame
-gate, `IY` brackets), `failure-patterns` (the regression this loop replaced).
+gate, `IY` brackets, and §8 for where the music sits in the frame), `rendering-and-attributes` §1b
+(the screen border the driver sets), `failure-patterns` (the regression this loop replaced).

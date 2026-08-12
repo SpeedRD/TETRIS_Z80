@@ -51,3 +51,24 @@ Medio:           DB 15      ; copia en memoria de la columna en curso (C).
                             ; escribe desde C en cuanto aparece la primera
                             ; pieza. Antes vivia en piezas.asm, dentro de la
                             ; imagen de codigo, pegado al ultimo registro.
+
+; --- musica ----------------------------------------------------------------
+; Las tres primeras son la posicion del reproductor dentro de melodia
+; (musica.asm); la cuarta es la unica que escribe alguien de fuera.
+musica_puntero:  DW melodia  ; siguiente pareja (nota, duracion) por leer.
+                             ; Referencia adelantada a musica.asm, igual que
+                             ; siguiente_pieza lo es a piezas.asm.
+musica_nota:     DB NOTA_SIL ; indice en tabla_notas de la nota que suena
+                             ; AHORA. NOTA_SIL = ninguna (silencio de la
+                             ; propia melodia).
+musica_frames:   DB 0        ; tramas que le quedan a esa nota. 0 = agotada:
+                             ; la proxima llamada a musica_frame carga la
+                             ; pareja siguiente. Por eso el valor inicial es 0
+                             ; y no hace falta ninguna rutina de arranque.
+musica_silencio: DB 0        ; distinto de cero = esta trama va MUDA.
+                             ; La escribe juego.asm con el numero de filas que
+                             ; devuelve limpiar_lineas: una trama que borra
+                             ; lineas no tiene presupuesto para el relleno de
+                             ; sonido (MUSIC_DESIGN.md 6). musica_frame la lee
+                             ; y la vuelve a poner a cero SIEMPRE, asi que es
+                             ; una bandera de una sola trama.

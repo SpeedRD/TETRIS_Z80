@@ -9,6 +9,11 @@ Spanish: `pintar` = paint/draw, `borrar` = erase, `pantalla` = screen, `fila` = 
 column, `tablero` = board, `atributo` = attribute, `CalcularAtributo` = "calculate attribute",
 `dibujar_tablero` = "draw board", `Medio` = "middle" (column). `tetromino` is as-is.
 
+**"Border" means three different things in this file.** They are unrelated and mixing them up wastes
+time: the **well border** is the yellow attribute cells at columns 6/25 and row 22 (§5); the
+**border window** is the ~14,000 T-state raster period after `HALT` in which a write is invisible
+(§4); the **screen border** is the frame around the display, set by bits 0-2 of port `$FE` (§1b).
+
 ## 1. The Spectrum screen: two regions, and this game uses one
 
 The screen is 32 columns x 24 rows of 8x8 pixel cells, described by **two separate, independent** regions:
@@ -29,6 +34,38 @@ filled cell is any non-zero attribute byte, an empty cell is `0`**; collision is
 `ld a,(hl) : or a` (`test_col.asm:24-25`, see `game-loop-and-collision`). The pixel file is only
 decoration — the title picture (`titulo.asm`) and the `Tetris_3D` bevel (`L35 - Tetris_3D.asm:3-27`,
 which also leaves `IY = $9FDF`, see `interrupts-and-timing`). `memory-map` owns the address map.
+
+## 1b. The screen border is BLACK, and the music driver is what sets it
+
+There is a third region the tables above do not cover, because it is not memory: the **screen
+border**, the frame around the 256x192 display. It has no address. It is set only by writing bits
+0-2 of port `$FE`, and **it cannot be read back** — there is no way to preserve it, so any code that
+writes `$FE` at all is choosing a border colour whether it means to or not.
+
+| | |
+|---|---|
+| Colour | **Black** (bits 0-2 = `0`), matching the black PAPER the well and the panels use |
+| Written by | `musica.asm` — `mus_agudo`, `mus_grave` and `mf_reposo`, all via `out ($FE),a` |
+| Written when | Every frame the music driver emits a tone, i.e. once per pass of `juego.asm`'s loop |
+| Constant | `MUS_BORDE EQU %00000000` (`musica.asm`) |
+
+This is the **only** `$FE` write in the tree. The driver's real business there is bit 4, the speaker;
+bits 0-2 come along for the ride, which is why the colour had to be decided rather than inherited
+(`MUSIC_DESIGN.md` §8).
+
+Two consequences that look like bugs and are not:
+
+1. **The border goes black when play starts, not at boot.** The hook is inside `iniciar`, so the
+   title screen and the start menu still show whatever border the ROM left, and it turns black on the
+   first pass of the game loop. Do not "fix" this by adding an `out ($FE),a` to `main.asm` —
+   `MUSIC_DESIGN.md` §8 item 5 records that the music work was to touch existing game code in
+   exactly one place.
+2. **Silent frames leave the border alone.** A frame muted by `limpiar_lineas`, a `NOTA_SIL` rest and
+   a note's last frame all return without touching `$FE` at all, so the border keeps its last value
+   rather than flickering.
+
+If you ever need the border to be something else, change `MUS_BORDE` — not the `out` instructions,
+of which there are three.
 
 ## 2. Two attribute-address routines — there is a choice, and it matters
 
@@ -287,7 +324,12 @@ one deliberately, or extending past PAPER-only encoding into BRIGHT (bit 6). `pi
 - Adding a double buffer. No page flipping on 48K; the copy tears anyway.
 - Printing text into columns 7-24. It becomes collidable geometry inside the well.
 - Accented characters or `¡` / `¿` in a new message string (§7).
-- Assuming the border repairs itself. It is drawn once and never again.
+- Assuming the well border repairs itself. It is drawn once and never again.
+- Confusing the three "borders" — well border, border window, screen border. See the note above §1.
+- Trying to save and restore the screen border around a `$FE` write. It cannot be read back; pick a
+  value (§1b).
+- Writing `$FE` from new code with bits 0-2 set to anything but 0, which changes the border as a side
+  effect of whatever you were actually doing (§1b).
 - Reaching for a box-drawing glyph for a panel border. `charset.bin` is ASCII 32-127 only; frames
   are attribute cells (§5b).
 - Using `CalcularAtributo` inside a panel or fill loop. It eats `BC`, which is the row you are

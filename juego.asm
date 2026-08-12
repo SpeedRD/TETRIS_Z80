@@ -126,6 +126,11 @@ sin_giro:                   ;  el solo. NUNCA envolverlo en comprobar.
     CALL pintar_tetromino   ; y la fijamos en el fichero de atributos
 
     CALL limpiar_lineas     ; A = filas eliminadas (0..4)
+    LD (musica_silencio), A ; una trama que borra filas va MUDA: ni un borrado
+                            ;  de una sola fila cabe junto al relleno de sonido
+                            ;  (MUSIC_DESIGN.md 6). LD (nn),A no toca A ni los
+                            ;  flags, asi que anotar_lineas sigue recibiendo
+                            ;  intacta la cuenta que acaba de devolver.
     CALL anotar_lineas      ; puntua, sube de nivel y refresca el marcador
 
     CALL seleccionar_pieza  ; IX = pieza siguiente, B = 0, C = 15
@@ -138,6 +143,14 @@ sin_giro:                   ;  el solo. NUNCA envolverlo en comprobar.
 
 dibujar:
     CALL pintar_tetromino   ; pintamos el (B, C, IX) ya validado
+
+    CALL musica_frame       ; el relleno de sonido va AQUI, al final del cuerpo
+                            ;  y DETRAS del repintado (MUSIC_DESIGN.md 7 regla
+                            ;  1): el par borrar/pintar tiene que seguir pegado
+                            ;  al HALT, dentro del borde superior, o la pieza se
+                            ;  desgarra. Delante del repintado lo echaria fuera
+                            ;  de esa ventana; detras es inofensivo.
+                            ;  Preserva AF, BC, DE, HL, IX e IY, y no hace DI.
     JP paso                 ; JP, no JR: paso ha quedado fuera de rango
 
 fin_partida:

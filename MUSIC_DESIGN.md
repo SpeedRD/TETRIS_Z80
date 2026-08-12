@@ -1,7 +1,14 @@
 # In-game music: feasibility, cost and design decision
 
-Decision document. Nothing here is built yet — this records what the timing actually is, what a
-beeper driver actually costs, and what was decided before code gets written.
+Decision document, and now also the record of what was built from it. §1–§7 are the original
+measurements and decisions, unchanged apart from the warning added to §4.1 and the new §4.5; §8 says
+what shipped and where it differs. It records what the timing actually is, what a beeper driver
+actually costs, and what was decided before code got written.
+
+**Built.** `musica.asm` (driver + note table + the full melody), the music block in
+`variables.asm`, two hooks in `juego.asm`, the per-game reset call in `puntuacion.asm`, and
+`tests/test_musica.py`. **Read §4.5 before touching the note table** — the delay constants that
+shipped are not the ones in §4.1's table, deliberately.
 
 Every number below was **measured**, not estimated: the game was driven under ZEsarUX over ZRCP and
 stepped one opcode at a time, with each step's T-states read from the emulator's counter and
@@ -174,6 +181,11 @@ C5 upward; the 16-bit loop covers A3 to B4. Worked constants across Korobeiniki'
 
 Worst error across the whole melody: **4.2 cents**. Pitch is a solved problem at any budget.
 
+> **The constants in that table are not the ones that shipped, and must not be copied into code.**
+> They belong to the benchmark loop, which was never in the tree (see the appendix). `musica.asm`'s
+> loops are shorter, so they need *longer* delay constants for the same pitch. **§4.5 has the
+> formulas and the table the driver actually uses.**
+
 ### 4.2 Approach 1 — tone-accurate square-wave toggle loop
 
 Toggle bit 4 of port `$FE`, wait a computed number of T-states, repeat. This is the classic
@@ -221,6 +233,58 @@ faintly inside it; a high duty cycle is heard as a clear note.
 
 56,000 T is not a real option: 344 T of margin on the lock frame means any future addition to the
 lock path drops the game to 25 fps.
+
+### 4.5 As built: the formulas the shipped driver actually has
+
+§4.1's two formulas were fitted from an isolated benchmark assembled at `$C000`, which was never
+part of the game image and is not in the tree. `musica.asm`'s loops are not that benchmark. Their
+cost was hand-counted opcode by opcode and then confirmed by measurement:
+
+```
+mus_agudo  (DJNZ delay)     half_period_T = 33 + 13 × C     C  = 1..255
+mus_grave  (16-bit delay)   half_period_T = 42 + 26 × HL    HL = 1..65535
+
+§4.1's model, for comparison:  51.81 + 13.00 × C   and   75.55 + 26.01 × HL
+```
+
+**The slopes are identical; only the fixed overhead differs** — 18 T lower on the DJNZ loop, 34 T
+lower on the 16-bit one. That is just what a tighter loop costs, and it is why the two shapes were
+kept: 13 T of granularity for the high notes, 26 T for the low ones, split at C5/B4 exactly where
+§4.1 puts it.
+
+**The note table is therefore derived from these formulas, not from §4.1's constant column.** Every
+constant comes out 1 or 2 higher, which is the mechanical consequence of a shorter loop needing a
+longer delay to reach the same pitch. This is not a cosmetic difference: copying §4.1's constants
+onto these loops would sharpen every note by roughly 4 cents, because the delay would be right for
+a loop that is not the one playing it. The generated table is re-derived from the formulas above and
+compared byte for byte in `tests/test_musica.py`.
+
+**Cost: worst-case pitch error is −5.02 cents, at G#5** — against the 4.2 cents §4.1 reports for its
+own model over its own 16-note subset. Both numbers are rounding luck rather than a quality
+difference: at 13 T of granularity the quantisation floor near the top of the range is about ±5.3
+cents whatever the fixed overhead is, and a scan of every possible fixed pad showed **4.39 cents is
+the best any padding can reach** across A3–C6. That was not worth two extra instructions in the hot
+loop. §4.1's own standard still holds — a semitone is 100 cents and trained ears resolve 5–10 at
+best — so 5.02 cents stays inside the "inaudible" bound this document set. It was confirmed by
+listening before the melody was built out.
+
+Measured, per call, over all 28 notes of the table:
+
+| Quantity | Value |
+|---|---:|
+| Worst tone fill | **47,920 T** (B5), budget 48,000 |
+| Worst whole call, fill + bookkeeping | **48,378 T** (a note-change frame) |
+| Driver bookkeeping, hand-counted and measured | 362 T |
+| Frame muted by `limpiar_lineas` | 202 T |
+| `NOTA_SIL` rest / note's last frame | 229 T / 187 T |
+| Slack against a worst normal pass (8,366 T) | **13,144 T** |
+
+One thing §2 did not anticipate: **port `$FE` is itself contended.** The driver reads only its own
+tables above `$8000`, so its *memory* accesses are firm as §2 says, but every `OUT ($FE),A` is an
+I/O access to the ULA and is delayed during the visible display. Measured inflation is up to ~50 T
+per call across all the OUTs of one note — irrelevant against 13,144 T of slack, but it means the
+emitted half-period jitters by a few T on real hardware, which is a fraction of a cent and is how
+every beeper engine on this machine sounds.
 
 ---
 
@@ -300,29 +364,58 @@ Three rules the driver must follow:
 
 ---
 
-## 8. What gets built next
+## 8. What was built
 
-1. **`variables.asm`** — music state: current note index, frames remaining on the note, a
-   suppress-this-frame flag. Placement per `memory-map` §6; `variables.asm` stays the last INCLUDE.
-2. **Note table** — one entry per pitch: driver selector, delay constant, half-period count for the
-   48,000 T budget. Derived from the two formulas in §4.1. Read-only data.
-3. **Melody table** — Korobeiniki as (note, duration) pairs. ~100 notes at 2 bytes each is ~200
-   bytes; the image currently ends at `$A6BD` with free RAM above, so **the full melody costs
-   nothing worth counting. There is no reason to fall back to a short riff.**
-4. **`musica.asm`** — the toggle loop (both driver variants) plus a per-frame entry point that
-   advances the melody and emits one frame's worth of the current note.
-5. **`juego.asm` hook** — one call at the end of the loop body, plus setting the suppress flag from
-   `limpiar_lineas`'s return value. This is the only change to existing game code.
-6. **Tests** — the harness can assert note timing and that the suppression flag is set on clearing
-   frames. It cannot assert what it sounds like; that needs a human.
+All six items below shipped. Each line says what actually landed, and the two places where it is
+not what this section originally called for.
 
-### Side effect to decide at build time
+1. **`variables.asm`** — `musica_puntero` (melody cursor, a `DW`), `musica_nota`, `musica_frames`,
+   `musica_silencio`. Appended per `memory-map` §6; `variables.asm` is still the last INCLUDE.
+   *Differs:* the cursor is a pointer, not a note index — the melody outgrew a byte offset and a
+   pointer costs one byte more and no arithmetic.
+2. **Note table** — 28 chromatic entries, A3 to C6, 4 bytes each: driver selector, delay constant
+   (word), half-period count for the 48,000 T budget. Read-only, after the last `ret`.
+   *Differs:* derived from **§4.5's** formulas, not §4.1's. §4.5 says why, and it matters.
+3. **Melody table** — Korobeiniki complete: the 8-bar A section and the 8-bar B section as
+   (note, duration) pairs, looping. 54 notes, 110 bytes, 25.6 s per loop at 150 BPM. As predicted,
+   the space cost was not worth counting and no riff fallback was needed.
+4. **`musica.asm`** — `mus_agudo` and `mus_grave` (both driver variants) plus `musica_frame`, the
+   per-frame entry point, and `mus_cargar`, which advances the melody. One addition this section did
+   not ask for: **`musica_frame` silences the last frame of every note.** Without that 20 ms gap two
+   consecutive notes of the same pitch merge into one long note, and the melody has three such
+   pairs — it is the difference between a tune and a buzz that changes pitch.
+5. **`juego.asm` hook** — `CALL musica_frame` as the last thing in `dibujar`, after
+   `pintar_tetromino`, plus `LD (musica_silencio),A` between `CALL limpiar_lineas` and
+   `CALL anotar_lineas`. Two instructions.
+   *Differs:* this section said it would be the **only** change to existing game code, and it was
+   not enough. Music state is per-game, and a game over does not clear RAM — `Pantalla_Final` does
+   `jp inicializar`, which only re-sets `SP` — so the melody carried over and every game after the
+   first started partway through it, mid-note, sometimes with a stale mute flag pending. The fix is
+   a third instruction, in a second file: `reiniciar_marcador` (`puntuacion.asm`) now calls
+   `musica_reiniciar`, which puts the four variables back to their declared initial values. That
+   routine is the one per-game reset point in the tree, so putting it there means a future reset
+   cannot forget it; it still does not touch `MEJOR`, which is per-session. Note that `mus_cargar`
+   is **not** usable for this — it advances the melody rather than rewinding it, so it would have
+   eaten one note per game. `memory-map` §6a now carries the per-game/per-session table this
+   omission should have been caught by.
+6. **Tests** — `tests/test_musica.py`: the table re-derived from the formulas and compared byte for
+   byte, melody well-formedness, the measured cost of every note against the budget, and
+   `musica_silencio` checked against `LINEAS` in a running game. As predicted it **cannot** assert
+   pitch or tune; that was confirmed by a human listening, and the suite says so in its docstring.
+
+### Side effect, decided: the border is black
 
 Writing port `$FE` sets the **border colour** in bits 0–2 as well as toggling the speaker on bit 4.
-The game currently never writes `$FE` at all (`memory-map` §7), so the border is whatever the ROM
-left. The driver must pick a value; **black (bits 0–2 = 0)** is the recommendation, matching the
-black paper the panels and well already use. It is a visible change either way — the border cannot
-be read back, so it must be chosen rather than preserved.
+The game never wrote `$FE` at all before this (`memory-map` §7), so the border was whatever the ROM
+left. **Black (bits 0–2 = 0) was chosen**, matching the black paper the panels and well already use.
+It cannot be read back, so it had to be chosen rather than preserved.
+
+Two consequences worth knowing. The border turns black **on the first frame the game loop runs**,
+not at startup: the driver is the only thing that writes `$FE`, and the hook is inside `iniciar`.
+The title and menu screens therefore keep the ROM's border, and it goes black when play begins. And
+the driver rewrites `$FE` at the end of every fill (`mf_reposo`) to park the speaker low, which
+repaints the border as a side effect — so a suppressed or silent frame leaves the border alone
+rather than changing it.
 
 ---
 

@@ -92,16 +92,19 @@ and `COL_IZQ`/`ANCHO_POZO`/`FILA_BAJA` in `lineas.asm:9-11`.
 | `$4000-$57FF` | 6144 | Pixel display file | `L35 - Tetris_3D.asm:5` |
 | `$5800-$5AFF` | 768 | **Attribute file = the board** | `tableroJuego.asm:8` |
 | `$5B00-$7FFF` | 9472 | **Free. Nothing in this program touches it.** The old `TIEMPO_CAIDA`/`NIVEL_ACTUAL` at `$7000-$7003` and the accidental `$77EF` scratch byte all went with `caida.asm` and the `B=255` probe | — |
-| `$8000-$A5B9` | 9658 | Program image (code + read-only data + the `variables.asm` block at the very end) | `main.asm:4` |
+| `$8000-$A82B` | 10284 | Program image (code + read-only data + the `variables.asm` block at the very end) | `main.asm:4` |
 | ` $8041-$9B40` | 6912 | `TETRIS.scr` title picture, `INCBIN`. `$9B41` is `Pantalla_Ini` | `titulo.asm:32` |
-| ` $9CDB-$9CDF` | 5 | `SCR_CUR_PTR`, `SCR_ATTR_PTR`, `PRINT_ATTR` — print library cursor state | `L30.3 - printat.asm:158-160` |
-| ` $9CE0-$9FDF` | 768 | `CHARSET` (`charset.bin`, 96 glyphs, ASCII 32-127) | `L30.3 - printat.asm:162` |
-| ` $A16A-$A24D` | 228 | 19 piece records, 12 bytes each | `piezas.asm:5-29` |
-| ` $A24E-$A25B` | 14 | `spawn_table` — 7 read-only pointers, one per shape | `piezas.asm:35` |
-| ` $A362-$A367` | 6 | `giro_kicks` — read-only kick offsets, after `GIRAR`'s `ret` | `giro.asm:67` |
-| ` $A428-$A43A` | 19 | `PUNTOS_POR_LINEA`, `FRAMES_POR_NIVEL` — read-only score/speed tables | `puntuacion.asm:15-16` |
-| ` $A5AC-$A5B9` | 14 | **`variables.asm` — every mutable byte in the program.** `PUNTOS` `$A5AC`, `LINEAS` `$A5AF`, `NIVEL` `$A5B0`, `PROX_NIVEL` `$A5B1`, `FRAMES_POR_FILA` `$A5B2`, `contador_frames` `$A5B3`, `contador_rapido` `$A5B4`, `teclas_ant` `$A5B5`, `semilla` `$A5B6`, `siguiente_pieza` `$A5B7`, `Medio` `$A5B9` | `variables.asm:13-41` |
-| `$A5BA-...` | — | Free RAM, uncontended. First byte past the image. | — |
+| ` $9D92-$9D96` | 5 | `SCR_CUR_PTR`, `SCR_ATTR_PTR`, `PRINT_ATTR` — print library cursor state | `L30.3 - printat.asm:158-160` |
+| ` $9D97-$A096` | 768 | `CHARSET` (`charset.bin`, 96 glyphs, ASCII 32-127) | `L30.3 - printat.asm:162` |
+| ` $A22A-$A30D` | 228 | 19 piece records, 12 bytes each | `piezas.asm:5-29` |
+| ` $A30E-$A31B` | 14 | `spawn_table` — 7 read-only pointers, one per shape | `piezas.asm:35` |
+| ` $A422-$A427` | 6 | `giro_kicks` — read-only kick offsets, after `GIRAR`'s `ret` | `giro.asm:67` |
+| ` $A4EA-$A4FC` | 19 | `PUNTOS_POR_LINEA`, `FRAMES_POR_NIVEL` — read-only score/speed tables | `puntuacion.asm:15-16` |
+| ` $A6A8-$A737` | 144 | `musica.asm` code: `musica_frame`, the two driver loops, `mus_cargar`, `musica_reiniciar` | `musica.asm` |
+| ` $A738-$A7A7` | 112 | `tabla_notas` — 28 read-only note entries, 4 bytes each | `musica.asm` |
+| ` $A7A8-$A815` | 110 | `melodia` — Korobeiniki as read-only (note, duration) pairs | `musica.asm` |
+| ` $A816-$A82B` | **22** | **`variables.asm` — every mutable byte in the program.** `PUNTOS` `$A816`, `LINEAS` `$A819`, `NIVEL` `$A81A`, `PROX_NIVEL` `$A81B`, `MEJOR` `$A81C`, `FRAMES_POR_FILA` `$A81F`, `contador_frames` `$A820`, `contador_rapido` `$A821`, `teclas_ant` `$A822`, `semilla` `$A823`, `siguiente_pieza` `$A824`, `Medio` `$A826`, `musica_puntero` `$A827`, `musica_nota` `$A829`, `musica_frames` `$A82A`, `musica_silencio` `$A82B` | `variables.asm:13-77` |
+| `$A82C-...` | — | Free RAM, uncontended. First byte past the image. | — |
 | `$FFFF` downward | — | Stack. `LD SP, 0` means the first PUSH wraps to `$FFFE/$FFFF` | `main.asm:5, 15` |
 
 Every address above moves if anything earlier in the `INCLUDE` order changes size. Re-derive them
@@ -110,14 +113,16 @@ from `main.lst` rather than trusting this table after a structural edit.
 **Contention:** `$4000-$7FFF` is shared with the video chip; every access there is slowed
 unpredictably. `$8000-$FFFF` is not. See `interrupts-and-timing`.
 
-## 5. All mutable state is 14 bytes, in one block
+## 5. All mutable state is 22 bytes, in one block
 
-`variables.asm` at `$A5AC-$A5B9` holds every byte the program writes: score, lines, level, the
-level countdown, the normal gravity reload/counter pair (`FRAMES_POR_FILA`/`contador_frames`), an
+`variables.asm` at `$A816-$A82B` holds every byte the program writes: score, lines, level, the
+level countdown, the **session best** (`MEJOR`, 3 bytes of packed BCD — written only by
+`ActualizarMejor` and never zeroed, which is what makes it a session value and not a per-game one),
+the normal gravity reload/counter pair (`FRAMES_POR_FILA`/`contador_frames`), an
 independent soft-drop counter (`contador_rapido` — its own reload value, `FRAMES_CAIDA_RAPIDA`, is a
 code-side `EQU` in `juego.asm`, not a variable), the keyboard mask byte (edge state for K/J/Q/W,
 level state for SPACE — `entrada.asm`, `game-loop-and-collision`), the LFSR seed, the preview slot,
-and `Medio`.
+`Medio`, and the four bytes of music-player state (§6a).
 
 There is still **no board array** — the attribute file is the board (§2) — and no piece-position
 variable. Piece row is `B`, piece column `C`, current piece pointer `IX`; `Medio` is a *copy* of
@@ -128,18 +133,23 @@ variable. Piece row is `B`, piece column `C`, current piece pointer `IX`; `Medio
 
 **This is the single place variable placement is decided.** Every other skill cites this section
 and declares nothing. There is exactly **one** variables file, `variables.asm`, `INCLUDE`d
-**last** (`main.asm:45`), landing at `$A5AC`.
+**last** (`main.asm:47`), landing at `$A816`.
 
 Add your byte to that file, in the section it belongs to, and nowhere else. **A second declaration
 of an existing name is a duplicate-label error** (`Errors: 2, warnings: 4` — verified), so grep the
 file before adding.
 
 ```asm
-; the current contents, variables.asm:13-41 -- the ONLY place any of these exist
+; the current contents, variables.asm:13-77 -- the ONLY place any of these exist
 PUNTOS:          DB 0, 0, 0 ; packed BCD, 6 digits: pairs 1-2, 3-4, 5-6
 LINEAS:          DB 0       ; total rows cleared (8-bit binary)
 NIVEL:           DB 0       ; current level (8-bit binary)
 PROX_NIVEL:      DB 10      ; rows still needed to level up
+MEJOR:           DB 0, 0, 0 ; SESSION best, same packed BCD as PUNTOS. Written in
+                            ;  exactly one place -- ActualizarMejor, at the top of
+                            ;  Pantalla_Final -- and never zeroed, which is what
+                            ;  makes it survive a restart. NOT reset by
+                            ;  reiniciar_marcador; see game-loop-and-collision
 FRAMES_POR_FILA: DB 48      ; frames between one-row drops (level 0)
 contador_frames: DB 48      ; frames left until the next drop
 contador_rapido: DB 4       ; frames left until the next SOFT-DROP row. Independent
@@ -152,6 +162,16 @@ teclas_ant:      DB 0       ; previous leer_teclas mask; 1 = PRESSED (already
 semilla:         DB $A5     ; LFSR state. MUST be non-zero -- a zero LFSR stays zero
 siguiente_pieza: DW T_0     ; preview slot. Starts at a VALID record, never 0
 Medio:           DB 15      ; memory copy of the current column (C)
+musica_puntero:  DW melodia ; next (note, duration) pair to read. A POINTER, not
+                            ;  an index: the melody outgrew a byte offset
+musica_nota:     DB NOTA_SIL; index into tabla_notas of the note sounding NOW
+musica_frames:   DB 0       ; frames left on it. 0 = spent, so the next call to
+                            ;  musica_frame loads the following pair -- which is
+                            ;  why no start-up routine is needed
+musica_silencio: DB 0       ; non-zero = this frame is MUTE. Written by juego.asm
+                            ;  from limpiar_lineas' row count; musica_frame reads
+                            ;  it and re-zeroes it every call, so it lasts one
+                            ;  frame (game-loop-and-collision §8)
 ```
 
 Use as `LD A,(NIVEL)` / `LD (NIVEL),A` / `LD HL,(siguiente_pieza)`. Appending to this block is
@@ -169,6 +189,30 @@ the end of the code, and referenced only by label.
 growing downward through RAM. (The 48K system variables are far below, at `$5C00-$5CB5`; the
 only thing up here is the UDG area, roughly `$FF58-$FFFF`.) Anything above about `$FF00` is
 overwritten by pushes and interrupts.
+
+## 6a. Per-game or per-session? Every new variable has to answer this
+
+A game over does **not** reset RAM. `Pantalla_Final` does `jp inicializar`, and `inicializar`
+(`main.asm:14`) only re-sets `SP` — so every byte in §6 carries over into the next game unless some
+routine explicitly clears it. That makes "who zeroes this, and when?" part of declaring a variable,
+not an afterthought. Two variables have already been shipped with the wrong answer to it.
+
+| | Reset by | Which variables |
+|---|---|---|
+| **Per game** | `reiniciar_marcador` (`puntuacion.asm`), called once from `iniciar` (`juego.asm:26`) | `PUNTOS`, `LINEAS`, `NIVEL`, `PROX_NIVEL`, `FRAMES_POR_FILA`, `contador_frames`, and — via `musica_reiniciar` — `musica_puntero`, `musica_nota`, `musica_frames`, `musica_silencio` |
+| **Per session** | nobody, deliberately | `MEJOR` — zeroing it would destroy the best score it exists to keep |
+| **Doesn't matter** | nobody | `Medio` and `siguiente_pieza` are overwritten before first use; `semilla` carrying over is *desirable* (it keeps the piece sequence from repeating identically each game), and it must never be set to 0 |
+| **Carries over on purpose** | nobody | `contador_rapido` and `teclas_ant` are mid-play state whose stale value is harmless within a frame or two |
+
+`reiniciar_marcador` is the one place a per-game reset belongs, and the reason is the same one that
+puts the `di`/`ei` brackets inside the piece routines rather than at their call sites: there is
+exactly one of it, so it cannot be forgotten. It also prints, which is only safe because it runs
+before any piece exists.
+
+**The failure mode is quiet.** Music state was declared with correct initial values in
+`variables.asm` and no reset, so the first game was right and every game after it started
+mid-melody — nothing crashed, nothing looked wrong, and no board assertion could see it. If a new
+variable has any per-game meaning, add it to `reiniciar_marcador` in the same edit that declares it.
 
 ## 7. Port I/O — there is no memory-mapped I/O
 

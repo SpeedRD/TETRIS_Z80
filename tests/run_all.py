@@ -16,6 +16,7 @@ SUITES = [
     ("test_spawn",      "spawn RNG, preview handoff"),
     ("test_pantallas",  "redesigned screens, panels, best score"),
     ("test_relleno",    "game-over fill animation: timing, isolation"),
+    ("test_musica",     "note table, melody, driver cost, suppress flag"),
     ("checklist6",      "build-and-verify section 6, end to end"),
 ]
 
