@@ -17,9 +17,6 @@ byte is non-zero, and every draw, erase, and collision check reads or writes tha
 
 ![Gameplay](Images/Game.gif)
 
-> These images predate the screen redesign (unified panel style, fill animation, session-best
-> score) and should be recaptured.
-
 ## How to play
 
 1. **Title screen** — press **Q** to dismiss it.
