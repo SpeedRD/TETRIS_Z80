@@ -17,19 +17,26 @@ byte is non-zero, and every draw, erase, and collision check reads or writes tha
 
 ![Gameplay](Images/Game.gif)
 
+> These images predate the screen redesign (unified panel style, fill animation, session-best
+> score) and should be recaptured.
+
 ## How to play
 
 1. **Title screen** — press **Q** to dismiss it.
 2. **Start menu** — press **S** to start a game, or **N** to quit ("Gracias por jugar").
 3. A piece appears at the top of the well and falls on its own.
-4. **J** / **K** move the piece left / right, one cell per press.
+4. **J** / **K** move the piece left / right, one cell per press. Hold **SPACE** to soft-drop
+   (fall faster); release to return to normal speed.
 5. **Q** / **W** rotate the piece left / right (with wall kicks against the border and
    settled blocks).
 6. Fill an entire row (all 18 interior columns) to clear it — everything above drops down
    one row, and score/lines update. Every 10 cleared lines, the level increments and the
    fall speeds up.
-7. When the stack reaches the top, the game-over screen appears; any key returns to the
-   start menu with the board and scoreboard reset.
+7. When the stack reaches the top, the well fills with cycling colours from the bottom up,
+   then the game-over screen appears showing "Juego Terminado!", your session-best score,
+   and "Reiniciar el juego (S/N)?". Press **S** to play again — score, board, level, and
+   lines all reset, though the session-best score does not — or **N** to quit
+   ("Gracias por jugar").
 
 ## Features
 
@@ -38,16 +45,25 @@ byte is non-zero, and every draw, erase, and collision check reads or writes tha
 - **Movement and rotation** — left/right movement and two-directional rotation, both
   collision-checked before anything is drawn; rotation includes wall kicks so pieces don't
   overlap the well border or settled blocks.
+- **Soft drop** — holding **SPACE** drops the piece at a faster, independent gravity rate;
+  releasing it returns to normal speed immediately.
 - **Non-blocking input** — key reads are edge-detected once per frame; holding a key doesn't
   repeat the action or freeze gravity, unlike the school-project original.
 - **Line clearing** — full rows are detected, cleared, and everything above compacts downward.
 - **Scoring and levels** — packed-BCD score, a line counter, level-up every ten lines, and a
   frames-per-row speed table so gravity accelerates with level.
+- **Session-best score** — the highest score reached this session is tracked and shown on
+  both the pre-game and game-over screens; it survives a restart, unlike the rest of the
+  scoreboard.
 - **Next-piece preview** — a preview box shows the piece that will spawn next.
-- **Game over and restart** — stacking to the top reaches a proper game-over screen; a
-  keypress returns to the start menu with the board and scoreboard reset.
+- **Game over and restart** — stacking to the top reaches a proper game-over screen with a
+  restart prompt; **S** restarts with the score, board, level, and lines reset, **N** quits.
+- **Loss fill animation** — before the game-over screen appears, the well fills with cycling
+  tetromino colours from the bottom up.
 - **Frame-synced timing** — the fall loop is `HALT`-synced to the 50 Hz interrupt rather than
   a busy-wait, so speed is consistent regardless of emulator or hardware speed.
+- **Background music** — Korobeiniki, the Type-A Tetris theme, plays throughout on the ZX
+  Spectrum beeper, pausing only on the frame a line clears.
 
 For the full, file-by-file account of what's implemented and why — including the defects
 found in the original school submission and how each was fixed — see `AUDIT.md` and the
@@ -66,9 +82,9 @@ Build from the repo root:
 sjasmplus --fullpath --raw=main.bin --lst=main.lst --sld=main.sld main.asm
 ```
 
-Only `main.asm` is assembled directly — it `INCLUDE`s the other fourteen `.asm` files, and
+Only `main.asm` is assembled directly — it `INCLUDE`s the other seventeen `.asm` files, and
 include order is load-bearing (`variables.asm` must stay last). A clean build reports
-`Errors: 0, warnings: 0` and produces a 9614-byte raw image at `$8000-$A58D`. There's no
+`Errors: 0, warnings: 0` and produces a 10284-byte raw image at `$8000-$A82B`. There's no
 `SAVESNA`/`SAVETAP`, so `main.bin` has to be loaded into an emulator or debugger at `$8000`
 rather than double-clicked.
 
@@ -97,9 +113,9 @@ python3 tests/run_all.py test_giro    # just one suite
 ```
 
 This covers input edge-detection, rotation (every shape × state × column × direction), line
-clearing, scoring/leveling, spawn distribution, and a full-game checklist — around 130
-assertions in total. It can't see tearing or flicker, so anything purely visual still needs a
-human watching the emulator.
+clearing, scoring/leveling, spawn distribution, screen rendering, the game-over fill
+animation, music, and a full-game checklist — ten suites, 280 assertions in total. It can't
+see tearing or flicker, so anything purely visual still needs a human watching the emulator.
 
 ## Origin
 
@@ -112,7 +128,7 @@ programming, with an automated test harness added along the way to keep it that 
 
 ## Architecture
 
-The whole program is one translation unit (`main.asm`) that includes 15 source files and
+The whole program is one translation unit (`main.asm`) that includes 17 source files and
 assembles to a single flat binary loaded at `$8000`. There's no board array, no display
 list, and no separate game-state struct — the ZX Spectrum's own video attribute RAM at
 `$5800` **is** the board, piece position lives in the `B`/`C` registers and an `IX` pointer
