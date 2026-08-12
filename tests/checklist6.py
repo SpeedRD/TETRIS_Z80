@@ -135,8 +135,14 @@ check("7. J moves left and K moves right", cJ < c0 and cK > cJ,
 def ix():
     return int(z.cmd("get-registers").split("IX=")[1][:4], 16)
 
+# T_0 (the O-piece) is rotationally symmetric and its record points at
+# itself both ways (piezas.asm: "T_0: ... DW T_0, T_0"), so if the O-piece
+# happens to be the one on screen, IX legitimately does not move when Q/W
+# is pressed -- that is correct 4-fold-symmetry behaviour, not a failed
+# rotation. Only require i1 != i0 when a different piece spawned.
+T_0 = resolve("T_0")
 i0 = ix(); tap("Q", 60); i1 = ix(); tap("W", 60); i2 = ix()
-check("8. Q and W rotate the piece", i1 != i0 and i2 == i0,
+check("8. Q and W rotate the piece", (i0 == T_0 or i1 != i0) and i2 == i0,
       f"(IX {i0:04X} -> {i1:04X} -> {i2:04X}, and back)")
 
 # 8b-8d: soft drop (SPACE) -- still on the default, unmodified gravity speed
@@ -181,8 +187,10 @@ keys("SPACE", "Q"); time.sleep(0.06); keys(); time.sleep(0.10)
 i1b = ix()
 keys("SPACE", "W"); time.sleep(0.06); keys(); time.sleep(0.10)
 i2b = ix()
+# Same O-piece exception as check 8 above: T_0 points at itself both ways,
+# so no IX change is the correct outcome when the O-piece is on screen.
 check("8f. Q/W still rotate the piece while SPACE is held",
-      i1b != i0b and i2b == i0b,
+      (i0b == T_0 or i1b != i0b) and i2b == i0b,
       f"(IX {i0b:04X} -> {i1b:04X} -> {i2b:04X}, and back)")
 
 # 9 & 10 -------------------------------------------------------------

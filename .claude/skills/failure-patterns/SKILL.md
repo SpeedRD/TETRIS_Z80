@@ -199,6 +199,10 @@ it up expecting it to be needed somewhere.
 11. Do not put a non-ASCII character in a `db` string; the encoding bug is real (§3.2).
 12. Do not remove a `di`/`ei` bracket around an `IY` window because it "looks unnecessary"
     (`interrupts-and-timing` §1).
+13. Do not "fix" `T_0`'s self-referencing rotation pointer (`piezas.asm:5`, `DW T_0, T_0`) into
+    pointing anywhere else. The O-piece has 4-fold symmetry, so both rotation directions
+    correctly loop back to itself — `IX` not changing on a Q/W press is the right outcome for
+    this one piece, not a missed rotation (`piece-rotation` §2, §"Common mistakes").
 
 ## 5. What the history does not tell you
 
